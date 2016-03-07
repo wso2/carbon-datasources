@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>carbon-datasources</artifactId>
+        <groupId>org.wso2.carbon.datasources</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>bundle</packaging>
+
+    <artifactId>datasources-sample</artifactId>
+    <name>WSO2 Carbon Datasources - Sample</name>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.eclipse.osgi</groupId>
+            <artifactId>org.eclipse.osgi.services</artifactId>
+            <version>3.4.0.v20140312-2051</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.datasources</groupId>
+            <artifactId>org.wso2.carbon.datasource.core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.jndi</groupId>
+            <artifactId>org.wso2.carbon.jndi</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+    <properties>
+        <export.package>org.wso2.carbon.datasource.sample.*</export.package>
+        <import.package>javax.xml.parsers;version=0.0.0,*;resolution:=optional,org.wso2.carbon.datasource.core.*</import.package>
+        <dynamic.import.package>*</dynamic.import.package>
+    </properties>
+
+</project>
