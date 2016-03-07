@@ -15,8 +15,8 @@
  */
 package org.wso2.carbon.datasource.core;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.carbon.datasource.core.beans.CarbonDataSource;
 import org.wso2.carbon.datasource.core.beans.DataSourceMetadata;
 import org.wso2.carbon.datasource.core.beans.DataSourcesConfiguration;
@@ -39,12 +39,10 @@ import javax.naming.NamingException;
  */
 public class DataSourceManager {
 
-    private static Log log = LogFactory.getLog(DataSourceManager.class);
-    private static DataSourceManager instance = new DataSourceManager();;
+    private static Logger logger = LoggerFactory.getLogger(DataSourceManager.class);
+    private static DataSourceManager instance = new DataSourceManager();
     private DataSourceRepository dataSourceRepository;
     private Map<String, DataSourceReader> dataSourceReaders;
-
-    private String dataSourcesPath = null;
 
     private static final String FILE_NAME_SUFFIX = "-datasources.xml";
     private boolean initialized = false;
@@ -107,9 +105,8 @@ public class DataSourceManager {
      */
     public void initDataSources(String configurationDirectory)
             throws DataSourceException {
-        this.dataSourcesPath = configurationDirectory;
         loadDataSourceProviders();
-        initDataSources(dataSourcesPath, dataSourceReaders);
+        initDataSources(configurationDirectory, dataSourceReaders);
     }
 
     /**
@@ -121,10 +118,10 @@ public class DataSourceManager {
             throws DataSourceException {
         this.dataSourceReaders = dataSourceReaders;
         if (initialized) {
-            log.debug("Data sources are already initialized.");
+            logger.debug("Data sources are already initialized.");
             return;
         }
-        log.debug("Initializing the data sources.");
+        logger.debug("Initializing the data sources.");
 
         if (dataSourceReaders.isEmpty()) {
             throw new RuntimeException("No data source readers found. Data sources will not be initialized!");
@@ -154,8 +151,8 @@ public class DataSourceManager {
      * @throws DataSourceException
      */
     private void initDataSource(File dataSourceFile) throws DataSourceException {
-        if (log.isDebugEnabled()) {
-            log.debug("Initializing data source: " + dataSourceFile.getName());
+        if (logger.isDebugEnabled()) {
+            logger.debug("Initializing data source: " + dataSourceFile.getName());
         }
         try {
             DataSourcesConfiguration dataSourceConfiguration = DataSourceUtils

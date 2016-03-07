@@ -16,8 +16,8 @@
 package org.wso2.carbon.datasource.utils;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -60,7 +60,7 @@ import javax.xml.transform.stream.StreamResult;
  */
 public class DataSourceUtils {
 
-    private static Log log = LogFactory.getLog(DataSourceUtils.class);
+    private static Logger logger = LoggerFactory.getLogger(DataSourceUtils.class);
 
     private static final String[] CLASS_RETURN_TYPES = {"String", "Byte", "Character",
             "Short", "Integer", "Float", "Double", "Character", "Boolean"};
@@ -99,7 +99,7 @@ public class DataSourceUtils {
             serializer.getDomConfig().setParameter(XML_DECLARATION, false);
             return serializer.writeToString(element);
         } catch (Exception e) {
-            log.error("Error while converting element to string: " + e.getMessage(), e);
+            logger.error("Error while converting element to string: " + e.getMessage(), e);
             return null;
         }
     }
@@ -330,15 +330,15 @@ public class DataSourceUtils {
      * @param clazz         class type of the generated bean
      * @param <T>           class type of the generated bean
      * @param <U>           {@link File} or a {@code String}
-     * @return
+     * @return T class type of the generated bean
      * @throws DataSourceException
      */
     public static <T, U> T loadJAXBConfiguration(U configuration, Class<T> clazz) throws DataSourceException {
         try {
             JAXBContext ctx = JAXBContext.newInstance(clazz);
             if (configuration instanceof File) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Parsing configuration file: " + ((File) configuration).getName());
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Parsing configuration file: " + ((File) configuration).getName());
                 }
                 Document doc = DataSourceUtils.convertToDocument((File) configuration);
                 return (T) ctx.createUnmarshaller().unmarshal(doc);

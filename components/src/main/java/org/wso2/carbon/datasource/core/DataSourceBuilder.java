@@ -15,8 +15,8 @@
  */
 package org.wso2.carbon.datasource.core;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import org.wso2.carbon.datasource.core.beans.CarbonDataSource;
 import org.wso2.carbon.datasource.core.beans.DataSourceMetadata;
@@ -32,7 +32,7 @@ import javax.naming.Reference;
  */
 public class DataSourceBuilder {
 
-    private static Log log = LogFactory.getLog(DataSourceBuilder.class);
+    private static Logger logger = LoggerFactory.getLogger(DataSourceBuilder.class);
 
     /**
      * Build a {@code CarbonDataSource} object from the given {@code DataSourceMetaInfo} object.
@@ -51,15 +51,15 @@ public class DataSourceBuilder {
      * Creates the data source object by getting the appropriate DataSourceReader. The created object would be either
      * a {@link javax.sql.DataSource} or {@link Reference} if {@code isUseJndiReference} param is true.
      *
-     * @param dataSourceMetadata                {@code DataSourceMetaInfo}
+     * @param dataSourceMetadata     {@code DataSourceMetaInfo}
      * @param isUseDataSourceFactory {@code boolean}
      * @return {@code Object}
      */
     public static Object buildDataSourceObject(DataSourceMetadata dataSourceMetadata, boolean isUseDataSourceFactory,
                                                DataSourceReader dataSourceReader)
             throws DataSourceException {
-        if(log.isDebugEnabled()) {
-            log.debug("Generating the DataSource object from \"" + dataSourceReader.getType() + "\" type reader.");
+        if (logger.isDebugEnabled()) {
+            logger.debug("Generating the DataSource object from \"" + dataSourceReader.getType() + "\" type reader.");
         }
 
         Element configurationXmlDefinition = (Element) dataSourceMetadata.getDefinition().getDsXMLConfiguration();

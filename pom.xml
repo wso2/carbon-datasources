@@ -19,8 +19,9 @@
         <module>components</module>
         <module>feature</module>
         <module>distribution</module>
+        <module>sample</module>
     </modules>
-
+    <name>WSO2 Carbon Datasources</name>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -29,9 +30,9 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>commons-logging</groupId>
-                <artifactId>commons-logging-api</artifactId>
-                <version>${commons.logging.version}</version>
+                <groupId>org.wso2.eclipse.osgi</groupId>
+                <artifactId>org.eclipse.osgi.services</artifactId>
+                <version>${org.wso2.eclipse.osgi.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-io.wso2</groupId>
@@ -174,7 +175,6 @@
     </build>
 
     <properties>
-        <commons.logging.version>1.1</commons.logging.version>
         <carbon.datasource.version>1.0.0-SNAPSHOT</carbon.datasource.version>
         <carbon.feature.plugin.version>2.0.0</carbon.feature.plugin.version>
         <tomcat.jdbc.version>7.0.34.wso2v2</tomcat.jdbc.version>
@@ -190,6 +190,6 @@
         <testng.version>6.9.4</testng.version>
         <jacoco.version>0.7.5.201505241946</jacoco.version>
         <mysql.connector.java.version>5.1.6</mysql.connector.java.version>
-
+        <org.wso2.eclipse.osgi.version>3.4.0.v20140312-2051</org.wso2.eclipse.osgi.version>
     </properties>
 </project>

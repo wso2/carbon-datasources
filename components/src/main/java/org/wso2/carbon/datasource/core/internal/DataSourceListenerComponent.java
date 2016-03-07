@@ -15,14 +15,14 @@
  */
 package org.wso2.carbon.datasource.core.internal;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.carbon.datasource.core.DataSourceManager;
 import org.wso2.carbon.datasource.core.api.DataSourceManagementService;
 import org.wso2.carbon.datasource.core.api.DataSourceService;
@@ -51,7 +51,7 @@ import java.util.Map;
 )
 public class DataSourceListenerComponent implements RequiredCapabilityListener {
 
-    private static final Log log = LogFactory.getLog(DataSourceListenerComponent.class);
+    private static final Logger logger = LoggerFactory.getLogger(DataSourceListenerComponent.class);
 
     private BundleContext bundleContext;
     private Map<String, DataSourceReader> readers;
@@ -90,7 +90,7 @@ public class DataSourceListenerComponent implements RequiredCapabilityListener {
             DataSourceManagementService dataSourceMgtService = new DataSourceManagementServiceImpl();
             bundleContext.registerService(DataSourceManagementService.class.getName(), dataSourceMgtService, null);
         } catch (DataSourceException e) {
-            log.error("Error occurred while initializing data sources", e);
+            logger.error("Error occurred while initializing data sources", e);
         }
     }
 }
