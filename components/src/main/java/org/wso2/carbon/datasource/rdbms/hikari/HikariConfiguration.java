@@ -21,6 +21,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlValue;
 
+/**
+ * Hikari configuration bean class.
+ */
 @XmlRootElement(name = "configuration")
 public class HikariConfiguration {
 
@@ -76,6 +79,9 @@ public class HikariConfiguration {
         this.passwordPersist = passwordPersist;
     }
 
+    /**
+     * Bean class holding password.
+     */
     @XmlRootElement(name = "password")
     public static class Password {
 

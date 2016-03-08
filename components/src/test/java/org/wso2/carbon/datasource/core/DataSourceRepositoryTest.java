@@ -8,8 +8,6 @@ import org.wso2.carbon.datasource.core.beans.CarbonDataSource;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 
 import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * Test class for DataSourceRepository class.

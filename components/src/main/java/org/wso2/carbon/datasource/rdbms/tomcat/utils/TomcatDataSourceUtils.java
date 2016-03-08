@@ -53,15 +53,18 @@ public class TomcatDataSourceUtils {
         }
         String isolationLevelString = config.getDefaultTransactionIsolation();
         if (isolationLevelString != null) {
-            if (RDBMSDataSourceConstants.TX_ISOLATION_LEVELS.NONE.equals(isolationLevelString)) {
+            if (RDBMSDataSourceConstants.TransactionIsolationLevels.NONE.equals(isolationLevelString)) {
                 props.setDefaultTransactionIsolation(Connection.TRANSACTION_NONE);
-            } else if (RDBMSDataSourceConstants.TX_ISOLATION_LEVELS.READ_UNCOMMITTED.equals(isolationLevelString)) {
+            } else if (RDBMSDataSourceConstants.TransactionIsolationLevels.READ_UNCOMMITTED
+                    .equals(isolationLevelString)) {
                 props.setDefaultTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
-            } else if (RDBMSDataSourceConstants.TX_ISOLATION_LEVELS.READ_COMMITTED.equals(isolationLevelString)) {
+            } else if (RDBMSDataSourceConstants.TransactionIsolationLevels.READ_COMMITTED
+                    .equals(isolationLevelString)) {
                 props.setDefaultTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-            } else if (RDBMSDataSourceConstants.TX_ISOLATION_LEVELS.REPEATABLE_READ.equals(isolationLevelString)) {
+            } else if (RDBMSDataSourceConstants.TransactionIsolationLevels.REPEATABLE_READ
+                    .equals(isolationLevelString)) {
                 props.setDefaultTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
-            } else if (RDBMSDataSourceConstants.TX_ISOLATION_LEVELS.SERIALIZABLE.equals(isolationLevelString)) {
+            } else if (RDBMSDataSourceConstants.TransactionIsolationLevels.SERIALIZABLE.equals(isolationLevelString)) {
                 props.setDefaultTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             }
         }

@@ -75,6 +75,9 @@ public class DataSourceMetadata {
         this.definition = definition;
     }
 
+    /**
+     * CLass holding the data source definition.
+     */
     @XmlRootElement(name = "definition")
     public static class DataSourceDefinition {
 

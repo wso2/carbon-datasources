@@ -20,30 +20,33 @@ package org.wso2.carbon.datasource.rdbms;
  */
 public class RDBMSDataSourceConstants {
 
-	public static final String RDBMS_DATASOURCE_TYPE = "RDBMS";
-	
-	public static final String DATASOURCE_PROPS_NAME = "dataSourceProps";
+    public static final String RDBMS_DATASOURCE_TYPE = "RDBMS";
 
-	public static final String ROLLBACK_ON_RETURN = "rollbackOnReturn";
-	
-	public static final class TX_ISOLATION_LEVELS {
-		
-		public static final String NONE = "NONE";
-		
-		public static final String READ_COMMITTED = "READ_COMMITTED";
-		
-		public static final String READ_UNCOMMITTED = "READ_UNCOMMITTED";
-		
-		public static final String REPEATABLE_READ = "REPEATABLE_READ";
-		
-		public static final String SERIALIZABLE = "SERIALIZABLE";		
-		
-	}
-	
-	public static final String INITIAL_SIZE = "0";
-	
-	public static final String MAX_IDLE = "8";
-	
-	public static final String MIN_IDLE = "0";
-	
+    public static final String DATASOURCE_PROPS_NAME = "dataSourceProps";
+
+    public static final String ROLLBACK_ON_RETURN = "rollbackOnReturn";
+
+    /**
+     * Constant class holding transaction levels.
+     */
+    public static final class TransactionIsolationLevels {
+
+        public static final String NONE = "NONE";
+
+        public static final String READ_COMMITTED = "READ_COMMITTED";
+
+        public static final String READ_UNCOMMITTED = "READ_UNCOMMITTED";
+
+        public static final String REPEATABLE_READ = "REPEATABLE_READ";
+
+        public static final String SERIALIZABLE = "SERIALIZABLE";
+
+    }
+
+    public static final String INITIAL_SIZE = "0";
+
+    public static final String MAX_IDLE = "8";
+
+    public static final String MIN_IDLE = "0";
+
 }

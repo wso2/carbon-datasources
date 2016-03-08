@@ -15,10 +15,10 @@
  */
 package org.wso2.carbon.datasource.rdbms.tomcat;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.rdbms.tomcat.utils.TomcatDataSourceUtils;
 import org.wso2.carbon.datasource.utils.DataSourceUtils;
@@ -40,7 +40,7 @@ import javax.naming.StringRefAddr;
  */
 public class TomcatDataSource {
 
-    private static Log log = LogFactory.getLog(TomcatDataSource.class);
+    private static Logger logger = LoggerFactory.getLogger(TomcatDataSource.class);
 
     private static final String STANDARD_TOMCAT_JDBC_INTERCEPTORS = "ConnectionState;StatementFinalizer;" +
             "org.wso2.carbon.datasource.rdbms.tomcat.ConnectionRollbackOnReturnInterceptor;";
@@ -76,6 +76,7 @@ public class TomcatDataSource {
 
     /**
      * Returns a DataSource object.
+     *
      * @return {@link DataSource}
      */
     public DataSource getDataSource() {
@@ -96,8 +97,8 @@ public class TomcatDataSource {
         String mBean = "";
         try {
             if (DataSourceUtils.getCurrentDataSourceId() == null) {
-                if (log.isDebugEnabled()) {
-                    log.debug("The current dataSource id is not set");
+                if (logger.isDebugEnabled()) {
+                    logger.debug("The current dataSource id is not set");
                 }
                 return;
             }
@@ -106,11 +107,11 @@ public class TomcatDataSource {
             ObjectName objectName = new ObjectName(mBean + ":type=DataSource");
             mBeanServer.registerMBean(this.dataSource.createPool().getJmxPool(), objectName);
         } catch (InstanceAlreadyExistsException e) {
-            log.warn("Registering already existing mbean. '"
+            logger.warn("Registering already existing mbean. '"
                     + mBean + "' " + e.getMessage(), e);
         } catch (MalformedObjectNameException | NotCompliantMBeanException | SQLException
                 | MBeanRegistrationException e) {
-            log.error("Error while registering the MBean for dataSource '"  + mBean + " " + e.getMessage(), e);
+            logger.error("Error while registering the MBean for dataSource '" + mBean + " " + e.getMessage(), e);
         }
     }
 

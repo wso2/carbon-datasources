@@ -36,7 +36,7 @@ public class Utils {
                 outputStr.write(buf, 0, bytesRead);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

@@ -456,6 +456,9 @@ public class TomcatDataSourceConfiguration {
         this.validationQueryTimeout = validationQueryTimeout;
     }
 
+    /**
+     * Bean class holding Password
+     */
     @XmlRootElement(name = "password")
     public static class Password {
 
@@ -483,6 +486,9 @@ public class TomcatDataSourceConfiguration {
 
     }
 
+    /**
+     * Bean class holding data source properties.
+     */
     @XmlRootElement(name = "property")
     public static class DataSourceProperty {
 
