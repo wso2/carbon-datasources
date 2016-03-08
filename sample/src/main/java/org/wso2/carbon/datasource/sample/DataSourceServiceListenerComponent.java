@@ -20,6 +20,9 @@ import java.sql.SQLException;
 import javax.naming.Context;
 import javax.naming.NamingException;
 
+/**
+ * Example class.
+ */
 @Component(
         name = "org.wso2.carbon.kernel.datasource.sample",
         immediate = true
@@ -45,9 +48,9 @@ public class DataSourceServiceListenerComponent {
             Connection connection = dsObject.getConnection();
             //From connection do the required CRUD operation
         } catch (DataSourceException e) {
-            logger.error("error occurred while fetching the data source.");
+            logger.error("error occurred while fetching the data source.", e);
         } catch (SQLException e) {
-            logger.error("error occurred while fetching the connection.");
+            logger.error("error occurred while fetching the connection.", e);
         }
     }
 
@@ -62,6 +65,7 @@ public class DataSourceServiceListenerComponent {
         logger.info("Sample bundle register method fired");
         try {
             DataSourceMetadata metadata = service.getDataSource("WSO2_CARBON_DB");
+            logger.info(metadata.getName());
             //You can perform your functionalities by using the injected service.
         } catch (DataSourceException e) {
             logger.error("Error occurred while fetching the data sources", e);
@@ -81,6 +85,7 @@ public class DataSourceServiceListenerComponent {
         try {
             Context ctx = service.newInitialContext();
             Object obj = ctx.lookup("java:comp/env/jdbc/WSO2CarbonDB/test");
+            logger.info("Fetched data source: " + obj.toString());
             //Cast the object to required DataSource type and perforn crud operation.
         } catch (NamingException e) {
             logger.info("Error occurred while jndi lookup", e);

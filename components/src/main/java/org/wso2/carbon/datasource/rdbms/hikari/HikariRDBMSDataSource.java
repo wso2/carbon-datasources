@@ -43,6 +43,7 @@ public class HikariRDBMSDataSource {
      */
     public HikariRDBMSDataSource(HikariConfig config) throws DataSourceException {
         this.config = config;
+        this.dataSourceFactoryReference = new Reference(JAVAX_DATASOURCE_CLASS, HIKARI_JNDI_FACTORY, null);
     }
 
     /**
@@ -64,13 +65,9 @@ public class HikariRDBMSDataSource {
      * @throws DataSourceException
      */
     public Reference getDataSourceFactoryReference() throws DataSourceException {
-        if (dataSourceFactoryReference == null) {
-            dataSourceFactoryReference = new Reference(JAVAX_DATASOURCE_CLASS, HIKARI_JNDI_FACTORY, null);
-
-            Map<String, String> poolConfigMap =
-                    DataSourceUtils.extractPrimitiveFieldNameValuePairs(this.config);
-            poolConfigMap.forEach((key, value) -> dataSourceFactoryReference.add(new StringRefAddr(key, value)));
-        }
+        Map<String, String> poolConfigMap =
+                DataSourceUtils.extractPrimitiveFieldNameValuePairs(this.config);
+        poolConfigMap.forEach((key, value) -> dataSourceFactoryReference.add(new StringRefAddr(key, value)));
         return dataSourceFactoryReference;
     }
 }
