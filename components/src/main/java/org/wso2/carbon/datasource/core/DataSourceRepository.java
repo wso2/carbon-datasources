@@ -15,8 +15,8 @@
  */
 package org.wso2.carbon.datasource.core;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.carbon.datasource.core.beans.CarbonDataSource;
 import org.wso2.carbon.datasource.core.beans.DataSourceMetadata;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
  */
 public class DataSourceRepository {
 
-    private static Log log = LogFactory.getLog(DataSourceRepository.class);
+    private static Logger logger = LoggerFactory.getLogger(DataSourceRepository.class);
     private Map<String, CarbonDataSource> dataSources;
 
     /**
@@ -90,8 +90,8 @@ public class DataSourceRepository {
      * @param carbonDataSource The meta information of the data source to be added.
      */
     public void addDataSource(CarbonDataSource carbonDataSource) throws DataSourceException {
-        if (log.isDebugEnabled()) {
-            log.debug("Adding data source: " + carbonDataSource.getMetadata().getName());
+        if (logger.isDebugEnabled()) {
+            logger.debug("Adding data source: " + carbonDataSource.getMetadata().getName());
         }
         dataSources.put(carbonDataSource.getMetadata().getName(), carbonDataSource);
     }
@@ -103,8 +103,8 @@ public class DataSourceRepository {
      * @param dataSourceName The data source name
      */
     public void deleteDataSource(String dataSourceName) throws DataSourceException {
-        if (log.isDebugEnabled()) {
-            log.debug("Deleting data source: " + dataSourceName);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Deleting data source: " + dataSourceName);
         }
         CarbonDataSource cds = getDataSource(dataSourceName);
         if (cds == null) {

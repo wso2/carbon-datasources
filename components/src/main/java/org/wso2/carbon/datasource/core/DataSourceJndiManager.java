@@ -15,8 +15,8 @@
  */
 package org.wso2.carbon.datasource.core;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.carbon.datasource.core.beans.CarbonDataSource;
 import org.wso2.carbon.datasource.core.beans.DataSourceMetadata;
 import org.wso2.carbon.datasource.core.beans.JNDIConfig;
@@ -33,7 +33,7 @@ import javax.naming.NamingException;
  */
 public class DataSourceJndiManager {
 
-    private static Log log = LogFactory.getLog(DataSourceJndiManager.class);
+    private static Logger logger = LoggerFactory.getLogger(DataSourceJndiManager.class);
 
     private static final String JAVA_COMP_CONTEXT_STRING = "java:comp";
     private static final String ENV_CONTEXT_STRING = "env";
@@ -64,13 +64,13 @@ public class DataSourceJndiManager {
         JNDIConfig jndiConfig = dataSourceMetadata.getJndiConfig();
         //If JNDI configuration is not present, the data source will not be bound to a JNDI context.
         if (jndiConfig == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("JNDI info not found for " + dataSourceMetadata.getName());
+            if (logger.isDebugEnabled()) {
+                logger.debug("JNDI info not found for " + dataSourceMetadata.getName());
             }
             return;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Registering " + dataSourceMetadata.getName() + " into JNDI context");
+        if (logger.isDebugEnabled()) {
+            logger.debug("Registering " + dataSourceMetadata.getName() + " into JNDI context");
         }
         Context subContext = getBindingContext(jndiConfig);
 
@@ -148,8 +148,8 @@ public class DataSourceJndiManager {
      * @param cds {@code CarbonDataSource}
      */
     public static void unregister(CarbonDataSource cds) throws NamingException {
-        if (log.isDebugEnabled()) {
-            log.debug("Unregistering data source: " + cds.getMetadata().getName());
+        if (logger.isDebugEnabled()) {
+            logger.debug("Unregistering data source: " + cds.getMetadata().getName());
         }
         JNDIConfig jndiConfig = cds.getMetadata().getJndiConfig();
         if (jndiConfig == null) {

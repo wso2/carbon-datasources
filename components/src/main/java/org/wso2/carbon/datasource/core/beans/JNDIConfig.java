@@ -41,7 +41,10 @@ public class JNDIConfig {
     }
 
     public void setEnvironment(EnvEntry[] environment) {
-        this.environment = environment;
+        this.environment = new EnvEntry[environment.length];
+        for (int i = 0; i < environment.length; i++) {
+            this.environment[i] = environment[i].copy();
+        }
     }
 
     @XmlElement(name = "name", required = true, nillable = false)
@@ -52,7 +55,14 @@ public class JNDIConfig {
     @XmlElementWrapper(name = "environment", nillable = false)
     @XmlElement(name = "property")
     public EnvEntry[] getEnvironment() {
-        return environment;
+        if (environment == null) {
+            return new EnvEntry[0];
+        }
+        EnvEntry[] tempEnvironment = new EnvEntry[environment.length];
+        for (int i = 0; i < environment.length; i++) {
+            tempEnvironment[i] = environment[i].copy();
+        }
+        return tempEnvironment;
     }
 
     @XmlElement(name = "useJndiReference")
@@ -66,10 +76,8 @@ public class JNDIConfig {
 
     public Hashtable<String, String> extractHashtableEnv() {
         Hashtable<String, String> env = new Hashtable<>();
-        if (this.getEnvironment() != null) {
-            for (EnvEntry entry : this.getEnvironment()) {
-                env.put(entry.getName(), entry.getValue());
-            }
+        for (EnvEntry entry : this.getEnvironment()) {
+            String value = env.put(entry.getName(), entry.getValue());
         }
         return env;
     }
@@ -80,13 +88,11 @@ public class JNDIConfig {
         result.setUseJndiReference(this.isUseJndiReference());
         EnvEntry[] envEntries = null;
         EnvEntry[] origEntries = this.getEnvironment();
-        if (origEntries != null) {
-            envEntries = new EnvEntry[origEntries.length];
-            for (int i = 0; i < origEntries.length; i++) {
-                envEntries[i] = new EnvEntry();
-                envEntries[i].setName(origEntries[i].getName());
-                envEntries[i].setValue(origEntries[i].getValue());
-            }
+        envEntries = new EnvEntry[origEntries.length];
+        for (int i = 0; i < origEntries.length; i++) {
+            envEntries[i] = new EnvEntry();
+            envEntries[i].setName(origEntries[i].getName());
+            envEntries[i].setValue(origEntries[i].getValue());
         }
         result.setEnvironment(envEntries);
         return result;
@@ -113,6 +119,9 @@ public class JNDIConfig {
         return -1;
     }
 
+    /**
+     * Bean class to hold environment properties.
+     */
     @XmlRootElement(name = "property")
     public static class EnvEntry {
 
@@ -149,6 +158,12 @@ public class JNDIConfig {
             this.value = value;
         }
 
+        public EnvEntry copy() {
+            EnvEntry temp = new EnvEntry();
+            temp.setEncrypted(this.isEncrypted());
+            temp.setName(this.getName());
+            temp.setValue(this.getValue());
+            return temp;
+        }
     }
-
 }

@@ -8,7 +8,6 @@ import org.wso2.carbon.datasource.core.api.DataSourceManagementService;
 import org.wso2.carbon.datasource.core.beans.DataSourceMetadata;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.core.impl.DataSourceManagementServiceImpl;
-import org.wso2.carbon.datasource.core.impl.DataSourceServiceImpl;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -26,7 +25,7 @@ public class DataSourceManagementServiceTest extends BaseTest {
     @Test
     public void getDataSourceTest() throws DataSourceException {
         DataSourceMetadata dataSourceMetadata = dataSourceMgtService.getDataSource("WSO2_CARBON_DB_2");
-        Assert.assertNotNull(dataSourceMetadata , "metadata for \"WSO2_CARBON_DB_2\" should not be null");
+        Assert.assertNotNull(dataSourceMetadata, "metadata for \"WSO2_CARBON_DB_2\" should not be null");
     }
 
     @Test(dependsOnMethods = "getDataSourceTest")

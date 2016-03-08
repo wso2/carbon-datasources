@@ -12,6 +12,7 @@
     <packaging>carbon-feature</packaging>
     <artifactId>org.wso2.carbon.datasource.core.feature</artifactId>
 
+    <name>WSO2 Carbon Datasources - Feature</name>
     <description>Generates a feature from data source bundle by encapsulating it's core dependencies</description>
 
     <dependencies>
