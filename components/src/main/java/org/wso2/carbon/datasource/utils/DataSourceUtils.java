@@ -269,14 +269,14 @@ public class DataSourceUtils {
         Method methods[] = object.getClass().getMethods();
         for (Method method : methods) {
             if (isMethodMatched(method)) {
-                String FieldName = getFieldNameFromMethodName(method.getName());
+                String fieldName = getFieldNameFromMethodName(method.getName());
                 try {
                     if (method.invoke(object) != null) {
                         String result = method.invoke(object).toString();
-                        nameValueMap.put(FieldName, result);
+                        nameValueMap.put(fieldName, result);
                     }
                 } catch (IllegalAccessException | InvocationTargetException e) {
-                    throw new DataSourceException("Error in retrieving " + FieldName + " value from the object :" +
+                    throw new DataSourceException("Error in retrieving " + fieldName + " value from the object :" +
                             object.getClass() + e.getMessage(), e);
                 }
             }

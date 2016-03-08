@@ -113,6 +113,9 @@ public class JNDIConfig {
         return -1;
     }
 
+    /**
+     * Bean class to hold environment properties.
+     */
     @XmlRootElement(name = "property")
     public static class EnvEntry {
 

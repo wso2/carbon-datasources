@@ -24,8 +24,6 @@ import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.core.spi.DataSourceReader;
 import org.wso2.carbon.datasource.utils.DataSourceUtils;
 
-import javax.naming.Reference;
-
 /**
  * DataSourceBuilder is a util class responsible to build data source by passing the data source configuration to the
  * relevant DataSourceReader object.
@@ -49,7 +47,7 @@ public class DataSourceBuilder {
 
     /**
      * Creates the data source object by getting the appropriate DataSourceReader. The created object would be either
-     * a {@link javax.sql.DataSource} or {@link Reference} if {@code isUseJndiReference} param is true.
+     * a {@link javax.sql.DataSource} or {@code Reference} if {@code isUseJndiReference} param is true.
      *
      * @param dataSourceMetadata     {@code DataSourceMetaInfo}
      * @param isUseDataSourceFactory {@code boolean}
