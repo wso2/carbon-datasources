@@ -61,96 +61,62 @@ public class Utils {
      * Replace the existing carbon.yml file with populated carbon.yml file.
      */
     private static void copyCarbonYAML() {
-        Path carbonYmlFilePath;
-
-        String basedir = System.getProperty("basedir");
-        if (basedir == null) {
-            basedir = Paths.get(".").toString();
-        }
-        try {
-            carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources", "conf", "carbon.yml");
-            copy(carbonYmlFilePath.toString(), Paths.get(System.getProperty("carbon.home"), "conf",
-                    "carbon.yml").toString());
-        } catch (IOException e) {
-            logger.error("Unable to copy the carbon.yml file", e);
-        }
+        copy(Paths.get("src", "test", "resources", "conf", "carbon.yml"), Paths.get(System.getProperty("carbon.home"),
+                "conf", "carbon.yml"));
     }
 
     /**
      * Replace the existing carbon.yml file with populated carbon.yml file.
      */
     private static void copyLog4jXMLFile() {
-        Path carbonYmlFilePath;
-
-        String basedir = System.getProperty("basedir");
-        if (basedir == null) {
-            basedir = Paths.get(".").toString();
-        }
-        try {
-            carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources", "conf", "log4j2.xml");
-            copy(carbonYmlFilePath.toString(), Paths.get(System.getProperty("carbon.home"), "conf",
-                    "log4j2.xml").toString());
-        } catch (IOException e) {
-            logger.error("Unable to copy the carbon.yml file", e);
-        }
+        copy(Paths.get("src", "test", "resources", "conf", "log4j2.xml"),
+                Paths.get("conf", "log4j2.xml"));
     }
 
     /**
      * Replace the existing carbon.yml file with populated carbon.yml file.
      */
     private static void copyLaunchPropertiesFile() {
-        Path carbonYmlFilePath;
-
-        String basedir = System.getProperty("basedir");
-        if (basedir == null) {
-            basedir = Paths.get(".").toString();
-        }
-        try {
-            carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources", "conf", "osgi", "launch.properties");
-            copy(carbonYmlFilePath.toString(), Paths.get(System.getProperty("carbon.home"), "conf",
-                    "osgi", "launch.properties").toString());
-        } catch (IOException e) {
-            logger.error("Unable to copy the carbon.yml file", e);
-        }
+        copy(Paths.get("src", "test", "resources", "conf", "osgi", "launch.properties"),
+                Paths.get("conf", "osgi", "launch.properties"));
     }
 
     /**
      * Replace the existing carbon.yml file with populated carbon.yml file.
      */
     private static void copyDSConfigFile() {
-        Path carbonYmlFilePath;
-
-        String basedir = System.getProperty("basedir");
-        if (basedir == null) {
-            basedir = Paths.get(".").toString();
-        }
-        try {
-            carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources", "conf", "datasources",
-                    "master-datasources.xml");
-            copy(carbonYmlFilePath.toString(), Paths.get(System.getProperty("carbon.home"), "conf", "datasources",
-                    "master-datasources.xml").toString());
-        } catch (IOException e) {
-            logger.error("Unable to copy the carbon.yml file", e);
-        }
+        copy(Paths.get("src", "test", "resources", "conf", "datasources", "master-datasources.xml"),
+                Paths.get("conf", "datasources", "master-datasources.xml"));
     }
 
     /**
      * Replace the existing carbon.yml file with populated carbon.yml file.
      */
     private static void copyDeploymentFile() {
-        Path carbonYmlFilePath;
+        copy(Paths.get("src", "test", "resources", "deployment", "README.txt"), Paths.get("deployment", "README.txt"));
+    }
 
+    public static void copy(Path src, Path dest) {
         String basedir = System.getProperty("basedir");
         if (basedir == null) {
             basedir = Paths.get(".").toString();
         }
+
+        src = Paths.get(basedir).resolve(src);
+        dest = Paths.get(System.getProperty("carbon.home")).resolve(dest);
+
+        createOutputFolderStructure(dest.toString());
         try {
-            carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources", "deployment",
-                    "README.txt");
-            copy(carbonYmlFilePath.toString(), Paths.get(System.getProperty("carbon.home"), "deployment",
-                    "README.txt").toString());
+            try (FileInputStream inputStr = new FileInputStream(src.toAbsolutePath().toString());
+                 FileOutputStream outputStr = new FileOutputStream(dest.toAbsolutePath().toString())) {
+                byte[] buf = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStr.read(buf)) > 0) {
+                    outputStr.write(buf, 0, bytesRead);
+                }
+            }
         } catch (IOException e) {
-            logger.error("Unable to copy the carbon.yml file", e);
+            logger.error("error occurred while copying the file", e);
         }
     }
 
