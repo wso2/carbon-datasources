@@ -1,20 +1,13 @@
 <datasources-configuration>
-
-    <providers>
-        <provider>org.wso2.carbon.datasource.rdbms.hikari.HikariDataSourceReader</provider>
-        <!--<provider>org.wso2.carbon.datasource.rdbms.tomcat.TomcatDataSourceReader</provider>-->
-    </providers>
-
     <datasources>
         <datasource>
             <name>WSO2_CARBON_DB</name>
             <description>The datasource used for registry and user manager</description>
             <jndiConfig>
                 <name>jdbc/WSO2CarbonDB/test</name>
-                 <!--<useDataSourceFactory>true</useDataSourceFactory>-->
-                <!--<environment>-->
-                    <!--<property name="java.naming.factory.initial">org.wso2.carbon.datasource.osgi.jndi.factories.CustomContextFactory</property>-->
-                <!--</environment>-->
+                <environment>
+                    <property name="java.naming.factory.initial">org.wso2.carbon.datasource.osgi.jndi.factories.CustomContextFactory</property>
+                </environment>
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>

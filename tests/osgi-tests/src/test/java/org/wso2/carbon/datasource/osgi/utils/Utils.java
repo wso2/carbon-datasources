@@ -15,39 +15,147 @@
  */
 package org.wso2.carbon.datasource.osgi.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wso2.carbon.kernel.Constants;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 /**
  * Utility class for unit tests. All the utility methods required for test classes should reside here.
  */
 public class Utils {
 
+    private static final Logger logger = LoggerFactory.getLogger(OSGiTestUtils.class);
 
-    /**
-     * Set the carbon home for execute tests.
-     * Carbon home is set to /carbon-kernel/tests/osgi-tests/target/carbon-home
-     */
-    public static void copyResources() {
-
-        Path configFilePath = Paths.get("tests", "osgi-tests", "src", "test", "resources", "conf",
-                "datasources", "master-datasources.xml");
-        Path configPathCopyLocation = Paths.get("tests", "osgi-tests", "target", "carbonHome", "conf", "datasources",
-                "master-datasources.xml");
-//        Path configFilePath = Paths.get("src", "test", "resources", "conf", "datasources", "master-datasources.xml");
-//        Path configPathCopyLocation = Paths.get("target", "carbonHome", "conf", "datasources",
-//                "master-datasources.xml");
-
-        Utils.copy(configFilePath.toFile().getAbsolutePath(), configPathCopyLocation.toFile().getAbsolutePath());
+    public static void setEnv() {
+        setCarbonHome();
+        setStartupTime();
+        copyCarbonYAML();
+        copyLog4jXMLFile();
+        copyLaunchPropertiesFile();
+        copyDSConfigFile();
+        copyDeploymentFile();
     }
 
-    public static void copy(String src, String dest) {
-        createOutputFolderStructure(dest);
+    private static void setCarbonHome() {
+        String currentDir = Paths.get("").toAbsolutePath().toString();
+        Path carbonHome = Paths.get(currentDir, "target", "carbon-home");
+        System.setProperty("carbon.home", carbonHome.toString());
+    }
 
+    /**
+     * Set the startup time to calculate the server startup time.
+     */
+    private static void setStartupTime() {
+        if (System.getProperty(Constants.START_TIME) == null) {
+            System.setProperty(Constants.START_TIME, System.currentTimeMillis() + "");
+        }
+    }
+
+    /**
+     * Replace the existing carbon.yml file with populated carbon.yml file.
+     */
+    private static void copyCarbonYAML() {
+        Path carbonYmlFilePath;
+
+        String basedir = System.getProperty("basedir");
+        if (basedir == null) {
+            basedir = Paths.get(".").toString();
+        }
+        try {
+            carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources", "conf", "carbon.yml");
+            copy(carbonYmlFilePath.toString(), Paths.get(System.getProperty("carbon.home"), "conf",
+                    "carbon.yml").toString());
+        } catch (IOException e) {
+            logger.error("Unable to copy the carbon.yml file", e);
+        }
+    }
+
+    /**
+     * Replace the existing carbon.yml file with populated carbon.yml file.
+     */
+    private static void copyLog4jXMLFile() {
+        Path carbonYmlFilePath;
+
+        String basedir = System.getProperty("basedir");
+        if (basedir == null) {
+            basedir = Paths.get(".").toString();
+        }
+        try {
+            carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources", "conf", "log4j2.xml");
+            copy(carbonYmlFilePath.toString(), Paths.get(System.getProperty("carbon.home"), "conf",
+                    "log4j2.xml").toString());
+        } catch (IOException e) {
+            logger.error("Unable to copy the carbon.yml file", e);
+        }
+    }
+
+    /**
+     * Replace the existing carbon.yml file with populated carbon.yml file.
+     */
+    private static void copyLaunchPropertiesFile() {
+        Path carbonYmlFilePath;
+
+        String basedir = System.getProperty("basedir");
+        if (basedir == null) {
+            basedir = Paths.get(".").toString();
+        }
+        try {
+            carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources", "conf", "osgi", "launch.properties");
+            copy(carbonYmlFilePath.toString(), Paths.get(System.getProperty("carbon.home"), "conf",
+                    "osgi", "launch.properties").toString());
+        } catch (IOException e) {
+            logger.error("Unable to copy the carbon.yml file", e);
+        }
+    }
+
+    /**
+     * Replace the existing carbon.yml file with populated carbon.yml file.
+     */
+    private static void copyDSConfigFile() {
+        Path carbonYmlFilePath;
+
+        String basedir = System.getProperty("basedir");
+        if (basedir == null) {
+            basedir = Paths.get(".").toString();
+        }
+        try {
+            carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources", "conf", "datasources",
+                    "master-datasources.xml");
+            copy(carbonYmlFilePath.toString(), Paths.get(System.getProperty("carbon.home"), "conf", "datasources",
+                    "master-datasources.xml").toString());
+        } catch (IOException e) {
+            logger.error("Unable to copy the carbon.yml file", e);
+        }
+    }
+
+    /**
+     * Replace the existing carbon.yml file with populated carbon.yml file.
+     */
+    private static void copyDeploymentFile() {
+        Path carbonYmlFilePath;
+
+        String basedir = System.getProperty("basedir");
+        if (basedir == null) {
+            basedir = Paths.get(".").toString();
+        }
+        try {
+            carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources", "deployment",
+                    "README.txt");
+            copy(carbonYmlFilePath.toString(), Paths.get(System.getProperty("carbon.home"), "deployment",
+                    "README.txt").toString());
+        } catch (IOException e) {
+            logger.error("Unable to copy the carbon.yml file", e);
+        }
+    }
+
+    public static void copy(String src, String dest) throws IOException {
+        createOutputFolderStructure(dest);
         try (FileInputStream inputStr = new FileInputStream(src);
              FileOutputStream outputStr = new FileOutputStream(dest)) {
             byte[] buf = new byte[1024];
@@ -55,8 +163,6 @@ public class Utils {
             while ((bytesRead = inputStr.read(buf)) > 0) {
                 outputStr.write(buf, 0, bytesRead);
             }
-        } catch (IOException e) {
-
         }
     }
 

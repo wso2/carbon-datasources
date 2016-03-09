@@ -165,7 +165,7 @@ public class DataSourceManager {
                 DataSourceJndiManager.register(carbonDataSource, dataSourceReader);
             }
         } catch (DataSourceException | NamingException e) {
-            throw new DataSourceException("Error in initializing system data sources at '" +
+            throw new DataSourceException("Error in initializing data sources at '" +
                     dataSourceFile.getAbsolutePath() + " - " + e.getMessage(), e);
         }
     }

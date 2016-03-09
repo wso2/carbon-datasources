@@ -44,6 +44,7 @@ import java.util.Map;
 @Component(
         name = "org.wso2.carbon.kernel.datasource.core.internal.DataSourceListenerComponent",
         immediate = true,
+        service = RequiredCapabilityListener.class,
         property = {
                 "capability-name=org.wso2.carbon.datasource.core.spi.DataSourceReader",
                 "component-key=carbon-datasource-service"
@@ -85,10 +86,10 @@ public class DataSourceListenerComponent implements RequiredCapabilityListener {
             dataSourceManager.initDataSources(dataSourcesPath, readers);
 
             DataSourceService dsService = new DataSourceServiceImpl();
-            bundleContext.registerService(DataSourceService.class.getName(), dsService, null);
+            bundleContext.registerService(DataSourceService.class, dsService, null);
 
             DataSourceManagementService dataSourceMgtService = new DataSourceManagementServiceImpl();
-            bundleContext.registerService(DataSourceManagementService.class.getName(), dataSourceMgtService, null);
+            bundleContext.registerService(DataSourceManagementService.class, dataSourceMgtService, null);
         } catch (DataSourceException e) {
             logger.error("Error occurred while initializing data sources", e);
         }

@@ -15,7 +15,10 @@
  */
 package org.wso2.carbon.datasource.rdbms.hikari;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.core.spi.DataSourceReader;
 import org.wso2.carbon.datasource.rdbms.RDBMSDataSourceConstants;
@@ -27,13 +30,20 @@ import org.wso2.carbon.datasource.rdbms.hikari.utils.HikariDataSourceUtils;
  */
 @Component(
         name = "org.wso2.carbon.datasource.rdbms.hikari.HikariDataSourceReader",
-        immediate = true,
-        service = DataSourceReader.class,
-        property = {
-                "dependent-component-key=carbon-datasource-reader"
-        }
+        immediate = true
 )
 public class HikariDataSourceReader implements DataSourceReader {
+
+
+    @Activate
+    protected void activate(BundleContext bundleContext) {
+
+    }
+
+    @Deactivate
+    protected void deactivate(BundleContext bundleContext) {
+
+    }
 
     /**
      * Return the type of the reader.

@@ -11,11 +11,10 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.datasource.core.api.DataSourceService;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.osgi.utils.Utils;
+import org.wso2.carbon.kernel.utils.CarbonServerInfo;
 import org.wso2.carbon.osgi.test.util.CarbonOSGiTestEnvConfigs;
 import org.wso2.carbon.osgi.test.util.utils.CarbonOSGiTestUtils;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -28,27 +27,37 @@ public class DataSourceServiceTest {
 
     @Configuration
     public Option[] createConfiguration() {
-        Utils.copyResources();
+        Utils.setEnv();
         List<Option> customOptions = new ArrayList<>();
+        customOptions.add(mavenBundle().artifactId("commons-io")
+                .groupId("commons-io.wso2")
+                .version("2.4.0.wso2v1"));
+        customOptions.add(mavenBundle().artifactId("HikariCP")
+                .groupId("com.zaxxer")
+                .version("2.4.1"));
+        customOptions.add(mavenBundle().artifactId("mysql-connector-java")
+                .groupId("mysql")
+                .version("5.1.38"));
+
+
         customOptions.add(mavenBundle().artifactId("org.wso2.carbon.datasource.core")
                 .groupId("org.wso2.carbon.datasources")
                 .versionAsInProject());
-        customOptions.add(mavenBundle().artifactId("datasources-sample")
-                .groupId("org.wso2.carbon.datasources")
-                .version("1.0.0-SNAPSHOT"));
         CarbonOSGiTestEnvConfigs configs = new CarbonOSGiTestEnvConfigs();
-        Path carbonHome = Paths.get("tests", "osgi-tests", "target", "carbonHome");
-//        Path carbonHome = Paths.get("target", "carbonHome");
-        configs.setCarbonHome(carbonHome.toFile().getAbsolutePath());
+
+        String carbonHome = System.getProperty("carbon.home");
+        configs.setCarbonHome(carbonHome);
         return CarbonOSGiTestUtils.getAllPaxOptions(configs, customOptions);
     }
+
+    @Inject
+    private CarbonServerInfo carbonServerInfo;
 
     @Inject
     private DataSourceService dataSourceService;
 
     @Test
     public void testDataSourceServiceInject() {
-
         Assert.assertNotNull(dataSourceService, "DataSourceService not found");
     }
 

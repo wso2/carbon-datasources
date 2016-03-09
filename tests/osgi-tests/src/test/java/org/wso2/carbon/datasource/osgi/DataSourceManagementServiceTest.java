@@ -28,14 +28,11 @@ public class DataSourceManagementServiceTest {
 
     @Configuration
     public Option[] createConfiguration() {
-        Utils.copyResources();
+        Utils.setEnv();
         List<Option> customOptions = new ArrayList<>();
         customOptions.add(mavenBundle().artifactId("org.wso2.carbon.datasource.core")
                 .groupId("org.wso2.carbon.datasources")
                 .versionAsInProject());
-        customOptions.add(mavenBundle().artifactId("datasources-sample")
-                .groupId("org.wso2.carbon.datasources")
-                .version("1.0.0-SNAPSHOT"));
         CarbonOSGiTestEnvConfigs configs = new CarbonOSGiTestEnvConfigs();
         Path carbonHome = Paths.get("tests", "osgi-tests", "target", "carbonHome");
 //        Path carbonHome = Paths.get("target", "carbonHome");
