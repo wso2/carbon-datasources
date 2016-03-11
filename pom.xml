@@ -31,7 +31,7 @@
     </parent>
 
     <modules>
-        <module>components</module>
+        <module>components/org.wso2.carbon.datasource.core</module>
         <module>feature</module>
         <module>distribution</module>
         <module>sample</module>
