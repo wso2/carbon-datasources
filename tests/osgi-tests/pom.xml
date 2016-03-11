@@ -31,64 +31,131 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.api.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.13</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>${testng.version}</version>
         </dependency>
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
             <artifactId>pax-exam</artifactId>
-            <version>${pax.exam.version}</version>
         </dependency>
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
             <artifactId>pax-exam-container-native</artifactId>
-            <version>${pax.exam.container.native.version}</version>
         </dependency>
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
             <artifactId>pax-exam-testng</artifactId>
-            <version>${pax.exam.testng.version}</version>
         </dependency>
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
             <artifactId>pax-exam-link-mvn</artifactId>
-            <version>${pax.exam.link.mvn.version}</version>
         </dependency>
         <dependency>
             <groupId>org.ops4j.pax.url</groupId>
             <artifactId>pax-url-aether</artifactId>
-            <version>${pax.url.aether.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon</groupId>
-            <artifactId>carbon-kernel-osgi-test-util</artifactId>
-            <version>5.1.0-SNAPSHOT</version>
-            <scope>test</scope>
+            <groupId>org.ops4j.pax.logging</groupId>
+            <artifactId>pax-logging-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.logging</groupId>
+            <artifactId>pax-logging-log4j2</artifactId>
         </dependency>
         <dependency>
             <groupId>org.ow2.spec.ee</groupId>
             <artifactId>ow2-jta-1.1-spec</artifactId>
-            <version>${ow2.jta.spec.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.compendium</artifactId>
-            <version>5.0.0</version>
-            <scope>test</scope>
+            <groupId>org.wso2.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.simpleconfigurator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.datasources</groupId>
             <artifactId>org.wso2.carbon.datasource.core</artifactId>
-            <version>${carbon.datasource.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.gogo.command</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.gogo.runtime</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.gogo.shell</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.app</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.concurrent</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.console</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.ds</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.frameworkadmin</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.frameworkadmin.equinox</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.launcher</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.launcher</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.preferences</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.registry</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.simpleconfigurator.manipulator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.cm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.orbit.org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.core</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
