@@ -104,11 +104,6 @@
                 <type>zip</type>
             </dependency>
             <dependency>
-                <groupId>org.testng</groupId>
-                <artifactId>testng</artifactId>
-                <version>${testng.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.jacoco</groupId>
                 <artifactId>org.jacoco.agent</artifactId>
                 <classifier>runtime</classifier>
@@ -119,11 +114,6 @@
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.connector.java.version}</version>
             </dependency>
-
-
-
-            <!-- tests -->
-
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
@@ -241,11 +231,6 @@
             </dependency>
             <dependency>
                 <groupId>org.wso2.eclipse.equinox</groupId>
-                <artifactId>org.eclipse.equinox.launcher</artifactId>
-                <version>${equinox.launcher.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.eclipse.equinox</groupId>
                 <artifactId>org.eclipse.equinox.preferences</artifactId>
                 <version>${equinox.preferences.version}</version>
             </dependency>
@@ -273,12 +258,6 @@
                 <groupId>org.wso2.orbit.org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
                 <version>${org.snakeyaml.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon</groupId>
-                <artifactId>org.wso2.carbon.core</artifactId>
-                <version>${carbon.kernel.version}</version>
-                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
