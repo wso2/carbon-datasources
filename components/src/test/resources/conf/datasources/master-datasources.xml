@@ -1,9 +1,4 @@
 <datasources-configuration>
-
-    <providers>
-        <provider>org.wso2.carbon.datasource.rdbms.hikari.HikariDataSourceReader</provider>
-    </providers>
-
     <datasources>
         <datasource>
             <name>WSO2_CARBON_DB</name>
