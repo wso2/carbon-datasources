@@ -115,111 +115,117 @@ public class OSGiTestUtils {
                 .toArray(Option[]::new);
     }
 
-        public static void setEnv() {
-                setCarbonHome();
-                setStartupTime();
-                copyCarbonYAML();
-                copyLog4jXMLFile();
-                copyLaunchPropertiesFile();
-                copyDSConfigFile();
-                copyDeploymentFile();
-        }
+    /**
+     * Set the environment prior to tests.
+     */
+    public static void setEnv() {
+        setCarbonHome();
+        setStartupTime();
+        copyCarbonYAML();
+        copyLog4jXMLFile();
+        copyLaunchPropertiesFile();
+        copyDSConfigFile();
+        copyDeploymentFile();
+    }
 
-        private static void setCarbonHome() {
-                String currentDir = Paths.get("").toAbsolutePath().toString();
-                Path carbonHome = Paths.get(currentDir, "target", "carbon-home");
-                System.setProperty("carbon.home", carbonHome.toString());
-        }
+    /**
+     * Set the carbon home.
+     */
+    private static void setCarbonHome() {
+        String currentDir = Paths.get("").toAbsolutePath().toString();
+        Path carbonHome = Paths.get(currentDir, "target", "carbon-home");
+        System.setProperty("carbon.home", carbonHome.toString());
+    }
 
-        /**
-         * Set the startup time to calculate the server startup time.
-         */
-        private static void setStartupTime() {
-                if (System.getProperty(Constants.START_TIME) == null) {
-                        System.setProperty(Constants.START_TIME, System.currentTimeMillis() + "");
-                }
+    /**
+     * Set the startup time to calculate the server startup time.
+     */
+    private static void setStartupTime() {
+        if (System.getProperty(Constants.START_TIME) == null) {
+            System.setProperty(Constants.START_TIME, System.currentTimeMillis() + "");
         }
+    }
 
-        /**
-         * Replace the existing carbon.yml file with populated carbon.yml file.
-         */
-        private static void copyCarbonYAML() {
-                copy(Paths.get("src", "test", "resources", "conf", "carbon.yml"),
-                        Paths.get(System.getProperty("carbon.home"),
+    /**
+     * Replace the existing carbon.yml file with populated carbon.yml file.
+     */
+    private static void copyCarbonYAML() {
+        copy(Paths.get("src", "test", "resources", "conf", "carbon.yml"),
+                Paths.get(System.getProperty("carbon.home"),
                         "conf", "carbon.yml"));
+    }
+
+    /**
+     * Replace the existing log4j2.xml file with populated log4j2.xml file.
+     */
+    private static void copyLog4jXMLFile() {
+        copy(Paths.get("src", "test", "resources", "conf", "log4j2.xml"),
+                Paths.get("conf", "log4j2.xml"));
+    }
+
+    /**
+     * Replace the existing launch.properties file with populated launch.properties file.
+     */
+    private static void copyLaunchPropertiesFile() {
+        copy(Paths.get("src", "test", "resources", "conf", "osgi", "launch.properties"),
+                Paths.get("conf", "osgi", "launch.properties"));
+    }
+
+    /**
+     * Replace the existing master-datasources.xml file with populated master-datasources.xml file.
+     */
+    private static void copyDSConfigFile() {
+        copy(Paths.get("src", "test", "resources", "conf", "datasources", "master-datasources.xml"),
+                Paths.get("conf", "datasources", "master-datasources.xml"));
+    }
+
+    /**
+     * Replace the existing "README.txt file with populated "README.txt file.
+     */
+    private static void copyDeploymentFile() {
+        copy(Paths.get("src", "test", "resources", "deployment", "README.txt"),
+                Paths.get("deployment", "README.txt"));
+    }
+
+    /**
+     * Copy files.
+     *
+     * @param src  Path for source
+     * @param dest Path for destination
+     */
+    public static void copy(Path src, Path dest) {
+        String basedir = System.getProperty("basedir");
+        if (basedir == null) {
+            basedir = Paths.get(".").toString();
         }
 
-        /**
-         * Replace the existing carbon.yml file with populated carbon.yml file.
-         */
-        private static void copyLog4jXMLFile() {
-                copy(Paths.get("src", "test", "resources", "conf", "log4j2.xml"),
-                        Paths.get("conf", "log4j2.xml"));
-        }
+        src = Paths.get(basedir).resolve(src);
+        dest = Paths.get(System.getProperty("carbon.home")).resolve(dest);
 
-        /**
-         * Replace the existing carbon.yml file with populated carbon.yml file.
-         */
-        private static void copyLaunchPropertiesFile() {
-                copy(Paths.get("src", "test", "resources", "conf", "osgi", "launch.properties"),
-                        Paths.get("conf", "osgi", "launch.properties"));
-        }
-
-        /**
-         * Replace the existing carbon.yml file with populated carbon.yml file.
-         */
-        private static void copyDSConfigFile() {
-                copy(Paths.get("src", "test", "resources", "conf", "datasources", "master-datasources.xml"),
-                        Paths.get("conf", "datasources", "master-datasources.xml"));
-        }
-
-        /**
-         * Replace the existing carbon.yml file with populated carbon.yml file.
-         */
-        private static void copyDeploymentFile() {
-                copy(Paths.get("src", "test", "resources", "deployment", "README.txt"),
-                        Paths.get("deployment", "README.txt"));
-        }
-
-        public static void copy(Path src, Path dest) {
-                String basedir = System.getProperty("basedir");
-                if (basedir == null) {
-                        basedir = Paths.get(".").toString();
+        createOutputFolderStructure(dest.toString());
+        try {
+            try (FileInputStream inputStr = new FileInputStream(src.toAbsolutePath().toString());
+                 FileOutputStream outputStr = new FileOutputStream(dest.toAbsolutePath().toString())) {
+                byte[] buf = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStr.read(buf)) > 0) {
+                    outputStr.write(buf, 0, bytesRead);
                 }
-
-                src = Paths.get(basedir).resolve(src);
-                dest = Paths.get(System.getProperty("carbon.home")).resolve(dest);
-
-                createOutputFolderStructure(dest.toString());
-                try {
-                        try (FileInputStream inputStr = new FileInputStream(src.toAbsolutePath().toString());
-                             FileOutputStream outputStr = new FileOutputStream(dest.toAbsolutePath().toString())) {
-                                byte[] buf = new byte[1024];
-                                int bytesRead;
-                                while ((bytesRead = inputStr.read(buf)) > 0) {
-                                        outputStr.write(buf, 0, bytesRead);
-                                }
-                        }
-                } catch (IOException e) {
-                        logger.error("error occurred while copying the file", e);
-                }
+            }
+        } catch (IOException e) {
+            logger.error("error occurred while copying the file", e);
         }
+    }
 
-        public static void copy(String src, String dest) throws IOException {
-                createOutputFolderStructure(dest);
-                try (FileInputStream inputStr = new FileInputStream(src);
-                     FileOutputStream outputStr = new FileOutputStream(dest)) {
-                        byte[] buf = new byte[1024];
-                        int bytesRead;
-                        while ((bytesRead = inputStr.read(buf)) > 0) {
-                                outputStr.write(buf, 0, bytesRead);
-                        }
-                }
-        }
 
-        private static void createOutputFolderStructure(String destFileLocation) {
-                File destFile = new File(destFileLocation);
-                File parentFolder = destFile.getParentFile();
-                parentFolder.mkdirs();
-        }
+    /**
+     * Create the directory structure.
+     *
+     * @param destFileLocation
+     */
+    private static void createOutputFolderStructure(String destFileLocation) {
+        File destFile = new File(destFileLocation);
+        File parentFolder = destFile.getParentFile();
+        parentFolder.mkdirs();
+    }
 }
