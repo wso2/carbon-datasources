@@ -110,9 +110,9 @@
                 <version>${jacoco.version}</version>
             </dependency>
             <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql.connector.java.version}</version>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.database.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -344,7 +344,7 @@
 
         <testng.version>6.9.4</testng.version>
         <jacoco.version>0.7.5.201505241946</jacoco.version>
-        <mysql.connector.java.version>5.1.6</mysql.connector.java.version>
+        <h2.database.version>1.4.191</h2.database.version>
         <org.wso2.eclipse.osgi.version>3.4.0.v20140312-2051</org.wso2.eclipse.osgi.version>
 
         <pax.logging.api.version>1.8.4</pax.logging.api.version>
