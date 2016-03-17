@@ -25,7 +25,7 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
 
-    <artifactId>carbon-datasource</artifactId>
+    <artifactId>wso2carbon-datasource</artifactId>
     <name>WSO2 Carbon Datasources - Distribution</name>
     <description>Install the data source feature into C5 and rebuild the pack</description>
 
