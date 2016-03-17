@@ -26,7 +26,7 @@
 
     <packaging>pom</packaging>
     <artifactId>carbon-datasource-tests</artifactId>
-    <name>WSO2 Carbon Datasources - carbon-datasource-tests</name>
+    <name>WSO2 Carbon Datasources - Tests Parent</name>
     <modules>
         <module>osgi-tests</module>
     </modules>

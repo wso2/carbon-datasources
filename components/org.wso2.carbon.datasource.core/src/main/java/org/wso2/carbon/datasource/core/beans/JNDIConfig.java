@@ -77,7 +77,7 @@ public class JNDIConfig {
     public Hashtable<String, String> extractHashtableEnv() {
         Hashtable<String, String> env = new Hashtable<>();
         for (EnvEntry entry : this.getEnvironment()) {
-            String value = env.put(entry.getName(), entry.getValue());
+            env.put(entry.getName(), entry.getValue());
         }
         return env;
     }
