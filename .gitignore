@@ -1,4 +1,8 @@
+target/
+*.iws
 *.class
+*.ipr
+*.iml
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

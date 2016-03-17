@@ -25,7 +25,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>carbon-datasources-osgi-tests</artifactId>
-    <name>WSO2 Carbon Datasources - carbon-datasources-osgi-tests</name>
+    <name>WSO2 Carbon Datasources - OSGi Tests</name>
 
     <dependencies>
         <dependency>

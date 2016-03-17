@@ -58,14 +58,24 @@ public class DataSourceServiceListenerComponent {
             unbind = "unregisterDataSourceService"
     )
     protected void onDataSourceServiceReady(DataSourceService service) {
+        Connection connection = null;
         try {
             HikariDataSource dsObject = (HikariDataSource) service.getDataSource("WSO2_CARBON_DB");
-            Connection connection = dsObject.getConnection();
+            connection = dsObject.getConnection();
+            logger.info("Database Major Version {}", connection.getMetaData().getDatabaseMajorVersion());
             //From connection do the required CRUD operation
         } catch (DataSourceException e) {
             logger.error("error occurred while fetching the data source.", e);
         } catch (SQLException e) {
             logger.error("error occurred while fetching the connection.", e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    logger.error("error occurred while closing the connection.", e);
+                }
+            }
         }
     }
 
