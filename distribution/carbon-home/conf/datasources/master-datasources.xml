@@ -1,9 +1,10 @@
 <datasources-configuration>
 
     <datasources>
+        <!--
         <datasource>
             <name>WSO2_CARBON_DB</name>
-            <description>The datasource used for registry and user manager</description>
+            <description>A sample datasource configuration</description>
             <jndiConfig>
                 <name>jdbc/WSO2CarbonDB/test</name>
             </jndiConfig>
@@ -22,7 +23,7 @@
                 </configuration>
             </definition>
         </datasource>
-
+        -->
     </datasources>
 
 </datasources-configuration>
