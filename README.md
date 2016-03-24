@@ -15,9 +15,12 @@ as an OSGi service.
 * Exposing OSGi Services to add, fetch data source objects.
 * If specified in the configuration, binding data source objects to the carbon-jndi context.
 
+## Important
+
+* This project has a dependency with [carbon-jndi](https://github.com/wso2/carbon-jndi). Thus in order for this to work carbon-jndi needs to be in place.
+* Place the required jdbc driver jar in the CARBON_HOME/osgi/dropins folder.
+
 ## Getting Started
-
-
 
 A client bundle which needs to use data sources should put their database configuration xml files under CARBON_HOME/Conf/datasources directory. The naming
 convention of the configuration file is *-datasources.xml. Refer the sample configuration file as follows;
@@ -62,6 +65,7 @@ The client bundles could retrieve data sources in one of two ways;
 
 ````java
 public class ActivatorComponent {
+
     @Reference(
             name = "org.wso2.carbon.datasource.jndi",
             service = JNDIContextManager.class,
@@ -73,9 +77,9 @@ public class ActivatorComponent {
 
         try {
             Context ctx = service.newInitialContext();
-            Object obj = ctx.lookup("java:comp/env/jdbc/WSO2CarbonDB");
-            logger.info("Fetched data source: " + obj.toString());
+
             //Cast the object to required DataSource type and perform crud operation.
+            Object obj = ctx.lookup("java:comp/env/jdbc/WSO2CarbonDB");
         } catch (NamingException e) {
             logger.info("Error occurred while jndi lookup", e);
         }
@@ -87,22 +91,140 @@ public class ActivatorComponent {
 }
 ````
 
-Note that all the data sources will be bound under the following context, java:comp/env.
+Note that all the data sources are bound under the following context, java:comp/env.
 
-### Usage
+2) Fetching a data source object from the OSGi Service
 
-- This maven project contains 3 maven modules.
-- org.wso2.carbon.datasource.core module will create an OSGi bundle which will read the datasource configuration files and bind through jndi.
-- feature module will encapsulate org.wso2.carbon.datasource.core.jar and it's dependencies and create a feature so it is installable into carbon-kernel.
-- distribution module, which will download carbon kernel 5.0.0, install the feature and zip it with the name 'carbon-datasource-1.0.0-SNAPSHOT.zip'
-- Extracted location of the aforementioned zip file is considered as CARBON_HOME for this readme.
-- data source configuration file can be found in CARBON_HOME/conf/datasources directory. Update the master-datasources.xml file to suite your requirement.
-- In addition you can place any data source configuration file in CARBON_HOME/conf/datasources directory having it's file name ends with '-datasources.xml'. This is the convention used in previous carbon versions.
-- Place the required jdbc driver jar in the CARBON_HOME/osgi/dropins folder.
+````java
+public class ActivatorComponent {
 
-#### Important
+    @Reference(
+            name = "org.wso2.carbon.datasource.DataSourceService",
+            service = DataSourceService.class,
+            cardinality = ReferenceCardinality.AT_LEAST_ONE,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "unregisterDataSourceService"
+    )
+    protected void onDataSourceServiceReady(DataSourceService service) {
+        Connection connection = null;
+        try {
+            HikariDataSource dsObject = (HikariDataSource) service.getDataSource("WSO2_CARBON_DB");
+            connection = dsObject.getConnection();
+            logger.info("Database Major Version {}", connection.getMetaData().getDatabaseMajorVersion());
+            //From connection do the required CRUD operation
+        } catch (DataSourceException e) {
+            logger.error("error occurred while fetching the data source.", e);
+        } catch (SQLException e) {
+            logger.error("error occurred while fetching the connection.", e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    logger.error("error occurred while closing the connection.", e);
+                }
+            }
+        }
+    }
 
-This project has a dependency with carbon-jndi. Thus in order for this to work carbon-jndi needs to be in place.
+    protected void unregisterDataSourceService(DataSourceService dataSourceService) {
+        logger.info("Unregistering data sources sample");
+    }
+}
+````
 
+In addition to retrieval of data sources, carbon-datasources bundle provides a management service for data source management activities. Following sample code
+snippet illustrates how to access the management service.
 
-After completing aforementioned activities, start C5 kernel by running carbon.sh or carbon.bat.
+````java
+public class ActivatorComponent {
+
+    @Reference(
+            name = "org.wso2.carbon.datasource.DataSourceManagementService",
+            service = DataSourceManagementService.class,
+            cardinality = ReferenceCardinality.AT_LEAST_ONE,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "unregisterDataSourceManagementService"
+    )
+    protected void onDataSourceManagementServiceReady(DataSourceManagementService service) {
+        logger.info("Sample bundle register method fired");
+        try {
+            DataSourceMetadata metadata = service.getDataSource("WSO2_CARBON_DB");
+            logger.info(metadata.getName());
+            //You can perform your functionalities by using the injected service.
+        } catch (DataSourceException e) {
+            logger.error("Error occurred while fetching the data sources", e);
+        }
+    }
+
+    protected void unregisterDataSourceManagementService(DataSourceManagementService dataSourceManagementService) {
+        logger.info("Unregistering data sources sample");
+    }
+}
+````
+
+Please refer the javadocs of org.wso2.carbon.datasource.core.api.DataSourceManagementService for usage.
+
+For full source code, see [Carbon Datasource samples] (samples).
+## Download
+
+Use Maven snippet:
+````xml
+<dependency>
+    <groupId>org.wso2.carbon.datasources</groupId>
+    <artifactId>org.wso2.carbon.datasource.core</artifactId>
+    <version>${carbon.datasource.version}</version>
+</dependency>
+````
+
+### Snapshot Releases
+
+Use following Maven repository for snapshot versions of Carbon JNDI.
+
+````xml
+<repository>
+    <id>wso2.snapshots</id>
+    <name>WSO2 Snapshot Repository</name>
+    <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
+    <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
+    </snapshots>
+    <releases>
+        <enabled>false</enabled>
+    </releases>
+</repository>
+````
+
+### Released Versions
+
+Use following Maven repository for released stable versions of Carbon Datasources.
+
+````xml
+<repository>
+    <id>wso2.releases</id>
+    <name>WSO2 Releases Repository</name>
+    <url>http://maven.wso2.org/nexus/content/repositories/releases/</url>
+    <releases>
+        <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
+        <checksumPolicy>ignore</checksumPolicy>
+    </releases>
+</repository>
+````
+
+## Building From Source
+
+Clone this repository first (`git clone https://github.com/wso2/carbon-datasources`) and use `mvn clean install` to build .
+
+## Contributing to Carbon Datasources Project
+
+Pull requests are highly encouraged and we recommend you to create a GitHub issue to discuss the issue or feature that you are contributing to.
+
+## License
+
+Carbon Datasources is available under the Apache 2 License.
+
+## Copyright
+
+Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
