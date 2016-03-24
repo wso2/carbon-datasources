@@ -61,6 +61,7 @@ The client bundles could retrieve data sources in one of two ways;
 1) Fetching a data source object from JNDI Context Manager
 
 ````java
+public class ActivatorComponent {
     @Reference(
             name = "org.wso2.carbon.datasource.jndi",
             service = JNDIContextManager.class,
@@ -79,6 +80,11 @@ The client bundles could retrieve data sources in one of two ways;
             logger.info("Error occurred while jndi lookup", e);
         }
     }
+
+    protected void onJNDIUnregister(JNDIContextManager jndiContextManager) {
+        logger.info("Unregistering data sources sample");
+    }
+}
 ````
 
 Note that all the data sources will be bound under the following context, java:comp/env.
