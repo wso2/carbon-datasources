@@ -12,7 +12,7 @@ as an OSGi service.
 ## Features:
 
 * Reading the given configuration xml files and create data source object which internally maintain a connection pool
-* Exposing OSGi Services to add, fetch data source objects.
+* Exposing OSGi Services to fetch and manage data source objects.
 * If specified in the configuration, binding data source objects to the carbon-jndi context.
 
 ## Important
@@ -74,12 +74,10 @@ public class ActivatorComponent {
             unbind = "onJNDIUnregister"
     )
     protected void onJNDIReady(JNDIContextManager service) {
-
         try {
             Context ctx = service.newInitialContext();
-
             //Cast the object to required DataSource type and perform crud operation.
-            Object obj = ctx.lookup("java:comp/env/jdbc/WSO2CarbonDB");
+            HikariDataSource dsObject = (HikariDataSource)ctx.lookup("java:comp/env/jdbc/WSO2CarbonDB");
         } catch (NamingException e) {
             logger.info("Error occurred while jndi lookup", e);
         }
@@ -91,7 +89,7 @@ public class ActivatorComponent {
 }
 ````
 
-Note that all the data sources are bound under the following context, java:comp/env.
+Note that all the data sources are bound under the following context, `java:comp/env`.
 
 2) Fetching a data source object from the OSGi Service
 
@@ -110,7 +108,6 @@ public class ActivatorComponent {
         try {
             HikariDataSource dsObject = (HikariDataSource) service.getDataSource("WSO2_CARBON_DB");
             connection = dsObject.getConnection();
-            logger.info("Database Major Version {}", connection.getMetaData().getDatabaseMajorVersion());
             //From connection do the required CRUD operation
         } catch (DataSourceException e) {
             logger.error("error occurred while fetching the data source.", e);
@@ -163,9 +160,9 @@ public class ActivatorComponent {
 }
 ````
 
-Please refer the javadocs of org.wso2.carbon.datasource.core.api.DataSourceManagementService for usage.
+Please refer the javadocs of `org.wso2.carbon.datasource.core.api.DataSourceManagementService` for usage.
 
-For full source code, see [Carbon Datasource samples] (samples).
+For full source code, see [Carbon Datasource sample] (sample).
 ## Download
 
 Use Maven snippet:
