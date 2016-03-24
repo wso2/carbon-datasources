@@ -176,7 +176,7 @@ Use Maven snippet:
 
 ### Snapshot Releases
 
-Use following Maven repository for snapshot versions of Carbon JNDI.
+Use following Maven repository for snapshot versions of Carbon Datasources.
 
 ````xml
 <repository>
