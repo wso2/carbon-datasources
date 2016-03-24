@@ -19,7 +19,7 @@ as an OSGi service.
 
 
 
-A client bundle which needs to use data sources should put their database configuration xml files under <C5 HOME>/Conf/datasources directory. The naming
+A client bundle which needs to use data sources should put their database configuration xml files under CARBON_HOME/Conf/datasources directory. The naming
 convention of the configuration file is *-datasources.xml. Refer the sample configuration file as follows;
 
 ````xml
@@ -54,8 +54,34 @@ The carbon-datasources bundle picks these xml configuration and build the data s
 
 The client bundles could retrieve data sources in one of two ways;
 
-* If JNDI configuration is provided in the data source configuration, use JNDI Context Manager to fetch data sources.
+* If JNDI configuration is provided in the data source configuration, use [JNDI Context Manager](https://github.com/wso2/carbon-jndi) to fetch data sources.
 * Use OSGi Services provided by the carbon-datasources bundle.
+
+
+1) Fetching a data source object from JNDI Context Manager
+
+````java
+    @Reference(
+            name = "org.wso2.carbon.datasource.jndi",
+            service = JNDIContextManager.class,
+            cardinality = ReferenceCardinality.AT_LEAST_ONE,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "onJNDIUnregister"
+    )
+    protected void onJNDIReady(JNDIContextManager service) {
+
+        try {
+            Context ctx = service.newInitialContext();
+            Object obj = ctx.lookup("java:comp/env/jdbc/WSO2CarbonDB");
+            logger.info("Fetched data source: " + obj.toString());
+            //Cast the object to required DataSource type and perform crud operation.
+        } catch (NamingException e) {
+            logger.info("Error occurred while jndi lookup", e);
+        }
+    }
+````
+
+Note that all the data sources will be bound under the following context, java:comp/env.
 
 ### Usage
 

@@ -111,7 +111,7 @@ public class DataSourceServiceListenerComponent {
             Context ctx = service.newInitialContext();
             Object obj = ctx.lookup("java:comp/env/jdbc/WSO2CarbonDB/test");
             logger.info("Fetched data source: " + obj.toString());
-            //Cast the object to required DataSource type and perforn crud operation.
+            //Cast the object to required DataSource type and perform crud operation.
         } catch (NamingException e) {
             logger.info("Error occurred while jndi lookup", e);
         }
