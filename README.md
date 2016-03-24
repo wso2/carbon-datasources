@@ -2,8 +2,18 @@
 
 ### Introduction
 
-This module contain carbon datasources. This is responsible to read the data source configuration files, bind the data sources into JNDI context and make these
-data sources available as an OSGi service.
+Carbon-datasources project is the data source implementation for Carbon 5. For any bundle deployed in Carbon 5, if it require to access a database, datasources
+are the preferred means of getting a connection. DataSource objects can provide connection pooling which is a must for performance improvement. For carbon-datasources,
+[HikariCP](https://github.com/brettwooldridge/HikariCP) is used as it's database connection pooling implementation.
+
+Carbon-datasources is responsible to read the data source configuration files, bind the data sources into JNDI context and make these data sources available
+as an OSGi service.
+
+## Features:
+
+* Reading the given configuration xml files and create data source object which internally maintain a connection pool
+* Exposing OSGi Services to add, fetch data source objects.
+* If specified in the configuration, binding data source objects to the carbon-jndi context.
 
 
 ### Usage
