@@ -11,7 +11,7 @@ as an OSGi service.
 
 ## Features
 
-* Reading the given configuration xml files and create data source object which internally maintain a connection pool
+* Reading the given configuration yaml files and create data source object which internally maintain a connection pool
 * Exposing OSGi Services to fetch and manage data source objects.
 * If specified in the configuration, binding data source objects to the carbon-jndi context.
 
@@ -22,38 +22,30 @@ as an OSGi service.
 
 ## Getting Started
 
-A client bundle which needs to use data sources should put their database configuration xml files under CARBON_HOME/Conf/datasources directory. The naming
-convention of the configuration file is *-datasources.xml. Refer the sample configuration file as follows;
+A client bundle which needs to use data sources should put their database configuration yaml files under CARBON_HOME/Conf/datasources directory. The naming
+convention of the configuration file is *-datasources.yml. Refer the sample configuration file as follows;
 
-````xml
-<datasources-configuration>
-    <datasources>
-        <datasource>
-            <name>WSO2_CARBON_DB</name>
-            <description>The datasource used for registry and user manager</description>
-            <jndiConfig>
-                <name>jdbc/WSO2CarbonDB</name>
-            </jndiConfig>
-            <definition type="RDBMS">
-                <configuration>
-                    <url>jdbc:h2:./target/database/TEST_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url>
-                    <username>wso2carbon</username>
-                    <password>wso2carbon</password>
-                    <driverClassName>org.h2.Driver</driverClassName>
-                    <maxActive>50</maxActive>
-                    <maxWait>60000</maxWait>
-                    <testOnBorrow>true</testOnBorrow>
-                    <validationQuery>SELECT 1</validationQuery>
-                    <validationInterval>30000</validationInterval>
-                    <defaultAutoCommit>false</defaultAutoCommit>
-                </configuration>
-            </definition>
-        </datasource>
-    </datasources>
-</datasources-configuration>
+````yml
+dataSources:
+ -
+  name: WSO2_CARBON_DB
+  description: The datasource used for registry and user manager
+  jndiConfig:
+   name: jdbc/WSO2CarbonDB/test
+   environment:
+    -
+     name: java.naming.factory.initial
+     value: org.wso2.carbon.datasource.osgi.jndi.factories.CustomContextFactory
+  definition:
+   type: RDBMS
+   configuration:
+    url: jdbc:h2:./target/database/TEST_DB1;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
+    username: wso2carbon
+    password: wso2carbon
+    driverClassName: org.h2.Driver
 ````
 
-The carbon-datasources bundle picks these xml configuration and build the data sources.
+The carbon-datasources bundle picks these yaml configuration and build the data sources.
 
 The client bundles could retrieve data sources in one of two ways;
 
