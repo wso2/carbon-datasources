@@ -73,9 +73,9 @@ public class ActivatorComponent {
             policy = ReferencePolicy.DYNAMIC,
             unbind = "onJNDIUnregister"
     )
-    protected void onJNDIReady(JNDIContextManager service) {
+    protected void onJNDIReady(JNDIContextManager jndiContextManager) {
         try {
-            Context ctx = service.newInitialContext();
+            Context ctx = jndiContextManager.newInitialContext();
             //Cast the object to required DataSource type and perform crud operation.
             HikariDataSource dsObject = (HikariDataSource)ctx.lookup("java:comp/env/jdbc/WSO2CarbonDB");
         } catch (NamingException e) {
@@ -89,7 +89,7 @@ public class ActivatorComponent {
 }
 ````
 
-Note that all the data sources are bound under the following context, `java:comp/env`.
+Note that all the data sources are bound under the following context, `java:comp/env/jdbc`.
 
 2) Fetching a data source object from the OSGi Service
 
@@ -103,12 +103,11 @@ public class ActivatorComponent {
             policy = ReferencePolicy.DYNAMIC,
             unbind = "unregisterDataSourceService"
     )
-    protected void onDataSourceServiceReady(DataSourceService service) {
+    protected void onDataSourceServiceReady(DataSourceService dataSourceService) {
         Connection connection = null;
         try {
-            HikariDataSource dsObject = (HikariDataSource) service.getDataSource("WSO2_CARBON_DB");
+            HikariDataSource dsObject = (HikariDataSource) dataSourceService.getDataSource("WSO2_CARBON_DB");
             connection = dsObject.getConnection();
-            //From connection do the required CRUD operation
         } catch (DataSourceException e) {
             logger.error("error occurred while fetching the data source.", e);
         } catch (SQLException e) {
@@ -143,10 +142,10 @@ public class ActivatorComponent {
             policy = ReferencePolicy.DYNAMIC,
             unbind = "unregisterDataSourceManagementService"
     )
-    protected void onDataSourceManagementServiceReady(DataSourceManagementService service) {
+    protected void onDataSourceManagementServiceReady(DataSourceManagementService dataSourceManagementService) {
         logger.info("Sample bundle register method fired");
         try {
-            DataSourceMetadata metadata = service.getDataSource("WSO2_CARBON_DB");
+            DataSourceMetadata metadata = dataSourceManagementService.getDataSource("WSO2_CARBON_DB");
             logger.info(metadata.getName());
             //You can perform your functionalities by using the injected service.
         } catch (DataSourceException e) {
