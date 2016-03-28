@@ -44,7 +44,7 @@ public class DataSourceManager {
     private DataSourceRepository dataSourceRepository;
     private Map<String, DataSourceReader> dataSourceReaders;
 
-    private static final String FILE_NAME_SUFFIX = "-datasources.xml";
+    private static final String FILE_NAME_SUFFIX = "-datasources.yml";
     private boolean initialized = false;
 
     /**
@@ -156,7 +156,10 @@ public class DataSourceManager {
         }
         try {
             DataSourcesConfiguration dataSourceConfiguration = DataSourceUtils
-                    .loadJAXBConfiguration(dataSourceFile, DataSourcesConfiguration.class);
+                    .loadConfiguration(dataSourceFile, DataSourcesConfiguration.class, true);
+            if (dataSourceConfiguration == null) {
+                return;
+            }
 
             for (DataSourceMetadata dsmInfo : dataSourceConfiguration.getDataSources()) {
                 DataSourceReader dataSourceReader = getDataSourceReader(dsmInfo.getDefinition().getType());

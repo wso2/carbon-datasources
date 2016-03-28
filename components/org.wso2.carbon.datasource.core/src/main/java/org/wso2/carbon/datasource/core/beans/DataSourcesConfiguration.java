@@ -16,20 +16,14 @@
 package org.wso2.carbon.datasource.core.beans;
 
 import java.util.List;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This class represents the system data sources configuration.
  */
-@XmlRootElement(name = "datasources-configuration")
 public class DataSourcesConfiguration {
 
     private List<DataSourceMetadata> dataSources;
 
-    @XmlElementWrapper(name = "datasources")
-    @XmlElement(name = "datasource", nillable = false)
     public List<DataSourceMetadata> getDataSources() {
         return dataSources;
     }

@@ -18,16 +18,10 @@ package org.wso2.carbon.datasource.core.beans;
 import org.wso2.carbon.datasource.utils.DataSourceUtils;
 
 import java.util.Hashtable;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlValue;
 
 /**
  * This class represents properties related to JNDI mapping of a data source.
  */
-@XmlRootElement(name = "jndiConfig")
 public class JNDIConfig {
 
     private String name;
@@ -47,13 +41,10 @@ public class JNDIConfig {
         }
     }
 
-    @XmlElement(name = "name", required = true, nillable = false)
     public String getName() {
         return name;
     }
 
-    @XmlElementWrapper(name = "environment", nillable = false)
-    @XmlElement(name = "property")
     public EnvEntry[] getEnvironment() {
         if (environment == null) {
             return new EnvEntry[0];
@@ -65,7 +56,6 @@ public class JNDIConfig {
         return tempEnvironment;
     }
 
-    @XmlElement(name = "useJndiReference")
     public boolean isUseJndiReference() {
         return useJndiReference;
     }
@@ -122,7 +112,6 @@ public class JNDIConfig {
     /**
      * Bean class to hold environment properties.
      */
-    @XmlRootElement(name = "property")
     public static class EnvEntry {
 
         private String name;
@@ -131,7 +120,6 @@ public class JNDIConfig {
 
         private String value;
 
-        @XmlAttribute(name = "encrypted")
         public boolean isEncrypted() {
             return encrypted;
         }
@@ -140,7 +128,6 @@ public class JNDIConfig {
             this.encrypted = encrypted;
         }
 
-        @XmlAttribute(name = "name")
         public String getName() {
             return name;
         }
@@ -149,7 +136,6 @@ public class JNDIConfig {
             this.name = name;
         }
 
-        @XmlValue
         public String getValue() {
             return value;
         }

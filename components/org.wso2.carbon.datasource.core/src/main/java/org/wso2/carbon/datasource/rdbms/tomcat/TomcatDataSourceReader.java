@@ -46,16 +46,16 @@ public class TomcatDataSourceReader implements DataSourceReader {
     /**
      * Creating the data source by reading the xml configuration.
      *
-     * @param xmlConfiguration             String
+     * @param ymlConfiguration             String
      * @param isDataSourceFactoryReference boolean
      * @return Object
      * @throws DataSourceException
      */
     @Override
-    public Object createDataSource(String xmlConfiguration, boolean isDataSourceFactoryReference)
+    public Object createDataSource(String ymlConfiguration, boolean isDataSourceFactoryReference)
             throws DataSourceException {
         TomcatDataSource dataSource = new TomcatDataSource(DataSourceUtils
-                .loadJAXBConfiguration(xmlConfiguration, TomcatDataSourceConfiguration.class));
+                .loadConfiguration(ymlConfiguration, TomcatDataSourceConfiguration.class, true));
         if (isDataSourceFactoryReference) {
             return dataSource.getDataSourceFactoryReference();
         } else {

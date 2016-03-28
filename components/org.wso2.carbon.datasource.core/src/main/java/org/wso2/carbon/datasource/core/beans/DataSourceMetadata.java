@@ -18,17 +18,9 @@ package org.wso2.carbon.datasource.core.beans;
 import org.w3c.dom.Element;
 import org.wso2.carbon.datasource.utils.DataSourceUtils;
 
-import javax.xml.bind.annotation.XmlAnyElement;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
 /**
  * This class represents data source meta information.
  */
-@XmlRootElement(name = "datasource")
-@XmlType(propOrder = {"name", "description", "jndiConfig", "definition"})
 public class DataSourceMetadata {
 
     private String name;
@@ -51,22 +43,18 @@ public class DataSourceMetadata {
         this.jndiConfig = jndiConfig;
     }
 
-    @XmlElement(name = "name", required = true, nillable = false)
     public String getName() {
         return name;
     }
 
-    @XmlElement(name = "description")
     public String getDescription() {
         return description;
     }
 
-    @XmlElement(name = "jndiConfig")
     public JNDIConfig getJndiConfig() {
         return jndiConfig;
     }
 
-    @XmlElement(name = "definition", required = true, nillable = false)
     public DataSourceDefinition getDefinition() {
         return definition;
     }
@@ -78,14 +66,12 @@ public class DataSourceMetadata {
     /**
      * CLass holding the data source definition.
      */
-    @XmlRootElement(name = "definition")
     public static class DataSourceDefinition {
 
         private String type;
 
-        private Object dsXMLConfiguration;
+        private Object configuration;
 
-        @XmlAttribute(name = "type", required = true)
         public String getType() {
             return type;
         }
@@ -94,13 +80,12 @@ public class DataSourceMetadata {
             this.type = type;
         }
 
-        @XmlAnyElement
-        public Object getDsXMLConfiguration() {
-            return dsXMLConfiguration;
+        public Object getDataSourceConfiguration() {
+            return configuration;
         }
 
-        public void setDsXMLConfiguration(Object dsXMLConfiguration) {
-            this.dsXMLConfiguration = dsXMLConfiguration;
+        public void setDataSourceConfiguration(Object configuration) {
+            this.configuration = configuration;
         }
 
         public boolean equals(Object rhs) {
@@ -112,8 +97,8 @@ public class DataSourceMetadata {
                 return false;
             }
             return DataSourceUtils.nullAllowEquals(DataSourceUtils.elementToString(
-                            (Element) dsDef.getDsXMLConfiguration()),
-                    DataSourceUtils.elementToString((Element) this.getDsXMLConfiguration()));
+                            (Element) dsDef.getDataSourceConfiguration()),
+                    DataSourceUtils.elementToString((Element) this.getDataSourceConfiguration()));
         }
 
         @Override
