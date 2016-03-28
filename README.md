@@ -9,7 +9,7 @@ are the preferred means of getting a connection. DataSource objects can provide 
 Carbon-datasources is responsible to read the data source configuration files, bind the data sources into JNDI context and make these data sources available
 as an OSGi service.
 
-## Features:
+## Features
 
 * Reading the given configuration xml files and create data source object which internally maintain a connection pool
 * Exposing OSGi Services to fetch and manage data source objects.
