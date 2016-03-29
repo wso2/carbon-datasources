@@ -2,27 +2,27 @@
 
 ### Introduction
 
-Carbon-datasources project is the data source implementation for Carbon 5. For any bundle deployed in Carbon 5, if it require to access a database, datasources
+Carbon-datasources project is the data source implementation for Carbon 5. For any bundle deployed in Carbon 5, if it require database access, datasources
 are the preferred means of getting a connection. DataSource objects can provide connection pooling which is a must for performance improvement. For carbon-datasources,
 [HikariCP](https://github.com/brettwooldridge/HikariCP) is used as it's database connection pooling implementation.
 
 Carbon-datasources is responsible to read the data source configuration files, bind the data sources into JNDI context and make these data sources available
-as an OSGi service.
+through an OSGi service.
 
 ## Features
 
-* Reading the given configuration yaml files and create data source object which internally maintain a connection pool
+* Reading the given configuration yaml file(s) and create data source object which internally maintain a pool of connections
 * Exposing OSGi Services to fetch and manage data source objects.
-* If specified in the configuration, binding data source objects to the carbon-jndi context.
+* If specified in the configuration, binding data source objects to the JNDI context.
 
 ## Important
 
 * This project has a dependency with [carbon-jndi](https://github.com/wso2/carbon-jndi). Thus in order for this to work carbon-jndi needs to be in place.
-* Place the required jdbc driver jar in the CARBON_HOME/osgi/dropins folder.
+* Place the required jdbc driver in the CARBON_HOME/osgi/dropins folder.
 
 ## Getting Started
 
-A client bundle which needs to use data sources should put their database configuration yaml files under CARBON_HOME/Conf/datasources directory. The naming
+A client bundle which needs to use data sources should put their database configuration yaml file(s) under CARBON_HOME/Conf/datasources directory. The naming
 convention of the configuration file is *-datasources.yml. Refer the sample configuration file as follows;
 
 ````yml
