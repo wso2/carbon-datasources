@@ -50,9 +50,8 @@ public class DataSourceManagementServiceTest {
         OSGiTestUtils.setEnv();
 
         Option[] options = CoreOptions.options(
-                mavenBundle().artifactId("commons-io").groupId("commons-io.wso2").version("2.4.0.wso2v1"),
-                mavenBundle().artifactId("HikariCP").groupId("com.zaxxer").version("2.4.1"),
-                mavenBundle().artifactId("h2").groupId("com.h2database").version("1.4.191"),
+                mavenBundle().artifactId("HikariCP").groupId("com.zaxxer").versionAsInProject(),
+                mavenBundle().artifactId("h2").groupId("com.h2database").versionAsInProject(),
                 mavenBundle().artifactId("org.wso2.carbon.datasource.core").groupId("org.wso2.carbon.datasources")
                         .versionAsInProject()
         );
@@ -67,7 +66,7 @@ public class DataSourceManagementServiceTest {
     @Test
     public void testGetDataSource() {
         try {
-            List<DataSourceMetadata> list  = dataSourceManagementService.getDataSource();
+            List<DataSourceMetadata> list = dataSourceManagementService.getDataSource();
             Assert.assertEquals(list.size(), 1, "Only one data source is registered");
         } catch (DataSourceException e) {
             Assert.fail("Thew DataSourceException when fetching data sources");
@@ -77,7 +76,7 @@ public class DataSourceManagementServiceTest {
     @Test
     public void testGetDataSourceForName() {
         try {
-            DataSourceMetadata dataSource  = dataSourceManagementService.getDataSource("WSO2_CARBON_DB");
+            DataSourceMetadata dataSource = dataSourceManagementService.getDataSource("WSO2_CARBON_DB");
             Assert.assertNotNull(dataSource, "Data source WSO2_CARBON_DB should exist");
         } catch (DataSourceException e) {
             Assert.fail("Thew DataSourceException when fetching data sources");
@@ -87,13 +86,13 @@ public class DataSourceManagementServiceTest {
     @Test
     public void testAddAndDeleteDataSource() {
         try {
-            DataSourceMetadata dataSource  = dataSourceManagementService.getDataSource("WSO2_CARBON_DB");
+            DataSourceMetadata dataSource = dataSourceManagementService.getDataSource("WSO2_CARBON_DB");
             Assert.assertNotNull(dataSource, "Data source WSO2_CARBON_DB should exist");
             dataSourceManagementService.deleteDataSource("WSO2_CARBON_DB");
-            DataSourceMetadata dataSource2  = dataSourceManagementService.getDataSource("WSO2_CARBON_DB");
+            DataSourceMetadata dataSource2 = dataSourceManagementService.getDataSource("WSO2_CARBON_DB");
             Assert.assertNull(dataSource2, "After deleting the data source should not exist");
             dataSourceManagementService.addDataSource(dataSource);
-            dataSource2  = dataSourceManagementService.getDataSource("WSO2_CARBON_DB");
+            dataSource2 = dataSourceManagementService.getDataSource("WSO2_CARBON_DB");
             Assert.assertNotNull(dataSource2, "The service did not fetch the inserted data source!!!");
         } catch (DataSourceException e) {
             Assert.fail("Thew DataSourceException when fetching data sources");
