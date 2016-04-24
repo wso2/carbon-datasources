@@ -364,8 +364,8 @@
         <org.apache.felix.version>1.0.0</org.apache.felix.version>
         <com.zaxxer.hikaricp.version>2.4.1</com.zaxxer.hikaricp.version>
         <java.version>1.8</java.version>
-        <carbon.kernel.version>5.1.0-m1</carbon.kernel.version>
-        <carbon.jndi.version>1.0.0-m1</carbon.jndi.version>
+        <carbon.kernel.version>5.1.0-alpha</carbon.kernel.version>
+        <carbon.jndi.version>1.0.0-alpha</carbon.jndi.version>
 
         <osgi.core.api.version>6.0.0</osgi.core.api.version>
 
