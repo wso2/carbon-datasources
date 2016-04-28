@@ -46,6 +46,7 @@ public class HikariDataSourceUtils {
             config.setMaxLifetime(configuration.getMaxLifetime());
             config.setMaximumPoolSize(configuration.getMaximumPoolSize());
             config.setMinimumIdle(configuration.getMinimumIdle());
+            config.setAutoCommit(configuration.isAutoCommit());
             return config;
         } catch (DataSourceException e) {
             throw new DataSourceException("Error in loading Hikari configuration: " + e.getMessage(), e);
