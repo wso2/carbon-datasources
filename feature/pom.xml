@@ -34,10 +34,6 @@
             <artifactId>org.wso2.carbon.datasource.core</artifactId>
         </dependency>
         <dependency>
-            <groupId>commons-io.wso2</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.tomcat.wso2</groupId>
             <artifactId>jdbc-pool</artifactId>
         </dependency>
@@ -75,10 +71,6 @@
                                 <bundle>
                                     <symbolicName>org.wso2.carbon.datasource.core</symbolicName>
                                     <version>${project.version}</version>
-                                </bundle>
-                                <bundle>
-                                    <symbolicName>commons-io</symbolicName>
-                                    <version>${commons.io.version}</version>
                                 </bundle>
                                 <bundle>
                                     <symbolicName>jdbc-pool</symbolicName>

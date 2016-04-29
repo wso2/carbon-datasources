@@ -172,11 +172,11 @@ public class OSGiTestUtils {
     }
 
     /**
-     * Replace the existing master-datasources.xml file with populated master-datasources.xml file.
+     * Replace the existing master-datasources.xml file with populated master-datasources.yml file.
      */
     private static void copyDSConfigFile() {
-        copy(Paths.get("src", "test", "resources", "conf", "datasources", "master-datasources.xml"),
-                Paths.get("conf", "datasources", "master-datasources.xml"));
+        copy(Paths.get("src", "test", "resources", "conf", "datasources", "master-datasources.yml"),
+                Paths.get("conf", "datasources", "master-datasources.yml"));
     }
 
     /**

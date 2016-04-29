@@ -57,11 +57,6 @@
                 <version>${org.wso2.eclipse.osgi.version}</version>
             </dependency>
             <dependency>
-                <groupId>commons-io.wso2</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>${commons.io.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.tomcat.wso2</groupId>
                 <artifactId>jdbc-pool</artifactId>
                 <version>${tomcat.jdbc.version}</version>
@@ -358,7 +353,6 @@
         <carbon.datasource.version>1.0.0-SNAPSHOT</carbon.datasource.version>
         <carbon.feature.plugin.version>2.0.0</carbon.feature.plugin.version>
         <tomcat.jdbc.version>7.0.34.wso2v2</tomcat.jdbc.version>
-        <commons.io.version>2.4.0.wso2v1</commons.io.version>
         <org.apache.felix.version>1.0.0</org.apache.felix.version>
         <com.zaxxer.hikaricp.version>2.4.1</com.zaxxer.hikaricp.version>
         <java.version>1.8</java.version>

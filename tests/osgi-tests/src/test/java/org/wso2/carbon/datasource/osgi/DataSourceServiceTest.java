@@ -43,9 +43,8 @@ public class DataSourceServiceTest {
         OSGiTestUtils.setEnv();
 
         Option[] options = CoreOptions.options(
-                mavenBundle().artifactId("commons-io").groupId("commons-io.wso2").version("2.4.0.wso2v1"),
-                mavenBundle().artifactId("HikariCP").groupId("com.zaxxer").version("2.4.1"),
-                mavenBundle().artifactId("h2").groupId("com.h2database").version("1.4.191"),
+                mavenBundle().artifactId("HikariCP").groupId("com.zaxxer").versionAsInProject(),
+                mavenBundle().artifactId("h2").groupId("com.h2database").versionAsInProject(),
                 mavenBundle().artifactId("org.wso2.carbon.datasource.core").groupId("org.wso2.carbon.datasources")
                         .versionAsInProject()
         );

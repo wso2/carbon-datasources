@@ -37,9 +37,9 @@ public class BaseTest {
         Path carbonHomePath = Paths.get("target", "carbonHome");
         System.setProperty("carbon.home", carbonHomePath.toFile().getAbsolutePath());
 
-        Path configFilePath = Paths.get("src", "test", "resources", "conf", "datasources", "master-datasources.xml");
+        Path configFilePath = Paths.get("src", "test", "resources", "conf", "datasources", "master-datasources.yml");
         Path configPathCopyLocation = Paths.get("target", "carbonHome", "conf", "datasources",
-                "master-datasources.xml");
+                "master-datasources.yml");
         Utils.copy(configFilePath.toFile().getAbsolutePath(), configPathCopyLocation.toFile().getAbsolutePath());
     }
 

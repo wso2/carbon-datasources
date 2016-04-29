@@ -1,0 +1,17 @@
+#dataSources:
+# -
+#  name: WSO2_CARBON_DB
+#  description: The datasource used for registry and user manager
+#  jndiConfig:
+#   name: jdbc/WSO2CarbonDB/test
+#   environment:
+#    -
+#     name: java.naming.factory.initial
+#     value: org.wso2.carbon.datasource.osgi.jndi.factories.CustomContextFactory
+#  definition:
+#   type: RDBMS
+#   configuration:
+#    url: jdbc:h2:./target/database/TEST_DB1;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
+#    username: wso2carbon
+#    password: wso2carbon
+#    driverClassName: org.h2.Driver

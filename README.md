@@ -2,58 +2,50 @@
 
 ### Introduction
 
-Carbon-datasources project is the data source implementation for Carbon 5. For any bundle deployed in Carbon 5, if it require to access a database, datasources
+Carbon-datasources project is the data source implementation for Carbon 5. For any bundle deployed in Carbon 5, if it require database access, datasources
 are the preferred means of getting a connection. DataSource objects can provide connection pooling which is a must for performance improvement. For carbon-datasources,
 [HikariCP](https://github.com/brettwooldridge/HikariCP) is used as it's database connection pooling implementation.
 
 Carbon-datasources is responsible to read the data source configuration files, bind the data sources into JNDI context and make these data sources available
-as an OSGi service.
+through an OSGi service.
 
 ## Features
 
-* Reading the given configuration xml files and create data source object which internally maintain a connection pool
+* Reading the given configuration yaml file(s) and create data source object which internally maintain a pool of connections
 * Exposing OSGi Services to fetch and manage data source objects.
-* If specified in the configuration, binding data source objects to the carbon-jndi context.
+* If specified in the configuration, binding data source objects to the JNDI context.
 
 ## Important
 
 * This project has a dependency with [carbon-jndi](https://github.com/wso2/carbon-jndi). Thus in order for this to work carbon-jndi needs to be in place.
-* Place the required jdbc driver jar in the CARBON_HOME/osgi/dropins folder.
+* Place the required jdbc driver in the CARBON_HOME/osgi/dropins folder.
 
 ## Getting Started
 
-A client bundle which needs to use data sources should put their database configuration xml files under CARBON_HOME/Conf/datasources directory. The naming
-convention of the configuration file is *-datasources.xml. Refer the sample configuration file as follows;
+A client bundle which needs to use data sources should put their database configuration yaml file(s) under CARBON_HOME/Conf/datasources directory. The naming
+convention of the configuration file is *-datasources.yml. Refer the sample configuration file as follows;
 
-````xml
-<datasources-configuration>
-    <datasources>
-        <datasource>
-            <name>WSO2_CARBON_DB</name>
-            <description>The datasource used for registry and user manager</description>
-            <jndiConfig>
-                <name>jdbc/WSO2CarbonDB</name>
-            </jndiConfig>
-            <definition type="RDBMS">
-                <configuration>
-                    <url>jdbc:h2:./target/database/TEST_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url>
-                    <username>wso2carbon</username>
-                    <password>wso2carbon</password>
-                    <driverClassName>org.h2.Driver</driverClassName>
-                    <maxActive>50</maxActive>
-                    <maxWait>60000</maxWait>
-                    <testOnBorrow>true</testOnBorrow>
-                    <validationQuery>SELECT 1</validationQuery>
-                    <validationInterval>30000</validationInterval>
-                    <defaultAutoCommit>false</defaultAutoCommit>
-                </configuration>
-            </definition>
-        </datasource>
-    </datasources>
-</datasources-configuration>
+````yml
+dataSources:
+ -
+  name: WSO2_CARBON_DB
+  description: The datasource used for registry and user manager
+  jndiConfig:
+   name: jdbc/WSO2CarbonDB/test
+   environment:
+    -
+     name: java.naming.factory.initial
+     value: org.wso2.carbon.datasource.osgi.jndi.factories.CustomContextFactory
+  definition:
+   type: RDBMS
+   configuration:
+    url: jdbc:h2:./target/database/TEST_DB1;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
+    username: wso2carbon
+    password: wso2carbon
+    driverClassName: org.h2.Driver
 ````
 
-The carbon-datasources bundle picks these xml configuration and build the data sources.
+The carbon-datasources bundle picks these yaml configuration and build the data sources.
 
 The client bundles could retrieve data sources in one of two ways;
 

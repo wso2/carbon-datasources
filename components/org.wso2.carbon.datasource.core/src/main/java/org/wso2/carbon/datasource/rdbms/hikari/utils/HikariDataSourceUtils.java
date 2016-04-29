@@ -16,7 +16,6 @@
 package org.wso2.carbon.datasource.rdbms.hikari.utils;
 
 import com.zaxxer.hikari.HikariConfig;
-import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.rdbms.hikari.HikariConfiguration;
 import org.wso2.carbon.datasource.utils.DataSourceUtils;
 
@@ -30,25 +29,20 @@ public class HikariDataSourceUtils {
      *
      * @param xmlConfiguration String
      * @return {@code HikariConfig}
-     * @throws DataSourceException
      */
-    public static HikariConfig buildConfiguration(String xmlConfiguration) throws DataSourceException {
-        try {
-            HikariConfiguration configuration = DataSourceUtils
-                    .loadJAXBConfiguration(xmlConfiguration, HikariConfiguration.class);
-            HikariConfig config = new HikariConfig();
-            config.setJdbcUrl(configuration.getUrl());
-            config.setUsername(configuration.getUsername());
-            config.setPassword(configuration.getPassword());
-            config.setDriverClassName(configuration.getDriverClassName());
-            config.setConnectionTimeout(configuration.getConnectionTimeout());
-            config.setIdleTimeout(configuration.getIdleTimeout());
-            config.setMaxLifetime(configuration.getMaxLifetime());
-            config.setMaximumPoolSize(configuration.getMaximumPoolSize());
-            config.setMinimumIdle(configuration.getMinimumIdle());
-            return config;
-        } catch (DataSourceException e) {
-            throw new DataSourceException("Error in loading Hikari configuration: " + e.getMessage(), e);
-        }
+    public static HikariConfig buildConfiguration(String xmlConfiguration) {
+        HikariConfiguration configuration = DataSourceUtils
+                .loadConfiguration(xmlConfiguration, HikariConfiguration.class, false);
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(configuration.getUrl());
+        config.setUsername(configuration.getUsername());
+        config.setPassword(configuration.getPassword());
+        config.setDriverClassName(configuration.getDriverClassName());
+        config.setConnectionTimeout(configuration.getConnectionTimeout());
+        config.setIdleTimeout(configuration.getIdleTimeout());
+        config.setMaxLifetime(configuration.getMaxLifetime());
+        config.setMaximumPoolSize(configuration.getMaximumPoolSize());
+        config.setMinimumIdle(configuration.getMinimumIdle());
+        return config;
     }
 }
