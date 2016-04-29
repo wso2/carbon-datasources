@@ -36,7 +36,7 @@ public class HikariConfiguration {
     private long maxLifetime = HikariConstants.MAX_LIFE_TIME;
     private int maximumPoolSize = HikariConstants.MAXIMUM_POOL_SIZE;
     private int minimumIdle = HikariConstants.MAXIMUM_POOL_SIZE;
-
+    private boolean autoCommit = HikariConstants.AUTO_COMMIT;
 
     public String getUrl() {
         return url;
@@ -157,4 +157,14 @@ public class HikariConfiguration {
     public void setMinimumIdle(int minimumIdle) {
         this.minimumIdle = minimumIdle;
     }
+
+    public boolean isAutoCommit() {
+        return autoCommit;
+    }
+
+    public void setAutoCommit(boolean autoCommit) {
+        this.autoCommit = autoCommit;
+    }
+    
+    
 }

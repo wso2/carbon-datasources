@@ -18,4 +18,9 @@ public class HikariConstants {
     public static final long MAX_LIFE_TIME = 1800000;
 
     public static final int MAXIMUM_POOL_SIZE = 10;
+    
+    /**
+     * Default value for auto commit flag (for a connection)
+     */
+    public static final boolean AUTO_COMMIT = true;
 }
