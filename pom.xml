@@ -372,8 +372,8 @@
         <h2.database.version>1.4.191</h2.database.version>
         <org.wso2.eclipse.osgi.version>3.4.0.v20140312-2051</org.wso2.eclipse.osgi.version>
 
-        <pax.logging.api.version>1.8.4</pax.logging.api.version>
-        <pax.logging.log4j2.version>1.8.4</pax.logging.log4j2.version>
+        <pax.logging.api.version>1.8.5</pax.logging.api.version>
+        <pax.logging.log4j2.version>1.8.5</pax.logging.log4j2.version>
         <pax.exam.version>4.6.0</pax.exam.version>
         <pax.exam.container.native.version>4.6.0</pax.exam.container.native.version>
         <pax.exam.testng.version>4.6.0</pax.exam.testng.version>
