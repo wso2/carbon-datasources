@@ -25,7 +25,7 @@
     <parent>
         <groupId>org.wso2</groupId>
         <artifactId>wso2</artifactId>
-        <version>3</version>
+        <version>5</version>
     </parent>
 
     <modules>
@@ -93,13 +93,13 @@
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon</groupId>
-                <artifactId>org.wso2.carbon.core.server.feature</artifactId>
+                <artifactId>org.wso2.carbon.kernel.feature</artifactId>
                 <version>${carbon.kernel.version}</version>
                 <type>zip</type>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon</groupId>
-                <artifactId>org.wso2.carbon.core.runtime.feature</artifactId>
+                <artifactId>org.wso2.carbon.runtime.feature</artifactId>
                 <version>${carbon.kernel.version}</version>
                 <type>zip</type>
             </dependency>
@@ -356,13 +356,13 @@
 
     <properties>
         <carbon.datasource.version>1.0.0-SNAPSHOT</carbon.datasource.version>
-        <carbon.feature.plugin.version>2.0.0</carbon.feature.plugin.version>
+        <carbon.feature.plugin.version>2.0.1</carbon.feature.plugin.version>
         <tomcat.jdbc.version>7.0.34.wso2v2</tomcat.jdbc.version>
         <commons.io.version>2.4.0.wso2v1</commons.io.version>
         <org.apache.felix.version>1.0.0</org.apache.felix.version>
         <com.zaxxer.hikaricp.version>2.4.1</com.zaxxer.hikaricp.version>
         <java.version>1.8</java.version>
-        <carbon.kernel.version>5.1.0-alpha</carbon.kernel.version>
+        <carbon.kernel.version>5.1.0-alpha2</carbon.kernel.version>
         <carbon.jndi.version>1.0.0-alpha</carbon.jndi.version>
 
         <osgi.core.api.version>6.0.0</osgi.core.api.version>
