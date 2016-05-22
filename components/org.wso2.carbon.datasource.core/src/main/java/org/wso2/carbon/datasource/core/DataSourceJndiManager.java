@@ -145,7 +145,7 @@ public class DataSourceJndiManager {
      *
      * @param cds {@code CarbonDataSource}
      */
-    public static void unregister(CarbonDataSource cds) throws NamingException, DataSourceException {
+    public static void unregister(CarbonDataSource cds) throws NamingException {
         if (logger.isDebugEnabled()) {
             logger.debug("Unregistering data source: " + cds.getMetadata().getName());
         }
@@ -153,7 +153,7 @@ public class DataSourceJndiManager {
         if (jndiConfig == null) {
             return;
         }
-        Context context = new InitialContext(jndiConfig.extractHashtableEnv());
+        InitialContext context = new InitialContext(jndiConfig.extractHashtableEnv());
         String jndiName = JAVA_COMP_CONTEXT_STRING + "/" + ENV_CONTEXT_STRING + "/" + jndiConfig.getName();
         context.unbind(jndiName);
     }
