@@ -5,9 +5,6 @@
             <description>The datasource used for registry and user manager</description>
             <jndiConfig>
                 <name>jdbc/WSO2CarbonDB/test</name>
-                <environment>
-                    <property name="java.naming.factory.initial">org.wso2.carbon.datasource.osgi.jndi.factories.CustomContextFactory</property>
-                </environment>
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
