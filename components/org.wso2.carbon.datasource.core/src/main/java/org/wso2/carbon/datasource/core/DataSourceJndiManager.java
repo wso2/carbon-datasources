@@ -33,10 +33,9 @@ import javax.naming.NamingException;
  */
 public class DataSourceJndiManager {
 
-    private static Logger logger = LoggerFactory.getLogger(DataSourceJndiManager.class);
-
     private static final String JAVA_COMP_CONTEXT_STRING = "java:comp";
     private static final String ENV_CONTEXT_STRING = "env";
+    private static Logger logger = LoggerFactory.getLogger(DataSourceJndiManager.class);
 
     /**
      * Register the data source in the JNDI context.
@@ -59,8 +58,7 @@ public class DataSourceJndiManager {
      * @throws DataSourceException
      */
     public static void register(DataSourceMetadata dataSourceMetadata, Object dataSourceObject,
-                                DataSourceReader dataSourceReader)
-            throws DataSourceException, NamingException {
+            DataSourceReader dataSourceReader) throws DataSourceException, NamingException {
         JNDIConfig jndiConfig = dataSourceMetadata.getJndiConfig();
         //If JNDI configuration is not present, the data source will not be bound to a JNDI context.
         if (jndiConfig == null) {
@@ -79,7 +77,8 @@ public class DataSourceJndiManager {
         if (jndiConfig.isUseJndiReference()) {
             dataSourceObject = DataSourceBuilder.buildDataSourceObject(dataSourceMetadata, true, dataSourceReader);
         }
-        subContext.rebind(jndiConfig.getName(), dataSourceObject);
+        String[] tokens = jndiConfig.getName().split("/");
+        subContext.rebind(tokens[tokens.length - 1], dataSourceObject);
     }
 
     /**
@@ -106,7 +105,6 @@ public class DataSourceJndiManager {
             throws DataSourceException, NamingException {
         String jndiName = JAVA_COMP_CONTEXT_STRING + "/" + ENV_CONTEXT_STRING + "/" + jndiConfig.getName();
         String[] tokens = jndiName.split("/");
-        jndiConfig.setName(tokens[tokens.length - 1]);
         Context tmpCtx = context;
         Context subContext = null;
         String token;
@@ -129,8 +127,8 @@ public class DataSourceJndiManager {
      * @return {@link Context}
      * @throws DataSourceException
      */
-    private static Context lookupJNDISubContext(Context context, String jndiName) throws DataSourceException
-            , NamingException {
+    private static Context lookupJNDISubContext(Context context, String jndiName)
+            throws DataSourceException, NamingException {
         try {
             Object obj = context.lookup(jndiName);
             if (!(obj instanceof Context)) {
@@ -156,6 +154,7 @@ public class DataSourceJndiManager {
             return;
         }
         InitialContext context = new InitialContext(jndiConfig.extractHashtableEnv());
-        context.unbind(jndiConfig.getName());
+        String jndiName = JAVA_COMP_CONTEXT_STRING + "/" + ENV_CONTEXT_STRING + "/" + jndiConfig.getName();
+        context.unbind(jndiName);
     }
 }

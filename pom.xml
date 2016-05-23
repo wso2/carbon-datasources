@@ -92,6 +92,11 @@
                 <version>${equinox.osgi.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.wso2.carbon.jndi</groupId>
+                <artifactId>org.wso2.carbon.jndi</artifactId>
+                <version>${carbon.jndi.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.wso2.carbon</groupId>
                 <artifactId>org.wso2.carbon.kernel.feature</artifactId>
                 <version>${carbon.kernel.version}</version>

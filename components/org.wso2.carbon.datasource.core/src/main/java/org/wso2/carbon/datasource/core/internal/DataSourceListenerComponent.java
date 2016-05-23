@@ -21,6 +21,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.jndi.JNDIContextManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.datasource.core.DataSourceManager;
@@ -53,12 +54,25 @@ public class DataSourceListenerComponent implements RequiredCapabilityListener {
     private static final Logger logger = LoggerFactory.getLogger(DataSourceListenerComponent.class);
 
     private BundleContext bundleContext;
-    private Map<String, DataSourceReader> readers;
+    private Map<String, DataSourceReader> readers = new HashMap<>();
 
     @Activate
     protected void start(BundleContext bundleContext) {
         this.bundleContext = bundleContext;
-        this.readers = new HashMap<>();
+    }
+
+    @Reference(
+            name = "org.wso2.carbon.datasource.jndi",
+            service = JNDIContextManager.class,
+            cardinality = ReferenceCardinality.MANDATORY,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "unRegisterJNDIContextManager"
+    )
+    protected void registerJNDIContextManager(JNDIContextManager jndiContextManager) {
+    }
+
+
+    protected void unRegisterJNDIContextManager(JNDIContextManager jndiContextManager) {
     }
 
     @Reference(

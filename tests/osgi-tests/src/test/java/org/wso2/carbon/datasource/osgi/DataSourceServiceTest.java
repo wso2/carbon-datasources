@@ -47,7 +47,8 @@ public class DataSourceServiceTest {
                 mavenBundle().artifactId("HikariCP").groupId("com.zaxxer").version("2.4.1"),
                 mavenBundle().artifactId("h2").groupId("com.h2database").version("1.4.191"),
                 mavenBundle().artifactId("org.wso2.carbon.datasource.core").groupId("org.wso2.carbon.datasources")
-                        .versionAsInProject()
+                        .versionAsInProject(),
+                mavenBundle().artifactId("org.wso2.carbon.jndi").groupId("org.wso2.carbon.jndi").versionAsInProject()
         );
         return OSGiTestUtils.getDefaultPaxOptions(options);
     }

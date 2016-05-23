@@ -151,6 +151,11 @@
             <artifactId>org.wso2.carbon.core</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.jndi</groupId>
+            <artifactId>org.wso2.carbon.jndi</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <profiles>
