@@ -17,9 +17,11 @@ package org.wso2.carbon.datasource.rdbms.hikari;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlValue;
+import java.util.List;
 
 /**
  * Hikari configuration bean class.
@@ -31,6 +33,7 @@ public class HikariConfiguration {
     private String username;
     private Password passwordPersist;
     private String driverClassName;
+    private List<DataSourceProperty> databaseProps;
     private long connectionTimeout = HikariConstants.CONNECTION_TIME_OUT;
     private long idleTimeout = HikariConstants.IDLE_TIME_OUT;
     private long maxLifetime = HikariConstants.MAX_LIFE_TIME;
@@ -165,6 +168,56 @@ public class HikariConfiguration {
     public void setAutoCommit(boolean autoCommit) {
         this.autoCommit = autoCommit;
     }
-    
-    
+
+    @XmlElementWrapper(name = "databaseProps")
+    @XmlElement(name = "property")
+    public List<DataSourceProperty> getDatabaseProps() {
+        return databaseProps;
+    }
+
+    public void setDatabaseProps(List<DataSourceProperty> databaseProps) {
+        this.databaseProps = databaseProps;
+    }
+
+    /**
+     * Bean class to hold custom properties
+     */
+    @XmlRootElement(name = "property")
+    public static class DataSourceProperty {
+
+        private boolean encrypted = true;
+
+        private String name;
+
+        private String value;
+
+        @XmlAttribute(name = "encrypted")
+        public boolean isEncrypted() {
+            return encrypted;
+        }
+
+        public void setEncrypted(boolean encrypted) {
+            this.encrypted = encrypted;
+        }
+
+        @XmlAttribute(name = "name")
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @XmlValue
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+    }
+
 }

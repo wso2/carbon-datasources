@@ -19,6 +19,7 @@ import com.zaxxer.hikari.HikariConfig;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.rdbms.hikari.HikariConfiguration;
 import org.wso2.carbon.datasource.utils.DataSourceUtils;
+import java.util.Properties;
 
 /**
  * Encapsulates a set of utility methods for HikariDataSource.
@@ -47,6 +48,12 @@ public class HikariDataSourceUtils {
             config.setMaximumPoolSize(configuration.getMaximumPoolSize());
             config.setMinimumIdle(configuration.getMinimumIdle());
             config.setAutoCommit(configuration.isAutoCommit());
+            if (configuration.getDatabaseProps() != null && !configuration.getDatabaseProps().isEmpty()) {
+                Properties properties = new Properties();
+                configuration.getDatabaseProps()
+                        .forEach(property -> properties.setProperty(property.getName(), property.getValue()));
+                config.setDataSourceProperties(properties);
+            }
             return config;
         } catch (DataSourceException e) {
             throw new DataSourceException("Error in loading Hikari configuration: " + e.getMessage(), e);
