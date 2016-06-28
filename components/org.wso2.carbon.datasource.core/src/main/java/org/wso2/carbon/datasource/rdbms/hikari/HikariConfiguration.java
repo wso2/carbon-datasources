@@ -15,13 +15,13 @@
  */
 package org.wso2.carbon.datasource.rdbms.hikari;
 
+import java.util.List;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlValue;
-import java.util.List;
 
 /**
  * Hikari configuration bean class.
@@ -88,18 +88,7 @@ public class HikariConfiguration {
     @XmlRootElement(name = "password")
     public static class Password {
 
-        private boolean encrypted = true;
-
         private String value;
-
-        @XmlAttribute(name = "encrypted")
-        public boolean isEncrypted() {
-            return encrypted;
-        }
-
-        public void setEncrypted(boolean encrypted) {
-            this.encrypted = encrypted;
-        }
 
         @XmlValue
         public String getValue() {
@@ -185,20 +174,9 @@ public class HikariConfiguration {
     @XmlRootElement(name = "property")
     public static class DataSourceProperty {
 
-        private boolean encrypted = true;
-
         private String name;
 
         private String value;
-
-        @XmlAttribute(name = "encrypted")
-        public boolean isEncrypted() {
-            return encrypted;
-        }
-
-        public void setEncrypted(boolean encrypted) {
-            this.encrypted = encrypted;
-        }
 
         @XmlAttribute(name = "name")
         public String getName() {
