@@ -37,6 +37,9 @@ public class DataSourceServiceImpl implements DataSourceService {
     public Object getDataSource(String name) throws DataSourceException {
         CarbonDataSource carbonDataSource = DataSourceManager.getInstance().getDataSourceRepository()
                 .getDataSource(name);
+        if (carbonDataSource == null) {
+            throw new DataSourceException("Cannot find the data source: " + name);
+        }
         return carbonDataSource.getDataSourceObject();
     }
 }
