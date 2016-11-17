@@ -18,6 +18,7 @@ package org.wso2.carbon.datasource.core;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.datasource.core.beans.CarbonDataSource;
+import org.wso2.carbon.datasource.core.beans.DataSourceDefinition;
 import org.wso2.carbon.datasource.core.beans.DataSourceMetadata;
 import org.wso2.carbon.datasource.core.beans.DataSourcesConfiguration;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
@@ -177,6 +178,26 @@ public class DataSourceManager {
         if (dataSourceReaders.size() == 0) {
             ServiceLoader<DataSourceReader> dsReaderLoader = ServiceLoader.load(DataSourceReader.class);
             dsReaderLoader.forEach(reader -> dataSourceReaders.put(reader.getType(), reader));
+        }
+    }
+
+    /**
+     * Creates datasource Object from the data
+     * @param dataSourceDefinition {@code DataSourceDefinition} that is converted to DataSource object
+     * @return {@code Object}
+     * @throws DataSourceException
+     */
+    public Object createDataSource(DataSourceDefinition dataSourceDefinition) throws DataSourceException {
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("Creating datasoure object of type: " + dataSourceDefinition.getType());
+        }
+        try {
+            DataSourceReader dataSourceReader = getDataSourceReader(dataSourceDefinition.getType());
+            return DataSourceBuilder.buildDataSourceObject(dataSourceReader, false, dataSourceDefinition);
+        } catch (DataSourceException e) {
+            throw new DataSourceException("Error creating data source object of type: " + dataSourceDefinition.
+                    getType() + " - " + e.getMessage(), e);
         }
     }
 }

@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import org.wso2.carbon.datasource.core.beans.CarbonDataSource;
+import org.wso2.carbon.datasource.core.beans.DataSourceDefinition;
 import org.wso2.carbon.datasource.core.beans.DataSourceMetadata;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.core.spi.DataSourceReader;
@@ -38,9 +39,8 @@ public class DataSourceBuilder {
      * @param dataSourceMetadata {@code DataSourceMetaInfo}
      * @throws DataSourceException
      */
-    public static CarbonDataSource buildCarbonDataSource(DataSourceMetadata dataSourceMetadata,
-                                                         DataSourceReader dataSourceReader)
-            throws DataSourceException {
+    public static CarbonDataSource buildCarbonDataSource(DataSourceMetadata dataSourceMetadata, DataSourceReader
+            dataSourceReader) throws DataSourceException {
         Object dataSource = buildDataSourceObject(dataSourceMetadata, false, dataSourceReader);
         return new CarbonDataSource(dataSourceMetadata, dataSource);
     }
@@ -51,16 +51,31 @@ public class DataSourceBuilder {
      *
      * @param dataSourceMetadata     {@code DataSourceMetaInfo}
      * @param isUseDataSourceFactory {@code boolean}
+     * @param dataSourceReader       {@code DataSourceReader} which is used to created the DataSource Object
      * @return {@code Object}
      */
     public static Object buildDataSourceObject(DataSourceMetadata dataSourceMetadata, boolean isUseDataSourceFactory,
-                                               DataSourceReader dataSourceReader)
-            throws DataSourceException {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Generating the DataSource object from \"" + dataSourceReader.getType() + "\" type reader.");
-        }
+                                               DataSourceReader dataSourceReader) throws DataSourceException {
+        return buildDataSourceObject(dataSourceReader, isUseDataSourceFactory, dataSourceMetadata.getDefinition());
+    }
 
-        Element configurationXmlDefinition = (Element) dataSourceMetadata.getDefinition().getDsXMLConfiguration();
+    /**
+     * Creates the data source object by getting the approoriate DataSourceReader. The created object would be either
+     * a {@link javax.sql.DataSource} or {@code Reference} if {@code isUseJndiReference} param is true
+     *
+     * @param dataSourceDefinition   {@code DataSourceDefinition} that is converted to DataSource object
+     * @param isUseDataSourceFactory if true return the DataSourceReference else return the DataSource
+     * @param dataSourceReader       {@code DataSourceReader} which is used to created the DataSource Object
+     * @return {@code Object}
+     * @throws DataSourceException
+     */
+    public static Object buildDataSourceObject(DataSourceReader dataSourceReader, boolean isUseDataSourceFactory,
+                                               DataSourceDefinition dataSourceDefinition) throws DataSourceException {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Generating the Datasource object from \"" + dataSourceDefinition.getType() + "\" type " +
+                    "reader.");
+        }
+        Element configurationXmlDefinition = (Element) dataSourceDefinition.getDsXMLConfiguration();
         return dataSourceReader.createDataSource(DataSourceUtils.elementToString(configurationXmlDefinition),
                 isUseDataSourceFactory);
     }

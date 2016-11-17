@@ -18,6 +18,7 @@ package org.wso2.carbon.datasource.core.impl;
 import org.wso2.carbon.datasource.core.DataSourceManager;
 import org.wso2.carbon.datasource.core.api.DataSourceService;
 import org.wso2.carbon.datasource.core.beans.CarbonDataSource;
+import org.wso2.carbon.datasource.core.beans.DataSourceDefinition;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 
 /**
@@ -42,4 +43,18 @@ public class DataSourceServiceImpl implements DataSourceService {
         }
         return carbonDataSource.getDataSourceObject();
     }
+
+    /**
+     *
+     * @param dataSourceDefinition    DataSourceDefinition to create the datasource object.
+     * @return {@code Object}
+     * @throws DataSourceException
+     */
+    @Override
+    public Object createDataSource(DataSourceDefinition dataSourceDefinition) throws DataSourceException {
+
+        return DataSourceManager.getInstance().createDataSource(dataSourceDefinition);
+    }
+
+
 }
