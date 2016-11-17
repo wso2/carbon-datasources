@@ -15,11 +15,8 @@
  */
 package org.wso2.carbon.datasource.core.beans;
 
-import org.w3c.dom.Element;
 import org.wso2.carbon.datasource.utils.DataSourceUtils;
 
-import javax.xml.bind.annotation.XmlAnyElement;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -73,55 +70,6 @@ public class DataSourceMetadata {
 
     public void setDefinition(DataSourceDefinition definition) {
         this.definition = definition;
-    }
-
-    /**
-     * CLass holding the data source definition.
-     */
-    @XmlRootElement(name = "definition")
-    public static class DataSourceDefinition {
-
-        private String type;
-
-        private Object dsXMLConfiguration;
-
-        @XmlAttribute(name = "type", required = true)
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        @XmlAnyElement
-        public Object getDsXMLConfiguration() {
-            return dsXMLConfiguration;
-        }
-
-        public void setDsXMLConfiguration(Object dsXMLConfiguration) {
-            this.dsXMLConfiguration = dsXMLConfiguration;
-        }
-
-        public boolean equals(Object rhs) {
-            if (!(rhs instanceof DataSourceDefinition)) {
-                return false;
-            }
-            DataSourceDefinition dsDef = (DataSourceDefinition) rhs;
-            if (!DataSourceUtils.nullAllowEquals(dsDef.getType(), this.getType())) {
-                return false;
-            }
-            return DataSourceUtils.nullAllowEquals(DataSourceUtils.elementToString(
-                            (Element) dsDef.getDsXMLConfiguration()),
-                    DataSourceUtils.elementToString((Element) this.getDsXMLConfiguration()));
-        }
-
-        @Override
-        public int hashCode() {
-            assert false : "hashCode() not implemented";
-            return -1;
-        }
-
     }
 
     @Override

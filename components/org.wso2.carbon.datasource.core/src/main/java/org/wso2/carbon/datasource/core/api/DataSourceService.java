@@ -15,6 +15,7 @@
  */
 package org.wso2.carbon.datasource.core.api;
 
+import org.wso2.carbon.datasource.core.beans.DataSourceDefinition;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 
 /**
@@ -23,11 +24,20 @@ import org.wso2.carbon.datasource.core.exception.DataSourceException;
 public interface DataSourceService {
 
     /**
-     * Returns a {@code CarbonDataSource} object for the given na,e.
+     * Returns a {@code CarbonDataSource} object for the given name.
      *
      * @param name String
      * @return DataSource Object
      * @throws DataSourceException
      */
     Object getDataSource(String name) throws DataSourceException;
+
+    /**
+     * Returns a {@code CarbonDataSource} object for the given dataSourceDefinition.
+     *
+     * @param dataSourceDefinition    {@code DataSourceDefinition} to create the datasource object.
+     * @return {@code Object}
+     * @throws DataSourceException
+     */
+    Object createDataSource(DataSourceDefinition dataSourceDefinition) throws DataSourceException;
 }
