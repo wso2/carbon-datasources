@@ -62,11 +62,6 @@
                 <version>${commons.io.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.tomcat.wso2</groupId>
-                <artifactId>jdbc-pool</artifactId>
-                <version>${tomcat.jdbc.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>org.osgi.compendium</artifactId>
                 <version>${org.apache.felix.version}</version>
@@ -139,7 +134,7 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
-                <version>1.7.13</version>
+                <version>${slf4j.log4j12.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.testng</groupId>
@@ -362,7 +357,6 @@
     <properties>
         <carbon.datasource.version>1.1.0-SNAPSHOT</carbon.datasource.version>
         <carbon.feature.plugin.version>2.0.1</carbon.feature.plugin.version>
-        <tomcat.jdbc.version>7.0.34.wso2v2</tomcat.jdbc.version>
         <commons.io.version>2.4.0.wso2v1</commons.io.version>
         <org.apache.felix.version>1.0.0</org.apache.felix.version>
         <com.zaxxer.hikaricp.version>2.4.1</com.zaxxer.hikaricp.version>
@@ -387,6 +381,7 @@
         <maven.paxexam.plugin.version>1.2.4</maven.paxexam.plugin.version>
         <ow2.jta.spec.version>1.0.12</ow2.jta.spec.version>
         <slf4j.api.version>1.7.12</slf4j.api.version>
+        <slf4j.log4j12.version>1.7.13</slf4j.log4j12.version>
         <equinox.osgi.services.version>3.4.0.v20140312-2051</equinox.osgi.services.version>
         <jacoco.version>0.7.5.201505241946</jacoco.version>
         <org.jacoco.ant.version>0.7.5.201505241946</org.jacoco.ant.version>
