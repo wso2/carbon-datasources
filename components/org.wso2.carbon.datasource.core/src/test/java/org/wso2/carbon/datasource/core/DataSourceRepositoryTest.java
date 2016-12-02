@@ -45,12 +45,12 @@ public class DataSourceRepositoryTest extends BaseTest {
 
 
     @Test
-    public void getAllDataSourceTest() {
+    public void getDataSourceTest() {
         CarbonDataSource carbonDataSource = dsRepository.getDataSource("WSO2_CARBON_DB");
         Assert.assertNotNull(carbonDataSource, "WSO2_CARBON_DB not found in the repository.");
     }
 
-    @Test(dependsOnMethods = "getAllDataSourceTest")
+    @Test(dependsOnMethods = "getDataSourceTest")
     public void deleteDataSourceTest() {
         try {
             dsRepository.deleteDataSource("WSO2_CARBON_DB");
@@ -59,6 +59,11 @@ public class DataSourceRepositoryTest extends BaseTest {
         } catch (DataSourceException e) {
             Assert.fail("Error occurred while deleting the data source");
         }
+    }
+
+    @Test(dependsOnMethods = "deleteDataSourceTest", expectedExceptions = DataSourceException.class)
+    public void deleteDataSourceFailTest() throws DataSourceException {
+         dsRepository.deleteDataSource("WSO2_CARBON_DB");
     }
 
     @AfterSuite

@@ -55,7 +55,9 @@ public class DataSourceManagementServiceTest extends BaseTest {
         Assert.assertNotNull(dataSourceMetadata, "dataSourceMetadata should not be null");
         dataSourceMgtService.deleteDataSource("WSO2_CARBON_DB_2");
         DataSourceMetadata dataSourceMetadata2 = dataSourceMgtService.getDataSource("WSO2_CARBON_DB_2");
-        Assert.assertNull(dataSourceMetadata2, "After deleting WSO2_CARBON_DB_2 should not exist in the repository");
-
+        Assert.assertNull(dataSourceMetadata2, "After deleting, WSO2_CARBON_DB_2 should not exist in the repository");
+        dataSourceMgtService.addDataSource(dataSourceMetadata);
+        Assert.assertNotNull(dataSourceMgtService.getDataSource("WSO2_CARBON_DB_2"), "WSO2_CARBON_DB_2 should exist "
+                + "in the repository");
     }
 }
