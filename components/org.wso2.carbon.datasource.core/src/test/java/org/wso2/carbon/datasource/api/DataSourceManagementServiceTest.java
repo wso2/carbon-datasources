@@ -27,6 +27,9 @@ import org.wso2.carbon.datasource.core.impl.DataSourceManagementServiceImpl;
 import java.net.MalformedURLException;
 import java.util.List;
 
+/**
+ * Test class for {@code DataSourceManagementService}.
+ */
 public class DataSourceManagementServiceTest extends BaseTest {
 
     private DataSourceManagementService dataSourceMgtService;

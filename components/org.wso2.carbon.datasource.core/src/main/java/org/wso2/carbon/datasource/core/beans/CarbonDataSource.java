@@ -37,7 +37,7 @@ public class CarbonDataSource {
     }
 
     /**
-     * Returns {@code DataSourceMetadata} object of this {@code CarbonDataSource}
+     * Returns {@code DataSourceMetadata} object of this {@code CarbonDataSource}.
      * @return {@code DataSourceMetadata}
      */
     public DataSourceMetadata getMetadata() {

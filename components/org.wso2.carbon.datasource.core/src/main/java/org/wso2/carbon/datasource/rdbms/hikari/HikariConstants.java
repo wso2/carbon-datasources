@@ -6,7 +6,7 @@ package org.wso2.carbon.datasource.rdbms.hikari;
 public class HikariConstants {
 
     /**
-     * Private constructor
+     * Private constructor.
      */
     private HikariConstants() {
     }
@@ -20,7 +20,7 @@ public class HikariConstants {
     public static final int MAXIMUM_POOL_SIZE = 10;
     
     /**
-     * Default value for auto commit flag (for a connection)
+     * Default value for auto commit flag (for a connection).
      */
     public static final boolean AUTO_COMMIT = true;
 }

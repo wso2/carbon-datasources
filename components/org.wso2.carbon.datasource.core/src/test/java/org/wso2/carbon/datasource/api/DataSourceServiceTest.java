@@ -36,6 +36,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+/**
+ * Test class for {@code DataSourceService}.
+ */
 public class DataSourceServiceTest extends BaseTest {
 
     private DataSourceService dataSourceService;

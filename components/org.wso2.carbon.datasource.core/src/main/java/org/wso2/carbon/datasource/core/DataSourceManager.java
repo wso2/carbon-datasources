@@ -182,7 +182,7 @@ public class DataSourceManager {
     }
 
     /**
-     * Creates datasource Object from the data
+     * Creates datasource Object from the data.
      * @param dataSourceDefinition {@code DataSourceDefinition} that is converted to DataSource object
      * @return {@code Object}
      * @throws DataSourceException
