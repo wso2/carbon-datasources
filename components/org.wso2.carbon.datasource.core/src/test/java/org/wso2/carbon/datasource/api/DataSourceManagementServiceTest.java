@@ -33,6 +33,7 @@ import java.util.List;
 public class DataSourceManagementServiceTest extends BaseTest {
 
     private DataSourceManagementService dataSourceMgtService;
+    private static final String DATASOURCE_NAME = "WSO2_CARBON_DB_2";
 
     @BeforeSuite
     public void initialize() throws DataSourceException, MalformedURLException {
@@ -42,25 +43,26 @@ public class DataSourceManagementServiceTest extends BaseTest {
 
     @Test
     public void getDataSourceTest() throws DataSourceException {
-        DataSourceMetadata dataSourceMetadata = dataSourceMgtService.getDataSource("WSO2_CARBON_DB_2");
-        Assert.assertNotNull(dataSourceMetadata, "metadata for \"WSO2_CARBON_DB_2\" should not be null");
+        DataSourceMetadata dataSourceMetadata = dataSourceMgtService.getDataSource(DATASOURCE_NAME);
+        Assert.assertNotNull(dataSourceMetadata, "metadata for \"" + DATASOURCE_NAME + "\" should not be null");
     }
 
     @Test(dependsOnMethods = "getDataSourceTest")
     public void getDataSourceListTest() throws DataSourceException {
         List<DataSourceMetadata> dataSourceMetadata = dataSourceMgtService.getDataSource();
-        Assert.assertEquals(1, dataSourceMetadata.size(), "Only one WSO2_CARBON_DB_2 exist in the repository.");
+        Assert.assertEquals(1, dataSourceMetadata.size(), "Only one " + DATASOURCE_NAME + " exist in the repository.");
     }
 
     @Test(dependsOnMethods = "getDataSourceListTest")
     public void addAndDeleteDataSourceTest() throws DataSourceException {
-        DataSourceMetadata dataSourceMetadata = dataSourceMgtService.getDataSource("WSO2_CARBON_DB_2");
+        DataSourceMetadata dataSourceMetadata = dataSourceMgtService.getDataSource(DATASOURCE_NAME);
         Assert.assertNotNull(dataSourceMetadata, "dataSourceMetadata should not be null");
-        dataSourceMgtService.deleteDataSource("WSO2_CARBON_DB_2");
-        DataSourceMetadata dataSourceMetadata2 = dataSourceMgtService.getDataSource("WSO2_CARBON_DB_2");
-        Assert.assertNull(dataSourceMetadata2, "After deleting, WSO2_CARBON_DB_2 should not exist in the repository");
+        dataSourceMgtService.deleteDataSource(DATASOURCE_NAME);
+        DataSourceMetadata dataSourceMetadata2 = dataSourceMgtService.getDataSource(DATASOURCE_NAME);
+        Assert.assertNull(dataSourceMetadata2, "After deleting, " + DATASOURCE_NAME + " should not exist in the "
+                + "repository");
         dataSourceMgtService.addDataSource(dataSourceMetadata);
-        Assert.assertNotNull(dataSourceMgtService.getDataSource("WSO2_CARBON_DB_2"), "WSO2_CARBON_DB_2 should exist "
-                + "in the repository");
+        Assert.assertNotNull(dataSourceMgtService.getDataSource(DATASOURCE_NAME), DATASOURCE_NAME + " should exist in"
+                + " the repository");
     }
 }

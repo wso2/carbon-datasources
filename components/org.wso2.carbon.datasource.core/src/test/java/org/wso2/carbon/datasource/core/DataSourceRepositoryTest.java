@@ -30,6 +30,7 @@ import java.net.MalformedURLException;
 public class DataSourceRepositoryTest extends BaseTest {
 
     private DataSourceRepository dsRepository;
+    private static final String DATASOURCE_NAME = "WSO2_CARBON_DB";
 
     @BeforeSuite
     public void initialize() throws DataSourceException, MalformedURLException {
@@ -46,16 +47,16 @@ public class DataSourceRepositoryTest extends BaseTest {
 
     @Test
     public void getDataSourceTest() {
-        CarbonDataSource carbonDataSource = dsRepository.getDataSource("WSO2_CARBON_DB");
-        Assert.assertNotNull(carbonDataSource, "WSO2_CARBON_DB not found in the repository.");
+        CarbonDataSource carbonDataSource = dsRepository.getDataSource(DATASOURCE_NAME);
+        Assert.assertNotNull(carbonDataSource, DATASOURCE_NAME + " not found in the repository.");
     }
 
     @Test(dependsOnMethods = "getDataSourceTest")
     public void deleteDataSourceTest() {
         try {
-            dsRepository.deleteDataSource("WSO2_CARBON_DB");
-            CarbonDataSource carbonDataSource = dsRepository.getDataSource("WSO2_CARBON_DB");
-            Assert.assertNull(carbonDataSource, "WSO2_CARBON_DB is deleted, but found in the repository.");
+            dsRepository.deleteDataSource(DATASOURCE_NAME);
+            CarbonDataSource carbonDataSource = dsRepository.getDataSource(DATASOURCE_NAME);
+            Assert.assertNull(carbonDataSource, DATASOURCE_NAME + " is deleted, but found in the repository.");
         } catch (DataSourceException e) {
             Assert.fail("Error occurred while deleting the data source");
         }
@@ -63,7 +64,7 @@ public class DataSourceRepositoryTest extends BaseTest {
 
     @Test(dependsOnMethods = "deleteDataSourceTest", expectedExceptions = DataSourceException.class)
     public void deleteDataSourceFailTest() throws DataSourceException {
-         dsRepository.deleteDataSource("WSO2_CARBON_DB");
+         dsRepository.deleteDataSource(DATASOURCE_NAME);
     }
 
     @AfterSuite

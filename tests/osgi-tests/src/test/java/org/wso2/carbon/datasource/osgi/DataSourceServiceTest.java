@@ -35,7 +35,7 @@ import javax.inject.Inject;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 
 /**
- * Test class for {@code DataSourceManagementService}.
+ * Test class for {@link DataSourceService}.
  */
 @Listeners(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)

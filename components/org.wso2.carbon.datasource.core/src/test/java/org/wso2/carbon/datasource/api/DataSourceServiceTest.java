@@ -51,8 +51,9 @@ public class DataSourceServiceTest extends BaseTest {
 
     @Test
     public void getDataSourceTest() throws DataSourceException {
-        Object dataSourceObject = dataSourceService.getDataSource("WSO2_CARBON_DB_2");
-        Assert.assertNotNull(dataSourceObject, "Test datasource \"WSO2_CARBON_DB_2\" should not be null");
+        final String datasourceName = "WSO2_CARBON_DB_2";
+        Object dataSourceObject = dataSourceService.getDataSource(datasourceName);
+        Assert.assertNotNull(dataSourceObject, "Test datasource \"" + datasourceName + "\" should not be null");
     }
 
     @Test(expectedExceptions = DataSourceException.class)
