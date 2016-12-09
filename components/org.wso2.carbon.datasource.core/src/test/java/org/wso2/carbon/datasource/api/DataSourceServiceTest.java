@@ -36,6 +36,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+/**
+ * Test class for {@code DataSourceService}.
+ */
 public class DataSourceServiceTest extends BaseTest {
 
     private DataSourceService dataSourceService;
@@ -48,8 +51,14 @@ public class DataSourceServiceTest extends BaseTest {
 
     @Test
     public void getDataSourceTest() throws DataSourceException {
-        Object dataSourceObject = dataSourceService.getDataSource("WSO2_CARBON_DB_2");
-        Assert.assertNotNull(dataSourceObject, "test datasource \"WSO2_CARBON_DB_2\" should not be null");
+        final String datasourceName = "WSO2_CARBON_DB_2";
+        Object dataSourceObject = dataSourceService.getDataSource(datasourceName);
+        Assert.assertNotNull(dataSourceObject, "Test datasource \"" + datasourceName + "\" should not be null");
+    }
+
+    @Test(expectedExceptions = DataSourceException.class)
+    public void getDataSourceFailTest() throws DataSourceException {
+        dataSourceService.getDataSource(null);
     }
 
     @Test

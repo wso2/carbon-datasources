@@ -35,9 +35,13 @@ import javax.inject.Inject;
 
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 
+/**
+ * Test class for {@link DataSourceManagementService}.
+ */
 @Listeners(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)
 public class DataSourceManagementServiceTest {
+    private static final String DATASOURCE_NAME = "WSO2_CARBON_DB";
 
     @Inject
     private DataSourceManagementService dataSourceManagementService;
@@ -78,8 +82,8 @@ public class DataSourceManagementServiceTest {
     @Test
     public void testGetDataSourceForName() {
         try {
-            DataSourceMetadata dataSource  = dataSourceManagementService.getDataSource("WSO2_CARBON_DB");
-            Assert.assertNotNull(dataSource, "Data source WSO2_CARBON_DB should exist");
+            DataSourceMetadata dataSource  = dataSourceManagementService.getDataSource(DATASOURCE_NAME);
+            Assert.assertNotNull(dataSource, "Data source " + DATASOURCE_NAME + " should exist");
         } catch (DataSourceException e) {
             Assert.fail("Thew DataSourceException when fetching data sources");
         }
@@ -88,13 +92,13 @@ public class DataSourceManagementServiceTest {
     @Test(dependsOnMethods = { "testGetDataSource", "testGetDataSourceForName" })
     public void testAddAndDeleteDataSource() {
         try {
-            DataSourceMetadata dataSource  = dataSourceManagementService.getDataSource("WSO2_CARBON_DB");
-            Assert.assertNotNull(dataSource, "Data source WSO2_CARBON_DB should exist");
-            dataSourceManagementService.deleteDataSource("WSO2_CARBON_DB");
-            DataSourceMetadata dataSource2  = dataSourceManagementService.getDataSource("WSO2_CARBON_DB");
+            DataSourceMetadata dataSource  = dataSourceManagementService.getDataSource(DATASOURCE_NAME);
+            Assert.assertNotNull(dataSource, "Data source " + DATASOURCE_NAME + " should exist");
+            dataSourceManagementService.deleteDataSource(DATASOURCE_NAME);
+            DataSourceMetadata dataSource2  = dataSourceManagementService.getDataSource(DATASOURCE_NAME);
             Assert.assertNull(dataSource2, "After deleting the data source should not exist");
             dataSourceManagementService.addDataSource(dataSource);
-            dataSource2  = dataSourceManagementService.getDataSource("WSO2_CARBON_DB");
+            dataSource2  = dataSourceManagementService.getDataSource(DATASOURCE_NAME);
             Assert.assertNotNull(dataSource2, "The service did not fetch the inserted data source!!!");
         } catch (DataSourceException e) {
             Assert.fail("Thew DataSourceException when fetching data sources");

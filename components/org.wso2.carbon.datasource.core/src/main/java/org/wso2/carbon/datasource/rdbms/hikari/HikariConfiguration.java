@@ -169,7 +169,7 @@ public class HikariConfiguration {
     }
 
     /**
-     * Bean class to hold custom properties
+     * Bean class to hold custom properties.
      */
     @XmlRootElement(name = "property")
     public static class DataSourceProperty {
