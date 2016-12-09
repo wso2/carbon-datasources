@@ -32,7 +32,7 @@ public class DataSourceServiceImpl implements DataSourceService {
      *
      * @param name Name of the data source.
      * @return DataSource Object
-     * @throws DataSourceException
+     * @throws DataSourceException if the data source can't be found by name.
      */
     @Override
     public Object getDataSource(String name) throws DataSourceException {
@@ -48,7 +48,7 @@ public class DataSourceServiceImpl implements DataSourceService {
      *
      * @param dataSourceDefinition    DataSourceDefinition to create the datasource object.
      * @return {@code Object}
-     * @throws DataSourceException
+     * @throws DataSourceException if data source can't be created.
      */
     @Override
     public Object createDataSource(DataSourceDefinition dataSourceDefinition) throws DataSourceException {

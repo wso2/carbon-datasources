@@ -148,7 +148,7 @@ public class DataSourceUtils {
      *
      * @param xmlConfiguration InputStream that carries xml configuration
      * @return returns a InputStream that has evaluated system variables in input
-     * @throws DataSourceException
+     * @throws DataSourceException if there is an error when building document.
      */
     public static InputStream replaceSystemVariablesInXml(InputStream xmlConfiguration) throws DataSourceException {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -184,7 +184,7 @@ public class DataSourceUtils {
     /**
      * @param doc the DOM.Document to be converted to InputStream.
      * @return Returns InputStream.
-     * @throws DataSourceException
+     * @throws DataSourceException if there is an error while transforming DOM to InputStream.
      */
     public static InputStream toInputStream(Document doc) throws DataSourceException {
         InputStream in;
@@ -221,7 +221,7 @@ public class DataSourceUtils {
      *
      * @param xmlConfiguration String
      * @return String
-     * @throws DataSourceException
+     * @throws DataSourceException if there is an error while converting InputStream to String.
      */
     public static String replaceSystemVariablesInXml(String xmlConfiguration) throws DataSourceException {
         InputStream in = replaceSystemVariablesInXml(new
@@ -331,7 +331,7 @@ public class DataSourceUtils {
      * @param <T>           class type of the generated bean
      * @param <U>           {@link File} or a {@code String}
      * @return T class type of the generated bean
-     * @throws DataSourceException
+     * @throws DataSourceException if there is an error while converting configuration into jaxb beans.
      */
     public static <T, U> T loadJAXBConfiguration(U configuration, Class<T> clazz) throws DataSourceException {
         try {

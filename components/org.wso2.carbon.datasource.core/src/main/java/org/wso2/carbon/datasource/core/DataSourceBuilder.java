@@ -37,7 +37,9 @@ public class DataSourceBuilder {
      * Build a {@code CarbonDataSource} object from the given {@code DataSourceMetaInfo} object.
      *
      * @param dataSourceMetadata {@code DataSourceMetaInfo}
-     * @throws DataSourceException
+     * @param dataSourceReader {@link DataSourceReader}
+     * @return {@link CarbonDataSource}
+     * @throws DataSourceException if CarbonDataSource object can't be built from given DataSourceMetaInfo object.
      */
     public static CarbonDataSource buildCarbonDataSource(DataSourceMetadata dataSourceMetadata, DataSourceReader
             dataSourceReader) throws DataSourceException {
@@ -53,6 +55,7 @@ public class DataSourceBuilder {
      * @param isUseDataSourceFactory {@code boolean}
      * @param dataSourceReader       {@code DataSourceReader} which is used to created the DataSource Object
      * @return {@code Object}
+     * @throws DataSourceException if data source object can't be created using given reader.
      */
     public static Object buildDataSourceObject(DataSourceMetadata dataSourceMetadata, boolean isUseDataSourceFactory,
                                                DataSourceReader dataSourceReader) throws DataSourceException {
@@ -60,14 +63,14 @@ public class DataSourceBuilder {
     }
 
     /**
-     * Creates the data source object by getting the approoriate DataSourceReader. The created object would be either
-     * a {@link javax.sql.DataSource} or {@code Reference} if {@code isUseJndiReference} param is true
+     * Creates the data source object by getting the appropriate DataSourceReader. The created object would be either
+     * a {@link javax.sql.DataSource} or {@code Reference} if {@code isUseJndiReference} param is true.
      *
      * @param dataSourceDefinition   {@code DataSourceDefinition} that is converted to DataSource object
      * @param isUseDataSourceFactory if true return the DataSourceReference else return the DataSource
      * @param dataSourceReader       {@code DataSourceReader} which is used to created the DataSource Object
      * @return {@code Object}
-     * @throws DataSourceException
+     * @throws DataSourceException if data source object can't be created using given data source reader.
      */
     public static Object buildDataSourceObject(DataSourceReader dataSourceReader, boolean isUseDataSourceFactory,
                                                DataSourceDefinition dataSourceDefinition) throws DataSourceException {

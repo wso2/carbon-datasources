@@ -29,7 +29,7 @@ public interface DataSourceManagementService {
      * Return all the registered data sources.
      *
      * @return {@code List<DataSourceMetadata>}
-     * @throws DataSourceException
+     * @throws DataSourceException if the registered data sources can't be retrieved.
      */
     List<DataSourceMetadata> getDataSource() throws DataSourceException;
 
@@ -38,7 +38,7 @@ public interface DataSourceManagementService {
      *
      * @param dataSourceName name of the data source
      * @return {@code CarbonDataSource}
-     * @throws DataSourceException
+     * @throws DataSourceException if particular data source can't be retrieved by its name.
      */
     DataSourceMetadata getDataSource(String dataSourceName) throws DataSourceException;
 
@@ -46,7 +46,7 @@ public interface DataSourceManagementService {
      * Add a new data source metadata object to the repository.
      *
      * @param dataSourceMetadata {@code DataSourceMetaInfo}
-     * @throws DataSourceException
+     * @throws DataSourceException if the data source can't be bind into jndi context.
      */
     void addDataSource(DataSourceMetadata dataSourceMetadata) throws DataSourceException;
 
@@ -54,7 +54,7 @@ public interface DataSourceManagementService {
      * Deletes a data source from the repository.
      *
      * @param dataSourceName {@code String}
-     * @throws DataSourceException
+     * @throws DataSourceException if the data source can't be unbind from jndi context.
      */
     void deleteDataSource(String dataSourceName) throws DataSourceException;
 }

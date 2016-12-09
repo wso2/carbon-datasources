@@ -88,7 +88,7 @@ public class DataSourceManager {
      *
      * @param dataSourceType String
      * @return {@code DataSourceReader}
-     * @throws DataSourceException
+     * @throws DataSourceException if the particular type {@link DataSourceReader} is not available.
      */
     public DataSourceReader getDataSourceReader(String dataSourceType) throws DataSourceException {
         DataSourceReader reader = dataSourceReaders.get(dataSourceType);
@@ -102,7 +102,7 @@ public class DataSourceManager {
      * Initializes the data sources.
      *
      * @param configurationDirectory String
-     * @throws DataSourceException
+     * @throws DataSourceException if an error occurred while initializing the data source.
      */
     public void initDataSources(String configurationDirectory)
             throws DataSourceException {
@@ -113,7 +113,7 @@ public class DataSourceManager {
     /**
      * @param configurationDir  String location of the configuration directory
      * @param dataSourceReaders {@code Map<String, DataSourceReader>}
-     * @throws DataSourceException
+     * @throws DataSourceException if an error occurred while initializing the data source.
      */
     public void initDataSources(String configurationDir, Map<String, DataSourceReader> dataSourceReaders)
             throws DataSourceException {
@@ -185,7 +185,7 @@ public class DataSourceManager {
      * Creates datasource Object from the data.
      * @param dataSourceDefinition {@code DataSourceDefinition} that is converted to DataSource object
      * @return {@code Object}
-     * @throws DataSourceException
+     * @throws DataSourceException if defined type of data source object can't be created.
      */
     public Object createDataSource(DataSourceDefinition dataSourceDefinition) throws DataSourceException {
 

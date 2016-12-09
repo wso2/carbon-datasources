@@ -28,7 +28,7 @@ public interface DataSourceService {
      *
      * @param name String
      * @return DataSource Object
-     * @throws DataSourceException
+     * @throws DataSourceException if the data source can't be found by name.
      */
     Object getDataSource(String name) throws DataSourceException;
 
@@ -37,7 +37,7 @@ public interface DataSourceService {
      *
      * @param dataSourceDefinition    {@code DataSourceDefinition} to create the datasource object.
      * @return {@code Object}
-     * @throws DataSourceException
+     * @throws DataSourceException if data source can't be created.
      */
     Object createDataSource(DataSourceDefinition dataSourceDefinition) throws DataSourceException;
 }

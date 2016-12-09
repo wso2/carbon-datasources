@@ -39,7 +39,7 @@ public class DataSourceManagementServiceImpl implements DataSourceManagementServ
      * Return all the registered data sources.
      *
      * @return {@code List<CarbonDataSource>}
-     * @throws DataSourceException
+     * @throws DataSourceException if the registered data sources can't be retrieved.
      */
     public List<DataSourceMetadata> getDataSource() throws DataSourceException {
         return new ArrayList<>(DataSourceManager.getInstance().getDataSourceRepository().getMetadata());
@@ -50,7 +50,7 @@ public class DataSourceManagementServiceImpl implements DataSourceManagementServ
      *
      * @param dataSourceName name of the data source
      * @return {@code CarbonDataSource}
-     * @throws DataSourceException
+     * @throws DataSourceException if particular data source can't be retrieved by its name.
      */
     public DataSourceMetadata getDataSource(String dataSourceName) throws DataSourceException {
         return DataSourceManager.getInstance().getDataSourceRepository().getMetadata(dataSourceName);
@@ -61,7 +61,7 @@ public class DataSourceManagementServiceImpl implements DataSourceManagementServ
      * register it in the JNDI context an the in memory repository.
      *
      * @param dataSourceMetadata {@code DataSourceMetaInfo}
-     * @throws DataSourceException
+     * @throws DataSourceException if the data source can't be bind into jndi context.
      */
     public void addDataSource(DataSourceMetadata dataSourceMetadata) throws DataSourceException {
         DataSourceManager dataSourceManager =  DataSourceManager.getInstance();
@@ -80,7 +80,7 @@ public class DataSourceManagementServiceImpl implements DataSourceManagementServ
      * Deletes a data source from the repository.
      *
      * @param dataSourceName {@code String}
-     * @throws DataSourceException
+     * @throws DataSourceException if the data source can't be unbind from jndi context.
      */
     public void deleteDataSource(String dataSourceName) throws DataSourceException {
         DataSourceRepository repository = DataSourceManager.getInstance().getDataSourceRepository();
