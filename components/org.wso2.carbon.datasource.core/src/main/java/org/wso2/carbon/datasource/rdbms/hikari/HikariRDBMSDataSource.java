@@ -39,7 +39,7 @@ public class HikariRDBMSDataSource {
      * Constructs HikariRDBMSDataSource object.
      *
      * @param config {@link HikariConfig}
-     * @throws DataSourceException
+     * @throws DataSourceException if there is an error.
      */
     public HikariRDBMSDataSource(HikariConfig config) throws DataSourceException {
         this.config = config;
@@ -62,7 +62,7 @@ public class HikariRDBMSDataSource {
      * Returns a {@link Reference} object representing the HikariDataSource.
      *
      * @return {@link Reference}
-     * @throws DataSourceException
+     * @throws DataSourceException if fieldName can't be retrieved from {@link HikariConfig} object.
      */
     public Reference getDataSourceFactoryReference() throws DataSourceException {
         Map<String, String> poolConfigMap =

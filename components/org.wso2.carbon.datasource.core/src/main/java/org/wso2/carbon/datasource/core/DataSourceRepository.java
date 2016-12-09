@@ -88,6 +88,7 @@ public class DataSourceRepository {
      * Adds a new data source to the repository.
      *
      * @param carbonDataSource The meta information of the data source to be added.
+     * @throws DataSourceException if there is an error.
      */
     public void addDataSource(CarbonDataSource carbonDataSource) throws DataSourceException {
         if (logger.isDebugEnabled()) {
@@ -101,6 +102,7 @@ public class DataSourceRepository {
      * Unregisters and deletes the data source from the repository.
      *
      * @param dataSourceName The data source name
+     * @throws DataSourceException if the data source is not there in repository.
      */
     public void deleteDataSource(String dataSourceName) throws DataSourceException {
         if (logger.isDebugEnabled()) {

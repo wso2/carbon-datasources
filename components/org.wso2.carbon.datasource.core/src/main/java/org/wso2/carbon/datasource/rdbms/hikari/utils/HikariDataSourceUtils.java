@@ -31,7 +31,7 @@ public class HikariDataSourceUtils {
      *
      * @param xmlConfiguration String
      * @return {@code HikariConfig}
-     * @throws DataSourceException
+     * @throws DataSourceException if there is an error when loading Hikari configuration.
      */
     public static HikariConfig buildConfiguration(String xmlConfiguration) throws DataSourceException {
         try {

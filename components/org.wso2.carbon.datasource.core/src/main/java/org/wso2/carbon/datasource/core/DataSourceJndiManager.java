@@ -42,7 +42,8 @@ public class DataSourceJndiManager {
      *
      * @param carbonDataSource {@code CarbonDataSource}
      * @param dataSourceReader {@code DataSourceReader}
-     * @throws DataSourceException
+     * @throws DataSourceException if there is an error while registering it in jndi context.
+     * @throws NamingException if there is an error while creating jndi context.
      */
     public static void register(CarbonDataSource carbonDataSource, DataSourceReader dataSourceReader)
             throws DataSourceException, NamingException {
@@ -55,7 +56,8 @@ public class DataSourceJndiManager {
      * @param dataSourceMetadata {@code DataSourceMetaInfo}
      * @param dataSourceObject   {@code Object}
      * @param dataSourceReader   {@code DataSourceReader}
-     * @throws DataSourceException
+     * @throws DataSourceException if there is an error while registering it in jndi context.
+     * @throws NamingException if there is an error while creating jndi context.
      */
     public static void register(DataSourceMetadata dataSourceMetadata, Object dataSourceObject,
             DataSourceReader dataSourceReader) throws DataSourceException, NamingException {
@@ -144,6 +146,7 @@ public class DataSourceJndiManager {
      * Unregister a given data source from the repository.
      *
      * @param cds {@code CarbonDataSource}
+     * @throws NamingException if there is an error while creating jndi initial context.
      */
     public static void unregister(CarbonDataSource cds) throws NamingException {
         if (logger.isDebugEnabled()) {
