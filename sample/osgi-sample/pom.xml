@@ -23,8 +23,8 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>bundle</packaging>
 
-    <artifactId>datasources-sample</artifactId>
-    <name>WSO2 Carbon Datasources - Sample</name>
+    <artifactId>datasources-osgi-sample</artifactId>
+    <name>WSO2 Carbon Datasources - OSGi Sample</name>
     <dependencies>
         <dependency>
             <groupId>org.apache.felix</groupId>

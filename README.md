@@ -22,6 +22,8 @@ as an OSGi service in OSGi environment or exposed through Java SPI in non-OSGi e
 
 ## Getting Started
 
+### Using carbon datasources in OSGi environment
+
 A client bundle which needs to use data sources should put their database configuration xml files under CARBON_HOME/Conf/datasources directory. The naming
 convention of the configuration file is *-datasources.xml. Refer the sample configuration file as follows;
 
@@ -159,9 +161,75 @@ public class ActivatorComponent {
 }
 ````
 
+### Using carbon datasources in non-OSGi environment
+
+The datasources required for non-OSGi client application can be defined in a configuration file and naming convention of the configuration file is *-datasources.xml. Refer the sample configuration file as follows;
+JNDI configuration cannot be added to a datasource because JNDI support is not there for non-OSGi applications at the moment.
+
+````xml
+<datasources-configuration>
+    <datasources>
+        <datasource>
+            <name>WSO2_ANALYTICS_DB</name>
+            <description>The datasource used for registry and user manager</description>
+            <definition type="RDBMS">
+                <configuration>
+                    <url>jdbc:h2:./target/database/ANALYTICS_DB1;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url>
+                    <username>wso2carbon</username>
+                    <password>wso2carbon</password>
+                    <driverClassName>org.h2.Driver</driverClassName>
+                    <maxActive>50</maxActive>
+                    <maxWait>60000</maxWait>
+                    <testOnBorrow>true</testOnBorrow>
+                    <validationQuery>SELECT 1</validationQuery>
+                    <validationInterval>30000</validationInterval>
+                    <defaultAutoCommit>false</defaultAutoCommit>
+                </configuration>
+            </definition>
+        </datasource>
+    </datasources>
+</datasources-configuration>
+````
+
+The carbon-datasources bundle picks these xml configuration and build the data sources. The client application could retrieve datasources using the services provided by the carbon-datasources bundle. The JNDI support to retrieve the carbon datsources in non-OSGi environment will be added soon.
+The datasources defined in configuration files are initialized by the DataSourceManager. They can be retrieved using `DataSourceService` using their names. The `DataSourceManagementService` can be used to perform managerial operations on datasources.
+
+The following is a sample code which loads and initializes the datsources defined in configuration files from `configFilePath` using DataSourceManager and performs some operation using the services.
+
+````java
+        DataSourceManager dataSourceManager = DataSourceManager.getInstance();
+        Path configFilePath = Paths.get("src", "main", "resources", "conf", "datasources");
+        DataSourceService dataSourceService = new DataSourceServiceImpl();
+        DataSourceManagementService dataSourceMgtService = new DataSourceManagementServiceImpl();
+        String analyticsDataSourceName = "WSO2_ANALYTICS_DB";
+        
+        try {
+            //Load and initialize the datasources defined in configuration files
+            dataSourceManager.initDataSources(configFilePath.toFile().getAbsolutePath());
+            
+            //Get datsources using DataSourceManagement service
+            logger.info("Initial data source count: " + dataSourceMgtService.getDataSource().size());
+            
+            //Get a particular datasource using its name
+            logger.info("Found " + analyticsDataSourceName + ": " + (
+                    dataSourceService.getDataSource(analyticsDataSourceName) != null ? true : false));
+            
+            //Delete a datasource using its name
+            dataSourceMgtService.deleteDataSource(analyticsDataSourceName);
+            logger.info("Deleted " + analyticsDataSourceName + " successfully");
+            logger.info("Data source count after deleting " + analyticsDataSourceName + ": " + dataSourceMgtService
+                    .getDataSource().size());
+
+        } catch (DataSourceException e) {
+            logger.error("Error occurred while using carbon datasource.", e);
+        }
+````
+
+
 Please refer the javadocs of `org.wso2.carbon.datasource.core.api.DataSourceManagementService` for usage.
 
 For full source code, see [Carbon Datasource sample] (sample).
+
 ## Download
 
 Use Maven snippet:
