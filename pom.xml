@@ -20,7 +20,7 @@
     <groupId>org.wso2.carbon.datasources</groupId>
     <artifactId>carbon-datasources</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.0</version>
+    <version>1.1.1-SNAPSHOT</version>
 
     <parent>
         <groupId>org.wso2</groupId>
@@ -42,7 +42,7 @@
         <url>https://github.com/wso2/carbon-datasources.git</url>
         <developerConnection>scm:git:https://github.com/wso2/carbon-datasources.git</developerConnection>
         <connection>scm:git:https://github.com/wso2/carbon-datasources.git</connection>
-        <tag>v1.1.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencyManagement>
@@ -369,7 +369,7 @@
     </build>
 
     <properties>
-        <carbon.datasource.version>1.1.0</carbon.datasource.version>
+        <carbon.datasource.version>1.1.1-SNAPSHOT</carbon.datasource.version>
         <carbon.feature.plugin.version>2.0.1</carbon.feature.plugin.version>
         <commons.io.version>2.4.0.wso2v1</commons.io.version>
         <org.apache.felix.version>1.0.0</org.apache.felix.version>
