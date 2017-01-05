@@ -14,7 +14,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>carbon-datasources</artifactId>
         <groupId>org.wso2.carbon.datasources</groupId>
@@ -99,7 +100,7 @@
                             <goal>jar</goal>
                         </goals>
                         <configuration>
-                            <excludePackageNames>org.wso2.carbon.datasource.internal</excludePackageNames>
+                            <excludePackageNames>org.wso2.carbon.datasource.core.internal</excludePackageNames>
                             <additionalparam>-Xdoclint:none</additionalparam>
                             <show>public</show>
                             <nohelp>true</nohelp>
@@ -112,7 +113,8 @@
     <properties>
         <export.package>org.wso2.carbon.datasource.core.*,
             org.wso2.carbon.datasource.rdbms.*,
-            org.wso2.carbon.datasource.utils.*</export.package>
+            org.wso2.carbon.datasource.utils.*
+        </export.package>
         <import.package>javax.xml.parsers;version=0.0.0,*;resolution:=optional</import.package>
         <dynamic.import.package>*</dynamic.import.package>
         <carbon.component>
