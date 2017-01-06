@@ -48,7 +48,9 @@ public class DataSourceClient {
         String analyticsDataSourceJndiConfigName = "java:comp/env/jdbc/WSO2AnalyticsDB/test";
 
         try {
-            //InitialContextFactoryBuilder has to be set to NamingManager to use InitialContext API
+            //InitialContextFactoryBuilder has to be set to NamingManager to use InitialContext API if the datasource
+            // definition does not have a jndiConfig element(ie datasource is initialized by default with JNDI
+            // context using carbon-jndi SPI DefaultContextFactoryBuilder).
             NamingManager.setInitialContextFactoryBuilder(new DefaultContextFactoryBuilder());
 
             //Load and initialize the datasources defined in configuration files

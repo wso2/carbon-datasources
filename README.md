@@ -164,7 +164,8 @@ public class ActivatorComponent {
 ### Using carbon datasources in non-OSGi environment
 
 The datasources required for non-OSGi client application can be defined in a configuration file and naming convention of the configuration file is *-datasources.xml. Refer the sample configuration file as follows;
-If there is no jndi config defined explicitly in datasource definition, it will use the InMemoryInitialContextFactory to bind datasource objects to jndi context using carbon-jndi.
+If there is no jndi config defined explicitly in datasource definition, it will use the InMemoryInitialContextFactory to bind datasource objects to jndi context using carbon-jndi. In this scenario non-OSGi application needs to
+set the carbon-jndi InitialContextFactoryBuilder `org.wso2.carbon.jndi.internal.spi.builder.DefaultContextFactoryBuilder` to NamingManager before initializing datasources.
 
 ````xml
 <datasources-configuration>
@@ -238,7 +239,9 @@ The following is a sample code which loads and initializes the datsources define
         String analyticsDataSourceJndiConfigName = "java:comp/env/jdbc/WSO2AnalyticsDB/test";
 
         try {
-            //InitialContextFactoryBuilder has to be set to NamingManager to use InitialContext API
+            //InitialContextFactoryBuilder has to be set to NamingManager to use InitialContext API if the datasource
+            // definition does not have a jndiConfig element(ie datasource is initialized by default with JNDI
+            // context using carbon-jndi SPI DefaultContextFactoryBuilder).
             NamingManager.setInitialContextFactoryBuilder(new DefaultContextFactoryBuilder());
 
             //Load and initialize the datasources defined in configuration files

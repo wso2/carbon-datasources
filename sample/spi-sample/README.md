@@ -35,7 +35,7 @@ If there is no jndi config defined explicitly in datasource definition, it will 
 ````
 
 A custom JNDI context can be plugged in easily by adding its initial context factory class in `jndiConfig` as below using the JNDI Context.INITIAL_CONTEXT_FACTORY("java.naming.factory.initial") property.
-````
+````xml
 <datasources-configuration>
     <datasources>
         <datasource>
