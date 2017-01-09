@@ -5,7 +5,6 @@ This is a sample java client application which uses WSO2 carbon-datasources serv
 ## Using carbon datasources in non-OSGi environment
 
 The datasources required for non-OSGi client application can be defined in a configuration file and naming convention of the configuration file is *-datasources.xml. Refer the sample configuration file as follows;
-JNDI configuration cannot be added to a datasource because JNDI support is not there for non-OSGi applications at the moment.
 
 If there is no jndi config defined explicitly in datasource definition, it will use the InMemoryInitialContextFactory to bind datasource objects to jndi context using carbon-jndi.
 
@@ -67,7 +66,7 @@ A custom JNDI context can be plugged in easily by adding its initial context fac
 </datasources-configuration>
 ````
 
-The carbon-datasources bundle picks these xml configuration and build the data sources. The client application could retrieve datasources using the services provided by the carbon-datasources bundle. The JNDI support to retrieve the carbon datsources in non-OSGi environment will be added soon.
+The carbon-datasources bundle picks these xml configuration and build the data sources. The client application could retrieve datasources using the services provided by the carbon-datasources bundle. The In-memory JNDI context support is there to be used with the carbon datsources in non-OSGi environment.
 The datasources defined in configuration files are initialized by the `DataSourceManager`. They can be retrieved using `DataSourceService` using their names. The `DataSourceManagementService` can be used to perform managerial operations on datasources.
 
 ## Instructions to build and execute the application

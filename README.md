@@ -225,7 +225,7 @@ A custom JNDI context can be plugged in easily by adding its initial context fac
 </datasources-configuration>
 ````
 
-The carbon-datasources bundle picks these xml configuration and build the data sources. The client application could retrieve datasources using the services provided by the carbon-datasources bundle. The JNDI support to retrieve the carbon datsources in non-OSGi environment will be added soon.
+The carbon-datasources bundle picks these xml configuration and build the data sources. The client application could retrieve datasources using the services provided by the carbon-datasources bundle. The In-memory JNDI context support is available to be used with to retrieve the carbon datsources in non-OSGi environment.
 The datasources defined in configuration files are initialized by the DataSourceManager. They can be retrieved using `DataSourceService` using their names. The `DataSourceManagementService` can be used to perform managerial operations on datasources. Also a datasource can be retrieved via jndi lookup using its jndi config names.
 
 The following is a sample code which loads and initializes the datsources defined in configuration files from `configFilePath` using DataSourceManager and performs some operation using the services.
