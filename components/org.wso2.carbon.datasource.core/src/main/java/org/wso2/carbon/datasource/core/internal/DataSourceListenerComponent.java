@@ -71,7 +71,6 @@ public class DataSourceListenerComponent implements RequiredCapabilityListener {
     protected void registerJNDIContextManager(JNDIContextManager jndiContextManager) {
     }
 
-
     protected void unRegisterJNDIContextManager(JNDIContextManager jndiContextManager) {
     }
 

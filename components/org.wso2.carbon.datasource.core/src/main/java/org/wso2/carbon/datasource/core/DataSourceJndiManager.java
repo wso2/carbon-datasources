@@ -35,7 +35,7 @@ public class DataSourceJndiManager {
 
     private static final String JAVA_COMP_CONTEXT_STRING = "java:comp";
     private static final String ENV_CONTEXT_STRING = "env";
-    private static Logger logger = LoggerFactory.getLogger(DataSourceJndiManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(DataSourceJndiManager.class);
 
     /**
      * Register the data source in the JNDI context.
