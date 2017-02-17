@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2016 WSO2, Inc. (http://wso2.com)
+  ~ Copyright 2017 WSO2, Inc. (http://wso2.com)
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -156,6 +156,17 @@
             <artifactId>org.wso2.carbon.jndi</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.wso2.carbon.datasources</groupId>
+            <artifactId>wso2carbon-datasource-test</artifactId>
+            <type>zip</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.container</artifactId>
+        </dependency>
     </dependencies>
 
     <profiles>
@@ -195,6 +206,24 @@
                         <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
                             <execution>
+                                <id>unpack-distribution</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.wso2.carbon.datasources</groupId>
+                                            <artifactId>wso2carbon-datasource-test</artifactId>
+                                            <type>zip</type>
+                                            <overWrite>true</overWrite>
+                                            <outputDirectory>${project.build.directory}</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                            <execution>
                                 <id>copy-jacoco-dependencies</id>
                                 <phase>compile</phase>
                                 <goals>
@@ -213,6 +242,10 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <systemPropertyVariables>
+                                <org.wso2.carbon.test.default.distribution>
+                                    org.wso2.carbon.datasources:wso2carbon-datasource-test
+                                </org.wso2.carbon.test.default.distribution>
+                                <org.ops4j.pax.logging.DefaultServiceLog.level>DEBUG</org.ops4j.pax.logging.DefaultServiceLog.level>
                                 <org.ops4j.pax.url.mvn.localRepository>${settings.localRepository}
                                 </org.ops4j.pax.url.mvn.localRepository>
                                 <jacoco-agent.destfile>${project.build.directory}/jacoco.exec</jacoco-agent.destfile>
@@ -220,6 +253,9 @@
                             <suiteXmlFiles>
                                 <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                             </suiteXmlFiles>
+                            <environmentVariables>
+                                <JAVA_OPTS>${jcoverage.command}</JAVA_OPTS>
+                                </environmentVariables>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -232,9 +268,11 @@
                                     <goal>prepare-agent</goal>
                                 </goals>
                                 <configuration>
+                                    <propertyName>jcoverage.command</propertyName>
                                     <includes>
                                         <include>org.wso2.carbon*</include>
                                     </includes>
+                                    <append>true</append>
                                 </configuration>
                             </execution>
                             <execution>

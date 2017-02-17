@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2016 WSO2, Inc. (http://wso2.com)
+  ~ Copyright 2017 WSO2, Inc. (http://wso2.com)
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -272,6 +272,28 @@
                 <artifactId>snakeyaml</artifactId>
                 <version>${org.snakeyaml.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon</groupId>
+                <artifactId>org.wso2.carbon.pax.exam.feature</artifactId>
+                <version>${carbon.kernel.version}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.datasources</groupId>
+                <artifactId>wso2carbon-datasource-test</artifactId>
+                <version>${project.version}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon</groupId>
+                <artifactId>org.wso2.carbon.container</artifactId>
+                <version>${carbon.kernel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.datasources</groupId>
+                <artifactId>wso2carbon-datasource</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -370,13 +392,13 @@
 
     <properties>
         <carbon.datasource.version>1.1.1-SNAPSHOT</carbon.datasource.version>
-        <carbon.feature.plugin.version>2.0.1</carbon.feature.plugin.version>
+        <carbon.feature.plugin.version>3.0.0</carbon.feature.plugin.version>
         <commons.io.version>2.4.0.wso2v1</commons.io.version>
         <org.apache.felix.version>1.0.0</org.apache.felix.version>
         <com.zaxxer.hikaricp.version>2.4.1</com.zaxxer.hikaricp.version>
         <java.version>1.8</java.version>
-        <carbon.kernel.version>5.1.0-alpha2</carbon.kernel.version>
-        <carbon.jndi.version>1.0.0-alpha</carbon.jndi.version>
+        <carbon.kernel.version>5.2.0-m3</carbon.kernel.version>
+        <carbon.jndi.version>1.0.2-SNAPSHOT</carbon.jndi.version>
 
         <osgi.core.api.version>6.0.0</osgi.core.api.version>
 
