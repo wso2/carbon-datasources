@@ -164,7 +164,8 @@ public class ActivatorComponent {
 ### Using carbon datasources in non-OSGi environment
 
 The datasources required for non-OSGi client application can be defined in a configuration file and naming convention of the configuration file is *-datasources.xml. Refer the sample configuration file as follows;
-JNDI configuration cannot be added to a datasource because JNDI support is not there for non-OSGi applications at the moment.
+If there is no jndi config defined explicitly in datasource definition, it will use the InMemoryInitialContextFactory to bind datasource objects to jndi context using carbon-jndi. In this scenario non-OSGi application needs to
+set the carbon-jndi InitialContextFactoryBuilder `org.wso2.carbon.jndi.internal.spi.builder.DefaultContextFactoryBuilder` to NamingManager before initializing datasources.
 
 ````xml
 <datasources-configuration>
@@ -191,8 +192,41 @@ JNDI configuration cannot be added to a datasource because JNDI support is not t
 </datasources-configuration>
 ````
 
-The carbon-datasources bundle picks these xml configuration and build the data sources. The client application could retrieve datasources using the services provided by the carbon-datasources bundle. The JNDI support to retrieve the carbon datsources in non-OSGi environment will be added soon.
-The datasources defined in configuration files are initialized by the DataSourceManager. They can be retrieved using `DataSourceService` using their names. The `DataSourceManagementService` can be used to perform managerial operations on datasources.
+A custom JNDI context can be plugged in easily by adding its initial context factory class in `jndiConfig` as below using the JNDI Context.INITIAL_CONTEXT_FACTORY("java.naming.factory.initial") property.
+````
+<datasources-configuration>
+    <datasources>
+        <datasource>
+            <name>WSO2_CARBON_DB</name>
+            <description>The datasource used for registry and user manager</description>
+            <jndiConfig>
+                <name>jdbc/WSO2CarbonDB/test</name>
+                <useJndiReference>true</useJndiReference>
+                <environment>
+                    <property name="java.naming.factory.initial">org.wso2.carbon.jndi.internal.InMemoryInitialContextFactory</property>
+                </environment>
+            </jndiConfig>
+            <definition type="RDBMS">
+                <configuration>
+                    <url>jdbc:h2:./target/database/TEST_DB1;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url>
+                    <username>wso2carbon</username>
+                    <password>wso2carbon</password>
+                    <driverClassName>org.h2.Driver</driverClassName>
+                    <maxActive>50</maxActive>
+                    <maxWait>60000</maxWait>
+                    <testOnBorrow>true</testOnBorrow>
+                    <validationQuery>SELECT 1</validationQuery>
+                    <validationInterval>30000</validationInterval>
+                    <defaultAutoCommit>false</defaultAutoCommit>
+                </configuration>
+            </definition>
+        </datasource>
+    </datasources>
+</datasources-configuration>
+````
+
+The carbon-datasources bundle picks these xml configuration and build the data sources. The client application could retrieve datasources using the services provided by the carbon-datasources bundle. The In-memory JNDI context support is available to be used with to retrieve the carbon datsources in non-OSGi environment.
+The datasources defined in configuration files are initialized by the DataSourceManager. They can be retrieved using `DataSourceService` using their names. The `DataSourceManagementService` can be used to perform managerial operations on datasources. Also a datasource can be retrieved via jndi lookup using its jndi config names.
 
 The following is a sample code which loads and initializes the datsources defined in configuration files from `configFilePath` using DataSourceManager and performs some operation using the services.
 
@@ -202,25 +236,35 @@ The following is a sample code which loads and initializes the datsources define
         DataSourceService dataSourceService = new DataSourceServiceImpl();
         DataSourceManagementService dataSourceMgtService = new DataSourceManagementServiceImpl();
         String analyticsDataSourceName = "WSO2_ANALYTICS_DB";
-        
+        String analyticsDataSourceJndiConfigName = "java:comp/env/jdbc/WSO2AnalyticsDB/test";
+
         try {
+            //InitialContextFactoryBuilder has to be set to NamingManager to use InitialContext API if the datasource
+            // definition does not have a jndiConfig element(ie datasource is initialized by default with JNDI
+            // context using carbon-jndi SPI DefaultContextFactoryBuilder).
+            NamingManager.setInitialContextFactoryBuilder(new DefaultContextFactoryBuilder());
+
             //Load and initialize the datasources defined in configuration files
             dataSourceManager.initDataSources(configFilePath.toFile().getAbsolutePath());
-            
-            //Get datsources using DataSourceManagement service
+
+            //Get datasources using DataSourceManagement service
             logger.info("Initial data source count: " + dataSourceMgtService.getDataSource().size());
-            
+
             //Get a particular datasource using its name
             logger.info("Found " + analyticsDataSourceName + ": " + (
                     dataSourceService.getDataSource(analyticsDataSourceName) != null ? true : false));
-            
+
+            //Get a datasource username using jndi lookup
+            Context context = new InitialContext();
+            logger.info(analyticsDataSourceName + " datasource username retrieved via jndi lookup: "
+                    + ((HikariDataSource) context.lookup(analyticsDataSourceJndiConfigName)).getUsername());
+
             //Delete a datasource using its name
             dataSourceMgtService.deleteDataSource(analyticsDataSourceName);
             logger.info("Deleted " + analyticsDataSourceName + " successfully");
             logger.info("Data source count after deleting " + analyticsDataSourceName + ": " + dataSourceMgtService
                     .getDataSource().size());
-
-        } catch (DataSourceException e) {
+        } catch (DataSourceException | NamingException e) {
             logger.error("Error occurred while using carbon datasource.", e);
         }
 ````
