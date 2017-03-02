@@ -1,0 +1,16 @@
+<datasources-configuration>
+    <datasources>
+        <datasource>
+            <name>WSO2_HADOOP_DB</name>
+            <description>The datasource used for registry and user manager</description>
+            <definition type="HADOOP">
+                <configuration>
+                    <property>
+                        <name>hbase.master</name>
+                        <value>localhost:60000</value>
+                    </property>
+                </configuration>
+            </definition>
+        </datasource>
+    </datasources>
+</datasources-configuration>
