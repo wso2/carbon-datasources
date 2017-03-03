@@ -15,9 +15,6 @@
  */
 package org.wso2.carbon.datasource.osgi;
 
-import org.ops4j.pax.exam.Configuration;
-import org.ops4j.pax.exam.CoreOptions;
-import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerClass;
 import org.ops4j.pax.exam.testng.listener.PaxExam;
@@ -27,12 +24,9 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.wso2.carbon.datasource.core.api.DataSourceService;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
-import org.wso2.carbon.datasource.osgi.utils.OSGiTestUtils;
 import org.wso2.carbon.kernel.utils.CarbonServerInfo;
 
 import javax.inject.Inject;
-
-import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 
 /**
  * Test class for {@link DataSourceService}.
@@ -40,21 +34,6 @@ import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 @Listeners(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)
 public class DataSourceServiceTest {
-
-    @Configuration
-    public Option[] createConfiguration() {
-        OSGiTestUtils.setEnv();
-
-        Option[] options = CoreOptions.options(
-                mavenBundle().artifactId("commons-io").groupId("commons-io.wso2").version("2.4.0.wso2v1"),
-                mavenBundle().artifactId("HikariCP").groupId("com.zaxxer").version("2.4.1"),
-                mavenBundle().artifactId("h2").groupId("com.h2database").version("1.4.191"),
-                mavenBundle().artifactId("org.wso2.carbon.datasource.core").groupId("org.wso2.carbon.datasources")
-                        .versionAsInProject(),
-                mavenBundle().artifactId("org.wso2.carbon.jndi").groupId("org.wso2.carbon.jndi").versionAsInProject()
-        );
-        return OSGiTestUtils.getDefaultPaxOptions(options);
-    }
 
     @Inject
     private BundleContext bundleContext;
