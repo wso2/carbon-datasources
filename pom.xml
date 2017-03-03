@@ -281,8 +281,9 @@
             <dependency>
                 <groupId>org.wso2.carbon.datasources</groupId>
                 <artifactId>wso2carbon-datasource-test</artifactId>
-                <version>${project.version}</version>
+                <version>${carbon.datasource.version}</version>
                 <type>zip</type>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon</groupId>
@@ -292,7 +293,7 @@
             <dependency>
                 <groupId>org.wso2.carbon.datasources</groupId>
                 <artifactId>wso2carbon-datasource</artifactId>
-                <version>${project.version}</version>
+                <version>${carbon.datasource.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -398,7 +399,7 @@
         <com.zaxxer.hikaricp.version>2.4.1</com.zaxxer.hikaricp.version>
         <java.version>1.8</java.version>
         <carbon.kernel.version>5.2.0-m3</carbon.kernel.version>
-        <carbon.jndi.version>1.0.2-SNAPSHOT</carbon.jndi.version>
+        <carbon.jndi.version>1.0.2</carbon.jndi.version>
 
         <osgi.core.api.version>6.0.0</osgi.core.api.version>
 
