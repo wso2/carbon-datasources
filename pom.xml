@@ -31,7 +31,7 @@
     <modules>
         <module>components/org.wso2.carbon.datasource.core</module>
         <module>components/org.wso2.carbon.datasource.hadoop</module>
-        <module>feature</module>
+        <module>features</module>
         <module>distribution</module>
         <module>sample/osgi-sample</module>
         <module>sample/spi-sample</module>
@@ -411,6 +411,7 @@
         <hbase.shaded.client.version>1.2.1.wso2v2</hbase.shaded.client.version>
         <commons.collections.version>3.2.2.wso2v1</commons.collections.version>
         <guava.version>19.0</guava.version>
+        <guava.manifest.version>19.0.0</guava.manifest.version>
         <!-- END dependencies required for the Hadoop datasource -->
 
         <osgi.core.api.version>6.0.0</osgi.core.api.version>
