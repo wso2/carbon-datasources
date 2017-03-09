@@ -70,7 +70,7 @@
                             <bundles>
                                 <bundle>
                                     <symbolicName>org.wso2.carbon.datasource.core</symbolicName>
-                                    <version>${project.version}</version>
+                                    <version>${carbon.datasource.version}</version>
                                 </bundle>
                                 <bundle>
                                     <symbolicName>commons-io</symbolicName>
