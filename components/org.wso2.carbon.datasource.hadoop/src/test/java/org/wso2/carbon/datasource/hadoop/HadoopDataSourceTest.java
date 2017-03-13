@@ -59,6 +59,7 @@ public class HadoopDataSourceTest {
     public void testDataSourceAvailability() throws DataSourceException {
         int dataSourcesCount = dataSourceMgtService.getDataSource().size();
         Assert.assertTrue(dataSourcesCount > 0, "There should be at least one defined datasource available");
+        logger.info("TEST 1: Checking if the datasource is available..                                          [OK]");
     }
 
     @Test(dependsOnMethods = "testDataSourceAvailability")
@@ -67,6 +68,7 @@ public class HadoopDataSourceTest {
         Assert.assertEquals(types.get(0), DATASOURCE_TYPE_HADOOP,
                 "Expected defined data source of type '" + DATASOURCE_TYPE_HADOOP + "' but found '"
                         + types.get(0) + "'");
+        logger.info("TEST 2: Checking if the datasource is of the expected type..                               [OK]");
     }
 
     @Test(dependsOnMethods = "testDataSourceAvailability")
@@ -75,6 +77,7 @@ public class HadoopDataSourceTest {
         Assert.assertEquals(reader.getType(), DATASOURCE_TYPE_HADOOP,
                 "Expected data source reader of type '" + DATASOURCE_TYPE_HADOOP + "' but found '"
                         + reader.getType() + "'");
+        logger.info("TEST 3: Checking if the datasource provider is available..                                 [OK]");
     }
 
     @Test(dependsOnMethods = "testDataSourceType")
@@ -82,6 +85,7 @@ public class HadoopDataSourceTest {
         final String dataSourceName = "WSO2_HADOOP_DB";
         Object dataSource = dataSourceService.getDataSource(dataSourceName);
         Assert.assertNotNull(dataSource, "Test datasource '" + dataSourceName + "' should not be null");
+        logger.info("TEST 4: Checking if the specified datasource is of the correct type..                      [OK]");
     }
 
     @Test(dependsOnMethods = "testDataSourceInitialization")
@@ -91,6 +95,7 @@ public class HadoopDataSourceTest {
         String propertyValue = hadoopDataSource.get("hbase.master");
         Assert.assertEquals(propertyValue, "localhost:60000",
                 "Expected Hadoop property to be 'localhost:60000' but found '" + propertyValue + "'");
+        logger.info("TEST 5: Checking if the datasource is valid for use in client-side applications..          [OK]");
     }
 
 }

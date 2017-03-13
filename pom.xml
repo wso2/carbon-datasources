@@ -398,6 +398,7 @@
 
     <properties>
         <carbon.datasource.version>1.1.1-SNAPSHOT</carbon.datasource.version>
+        <carbon.datasource.imp.pkg.version>[1.0, 2.0)</carbon.datasource.imp.pkg.version>
         <carbon.feature.plugin.version>2.0.1</carbon.feature.plugin.version>
         <commons.io.version>2.4.0.wso2v1</commons.io.version>
         <org.apache.felix.version>1.0.0</org.apache.felix.version>
@@ -408,7 +409,9 @@
 
         <!-- START dependencies required for the Hadoop datasource -->
         <hadoop-client.orbit.version>2.7.2.wso2v1</hadoop-client.orbit.version>
+        <hadoop-client.orbit.imp.pkg.version>[2.7, 3.0)</hadoop-client.orbit.imp.pkg.version>
         <hbase.shaded.client.version>1.2.1.wso2v2</hbase.shaded.client.version>
+        <hbase-client.orbit.imp.pkg.version>[1.2, 2.0)</hbase-client.orbit.imp.pkg.version>
         <commons.collections.version>3.2.2.wso2v1</commons.collections.version>
         <guava.version>19.0</guava.version>
         <guava.manifest.version>19.0.0</guava.manifest.version>

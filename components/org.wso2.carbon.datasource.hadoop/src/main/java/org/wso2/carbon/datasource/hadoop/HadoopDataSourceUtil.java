@@ -44,7 +44,7 @@ public class HadoopDataSourceUtil {
             List<HadoopDataSourceProperty> properties = configuration.getProperties();
 
             for (HadoopDataSourceProperty configEntry : properties) {
-                if (!("".equals(configEntry.getPropertyName())) && !("".equals(configEntry.getPropertyValue()))) {
+                if (!configEntry.getPropertyName().isEmpty() && !configEntry.getPropertyValue().isEmpty()) {
                     config.set(configEntry.getPropertyName(), configEntry.getPropertyValue());
                 }
             }

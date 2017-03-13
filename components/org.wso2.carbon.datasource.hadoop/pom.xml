@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2016 WSO2, Inc. (http://wso2.com)
+  ~ Copyright 2017 WSO2, Inc. (http://wso2.com)
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -48,10 +48,6 @@
         <dependency>
             <groupId>org.wso2.orbit.commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.ops4j.pax.logging</groupId>
-            <artifactId>pax-logging-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.ops4j.pax.logging</groupId>
@@ -123,7 +119,13 @@
     </build>
     <properties>
         <export.package>org.wso2.carbon.datasource.hadoop.*</export.package>
-        <import.package>javax.xml.parsers;version=0.0.0,*;resolution:=optional</import.package>
+        <import.package>
+            !org.wso2.carbon.datasource.hadoop,
+            org.wso2.carbon.datasource.*;version="${carbon.datasource.imp.pkg.version}",
+            org.apache.hadoop.*;version="${hadoop-client.orbit.imp.pkg.version}",
+            org.apache.hadoop.hbase.*;version="${hbase-client.orbit.imp.pkg.version}",
+            javax.xml.parsers;version=0.0.0
+        </import.package>
         <dynamic.import.package>*</dynamic.import.package>
         <carbon.component>
             startup.listener;componentName="carbon-datasource-service";requiredService="org.wso2.carbon.datasource.core.spi.DataSourceReader",
