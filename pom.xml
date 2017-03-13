@@ -30,7 +30,8 @@
 
     <modules>
         <module>components/org.wso2.carbon.datasource.core</module>
-        <module>feature</module>
+        <module>components/org.wso2.carbon.datasource.hadoop</module>
+        <module>features</module>
         <module>distribution</module>
         <module>sample/osgi-sample</module>
         <module>sample/spi-sample</module>
@@ -50,6 +51,11 @@
             <dependency>
                 <groupId>org.wso2.carbon.datasources</groupId>
                 <artifactId>org.wso2.carbon.datasource.core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.datasources</groupId>
+                <artifactId>org.wso2.carbon.datasource.hadoop</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -272,6 +278,28 @@
                 <artifactId>snakeyaml</artifactId>
                 <version>${org.snakeyaml.version}</version>
             </dependency>
+            <!-- START dependencies required for the Hadoop datasource -->
+            <dependency>
+                <groupId>org.wso2.orbit.org.apache.hadoop</groupId>
+                <artifactId>hadoop-client</artifactId>
+                <version>${hadoop-client.orbit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.orbit.org.apache.hbase</groupId>
+                <artifactId>hbase-shaded-client</artifactId>
+                <version>${hbase.shaded.client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.orbit.commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>${commons.collections.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <!-- END dependencies required for the Hadoop datasource -->
         </dependencies>
     </dependencyManagement>
 
@@ -370,6 +398,7 @@
 
     <properties>
         <carbon.datasource.version>1.1.1-SNAPSHOT</carbon.datasource.version>
+        <carbon.datasource.imp.pkg.version>[1.0, 2.0)</carbon.datasource.imp.pkg.version>
         <carbon.feature.plugin.version>2.0.1</carbon.feature.plugin.version>
         <commons.io.version>2.4.0.wso2v1</commons.io.version>
         <org.apache.felix.version>1.0.0</org.apache.felix.version>
@@ -377,6 +406,16 @@
         <java.version>1.8</java.version>
         <carbon.kernel.version>5.1.0-alpha2</carbon.kernel.version>
         <carbon.jndi.version>1.0.0-alpha</carbon.jndi.version>
+
+        <!-- START dependencies required for the Hadoop datasource -->
+        <hadoop-client.orbit.version>2.7.2.wso2v1</hadoop-client.orbit.version>
+        <hadoop-client.orbit.imp.pkg.version>[2.7, 3.0)</hadoop-client.orbit.imp.pkg.version>
+        <hbase.shaded.client.version>1.2.1.wso2v2</hbase.shaded.client.version>
+        <hbase-client.orbit.imp.pkg.version>[1.2, 2.0)</hbase-client.orbit.imp.pkg.version>
+        <commons.collections.version>3.2.2.wso2v1</commons.collections.version>
+        <guava.version>19.0</guava.version>
+        <guava.manifest.version>19.0.0</guava.manifest.version>
+        <!-- END dependencies required for the Hadoop datasource -->
 
         <osgi.core.api.version>6.0.0</osgi.core.api.version>
 

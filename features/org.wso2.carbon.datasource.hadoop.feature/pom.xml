@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2016 WSO2, Inc. (http://wso2.com)
+  ~ Copyright 2017 WSO2, Inc. (http://wso2.com)
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,19 +14,20 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>carbon-datasources</artifactId>
+        <artifactId>carbon-datasource-features</artifactId>
         <groupId>org.wso2.carbon.datasources</groupId>
         <version>1.1.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>carbon-feature</packaging>
-    <artifactId>org.wso2.carbon.datasource.core.feature</artifactId>
+    <artifactId>org.wso2.carbon.datasource.hadoop.feature</artifactId>
 
-    <name>WSO2 Carbon Datasources - Feature</name>
-    <description>Generates a feature from data source bundle by encapsulating it's core dependencies</description>
+    <name>WSO2 Carbon Hadoop Datasource - Feature</name>
+    <description>Generates a feature from data source bundle by encapsulating its core dependencies</description>
 
     <dependencies>
         <dependency>
@@ -34,12 +35,28 @@
             <artifactId>org.wso2.carbon.datasource.core</artifactId>
         </dependency>
         <dependency>
-            <groupId>commons-io.wso2</groupId>
-            <artifactId>commons-io</artifactId>
+            <groupId>org.wso2.carbon.datasources</groupId>
+            <artifactId>org.wso2.carbon.datasource.hadoop</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
+            <groupId>org.wso2.orbit.org.apache.hadoop</groupId>
+            <artifactId>hadoop-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.orbit.org.apache.hbase</groupId>
+            <artifactId>hbase-shaded-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.orbit.commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.logging</groupId>
+            <artifactId>pax-logging-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
     </dependencies>
 
@@ -69,16 +86,28 @@
                             </adviceFileContents>
                             <bundles>
                                 <bundle>
-                                    <symbolicName>org.wso2.carbon.datasource.core</symbolicName>
+                                    <symbolicName>org.wso2.carbon.datasource.hadoop</symbolicName>
                                     <version>${project.version}</version>
                                 </bundle>
                                 <bundle>
-                                    <symbolicName>commons-io</symbolicName>
-                                    <version>${commons.io.version}</version>
+                                    <symbolicName>hadoop-client</symbolicName>
+                                    <version>${hadoop-client.orbit.version}</version>
                                 </bundle>
                                 <bundle>
-                                    <symbolicName>com.zaxxer.HikariCP</symbolicName>
-                                    <version>${com.zaxxer.hikaricp.version}</version>
+                                    <symbolicName>hbase-shaded-client</symbolicName>
+                                    <version>${hbase.shaded.client.version}</version>
+                                </bundle>
+                                <bundle>
+                                    <symbolicName>commons-collections</symbolicName>
+                                    <version>${commons.collections.version}</version>
+                                </bundle>
+                                <bundle>
+                                    <symbolicName>org.ops4j.pax.logging.pax-logging-api</symbolicName>
+                                    <version>${pax.logging.api.version}</version>
+                                </bundle>
+                                <bundle>
+                                    <symbolicName>com.google.guava</symbolicName>
+                                    <version>${guava.manifest.version}</version>
                                 </bundle>
                             </bundles>
                         </configuration>
