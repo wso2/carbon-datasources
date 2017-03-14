@@ -77,11 +77,10 @@ public class DataSourceBuilder {
             logger.debug("Generating the Datasource object from \"" + dataSourceDefinition.getType() + "\" type " +
                     "reader.");
         }
-        // create the yaml string from the map
+        // create the yaml string from the configuration map
         Yaml yaml = new Yaml();
         String configuration = yaml.dumpAsMap(dataSourceDefinition.getConfiguration());
         return dataSourceReader.createDataSource(configuration,
                 isUseDataSourceFactory);
-
     }
 }
