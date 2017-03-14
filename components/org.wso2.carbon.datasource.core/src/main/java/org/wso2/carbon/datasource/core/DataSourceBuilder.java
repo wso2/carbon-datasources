@@ -17,13 +17,12 @@ package org.wso2.carbon.datasource.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Element;
 import org.wso2.carbon.datasource.core.beans.CarbonDataSource;
 import org.wso2.carbon.datasource.core.beans.DataSourceDefinition;
 import org.wso2.carbon.datasource.core.beans.DataSourceMetadata;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.core.spi.DataSourceReader;
-import org.wso2.carbon.datasource.utils.DataSourceUtils;
+import org.yaml.snakeyaml.Yaml;
 
 /**
  * DataSourceBuilder is a util class responsible to build data source by passing the data source configuration to the
@@ -78,8 +77,11 @@ public class DataSourceBuilder {
             logger.debug("Generating the Datasource object from \"" + dataSourceDefinition.getType() + "\" type " +
                     "reader.");
         }
-        Element configurationXmlDefinition = (Element) dataSourceDefinition.getDsXMLConfiguration();
-        return dataSourceReader.createDataSource(DataSourceUtils.elementToString(configurationXmlDefinition),
+        // create the yaml string from the map
+        Yaml yaml = new Yaml();
+        String configuration = yaml.dumpAsMap(dataSourceDefinition.getConfiguration());
+        return dataSourceReader.createDataSource(configuration,
                 isUseDataSourceFactory);
+
     }
 }

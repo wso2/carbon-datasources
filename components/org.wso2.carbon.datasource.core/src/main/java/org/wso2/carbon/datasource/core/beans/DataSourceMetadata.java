@@ -16,25 +16,25 @@
 package org.wso2.carbon.datasource.core.beans;
 
 import org.wso2.carbon.datasource.utils.DataSourceUtils;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import org.wso2.carbon.kernel.annotations.Configuration;
+import org.wso2.carbon.kernel.annotations.Element;
 
 /**
  * This class represents data source meta information.
  */
-@XmlRootElement(name = "datasource")
-@XmlType(propOrder = {"name", "description", "jndiConfig", "definition"})
+@Configuration(description = "Data Source metadata configuration")
 public class DataSourceMetadata {
 
-    private String name;
+    @Element(description = "datasource name", required = true)
+    private String name = "WSO2_CARBON_DB";
 
-    private String description;
+    @Element(description = "datasource description")
+    private String description = "A sample datasource configuration";
 
-    private JNDIConfig jndiConfig;
+    private JNDIConfig jndiConfig = new JNDIConfig();
 
-    private DataSourceDefinition definition;
+    @Element(description = "datasource definition", required = true)
+    private DataSourceDefinition definition = new DataSourceDefinition();
 
     public void setName(String name) {
         this.name = name;
@@ -48,22 +48,18 @@ public class DataSourceMetadata {
         this.jndiConfig = jndiConfig;
     }
 
-    @XmlElement(name = "name", required = true, nillable = false)
     public String getName() {
         return name;
     }
 
-    @XmlElement(name = "description")
     public String getDescription() {
         return description;
     }
 
-    @XmlElement(name = "jndiConfig")
     public JNDIConfig getJndiConfig() {
         return jndiConfig;
     }
 
-    @XmlElement(name = "definition", required = true, nillable = false)
     public DataSourceDefinition getDefinition() {
         return definition;
     }
@@ -92,7 +88,6 @@ public class DataSourceMetadata {
 
     @Override
     public int hashCode() {
-        assert false : "hashCode() not implemented";
         return -1;
     }
 

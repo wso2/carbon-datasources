@@ -268,11 +268,6 @@
                 <version>${org.eclipse.equinox.cm.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.orbit.org.yaml</groupId>
-                <artifactId>snakeyaml</artifactId>
-                <version>${org.snakeyaml.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.wso2.carbon</groupId>
                 <artifactId>org.wso2.carbon.pax.exam.feature</artifactId>
                 <version>${carbon.kernel.version}</version>
@@ -291,9 +286,10 @@
                 <version>${carbon.kernel.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.datasources</groupId>
-                <artifactId>wso2carbon-datasource</artifactId>
-                <version>${carbon.datasource.version}</version>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <optional>true</optional>
+                <version>${org.snakeyaml.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -444,6 +440,6 @@
         </equinox.simpleconfigurator.manipulator.version>
         <equinox.util.version>1.0.500.v20130404-1337</equinox.util.version>
         <org.eclipse.equinox.cm.version>1.1.0.v20131021-1936</org.eclipse.equinox.cm.version>
-        <org.snakeyaml.version>1.16.0.wso2v1</org.snakeyaml.version>
+        <org.snakeyaml.version>1.17</org.snakeyaml.version>
     </properties>
 </project>

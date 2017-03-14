@@ -15,21 +15,26 @@
  */
 package org.wso2.carbon.datasource.core.beans;
 
+import org.wso2.carbon.kernel.annotations.Configuration;
+import org.wso2.carbon.kernel.annotations.Element;
+
+import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This class represents the system data sources configuration.
  */
-@XmlRootElement(name = "datasources-configuration")
+@Configuration(namespace = "wso2.datasources", description = "Data Sources Configuration")
 public class DataSourcesConfiguration {
 
+    public DataSourcesConfiguration() {
+        dataSources = new ArrayList<>();
+        dataSources.add(new DataSourceMetadata());
+    }
+
+    @Element(description = "datasources")
     private List<DataSourceMetadata> dataSources;
 
-    @XmlElementWrapper(name = "datasources")
-    @XmlElement(name = "datasource", nillable = false)
     public List<DataSourceMetadata> getDataSources() {
         return dataSources;
     }

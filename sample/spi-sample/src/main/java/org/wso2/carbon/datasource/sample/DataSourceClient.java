@@ -15,23 +15,12 @@
  */
 package org.wso2.carbon.datasource.sample;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.wso2.carbon.datasource.core.DataSourceManager;
-import org.wso2.carbon.datasource.core.api.DataSourceManagementService;
-import org.wso2.carbon.datasource.core.api.DataSourceService;
-import org.wso2.carbon.datasource.core.exception.DataSourceException;
-import org.wso2.carbon.datasource.core.impl.DataSourceManagementServiceImpl;
-import org.wso2.carbon.datasource.core.impl.DataSourceServiceImpl;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 /**
  * This is a sample SPI client which uses the carbon datasources service in non-OSGi environment.
+ * TODO: Fix issue #32
  */
 public class DataSourceClient {
-    private static Logger logger = LoggerFactory.getLogger(DataSourceClient.class);
+/*    private static Logger logger = LoggerFactory.getLogger(DataSourceClient.class);
 
     public static void main(String[] args) {
         DataSourceManager dataSourceManager = DataSourceManager.getInstance();
@@ -60,6 +49,6 @@ public class DataSourceClient {
         } catch (DataSourceException e) {
             logger.error("Error occurred while using carbon datasource.", e);
         }
-    }
+    }*/
 }
 

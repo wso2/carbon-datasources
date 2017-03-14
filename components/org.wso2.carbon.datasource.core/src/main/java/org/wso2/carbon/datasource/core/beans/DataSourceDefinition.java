@@ -15,24 +15,41 @@
  */
 package org.wso2.carbon.datasource.core.beans;
 
-import org.w3c.dom.Element;
 import org.wso2.carbon.datasource.utils.DataSourceUtils;
+import org.wso2.carbon.kernel.annotations.Configuration;
+import org.wso2.carbon.kernel.annotations.Element;
+import org.yaml.snakeyaml.Yaml;
 
-import javax.xml.bind.annotation.XmlAnyElement;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 
 /**
  * Class holding the data source definition.
  */
-@XmlRootElement(name = "definition")
+@Configuration(description = "data source definition")
 public class DataSourceDefinition {
 
-    private String type;
+    @Element(description = "data source type", required = true)
+    private String type = "RDBMS";
 
-    private Object dsXMLConfiguration;
+    public DataSourceDefinition() {
+        Map<String, String> configMap = new LinkedHashMap<String, String>();
+        configMap.put("jdbcUrl", "jdbc:h2:./database/WSO2_CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000");
+        configMap.put("username", "wso2carbon");
+        configMap.put("password", "wso2carbon");
+        configMap.put("driverClassName", "org.h2.Driver");
+        configMap.put("maxPoolSize", "50");
+        configMap.put("idleTimeout", "60000");
+        configMap.put("connectionTestQuery", "SELECT 1");
+        configMap.put("validationTimeout", "30000");
+        configMap.put("isAutoCommit", "false");
+        configuration = configMap;
+    }
 
-    @XmlAttribute(name = "type", required = true)
+    @Element(description = "data source configuration")
+    private Object configuration;
+
     public String getType() {
         return type;
     }
@@ -41,13 +58,12 @@ public class DataSourceDefinition {
         this.type = type;
     }
 
-    @XmlAnyElement
-    public Object getDsXMLConfiguration() {
-        return dsXMLConfiguration;
+    public Object getConfiguration() {
+        return configuration;
     }
 
-    public void setDsXMLConfiguration(Object dsXMLConfiguration) {
-        this.dsXMLConfiguration = dsXMLConfiguration;
+    public void setConfiguration(Object configuration) {
+        this.configuration = configuration;
     }
 
     public boolean equals(Object rhs) {
@@ -58,14 +74,14 @@ public class DataSourceDefinition {
         if (!DataSourceUtils.nullAllowEquals(dsDef.getType(), this.getType())) {
             return false;
         }
-        return DataSourceUtils.nullAllowEquals(DataSourceUtils.elementToString(
-                (Element) dsDef.getDsXMLConfiguration()),
-                DataSourceUtils.elementToString((Element) this.getDsXMLConfiguration()));
+        Yaml yaml = new Yaml();
+        return DataSourceUtils.nullAllowEquals(yaml.dumpAsMap(
+                dsDef.configuration),
+                yaml.dumpAsMap(this.getConfiguration()));
     }
 
     @Override
     public int hashCode() {
-        assert false : "hashCode() not implemented";
         return -1;
     }
 }
