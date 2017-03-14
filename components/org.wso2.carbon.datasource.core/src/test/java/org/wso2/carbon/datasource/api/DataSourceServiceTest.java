@@ -18,23 +18,16 @@ package org.wso2.carbon.datasource.api;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-import org.w3c.dom.Document;
 import org.wso2.carbon.datasource.core.BaseTest;
 import org.wso2.carbon.datasource.core.api.DataSourceService;
 import org.wso2.carbon.datasource.core.beans.DataSourceDefinition;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.core.impl.DataSourceServiceImpl;
-import org.xml.sax.SAXException;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
+import org.yaml.snakeyaml.introspector.BeanAccess;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.charset.StandardCharsets;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * Test class for {@code DataSourceService}.
@@ -64,24 +57,26 @@ public class DataSourceServiceTest extends BaseTest {
     @Test
     public void createDataSourceTest() throws DataSourceException {
         try {
-            String dsXMLConfiguration = "<definition type=\"RDBMS\"><configuration><url>jdbc:h2:" +
-                    "./database/WSO2_CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;" +
-                    "LOCK_TIMEOUT=60000</url><username>wso2carbon</username><password>wso2carbon</password" +
-                    "><driverClassName>org.h2" +
-                    ".Driver</driverClassName><maxActive>50</maxActive><maxWait>60000</maxWait><testOnBorrow>true" +
-                    "</testOnBorrow><validationQuery>SELECT " +
-                    "1</validationQuery><validationInterval>30000</validationInterval><defaultAutoCommit>false" +
-                    "</defaultAutoCommit></configuration></definition>";
-            DataSourceDefinition dataSourceDefinition = new DataSourceDefinition();
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(new ByteArrayInputStream(dsXMLConfiguration.getBytes(StandardCharsets.UTF_8)));
-            JAXBContext ctx = JAXBContext.newInstance(dataSourceDefinition.getClass());
-            dataSourceDefinition = (DataSourceDefinition) ctx.createUnmarshaller().unmarshal(doc);
+            String configuration = "      type: RDBMS\n" +
+                    "        # data source configuration\n" +
+                    "      configuration:\n" +
+                    "        jdbcUrl: 'jdbc:h2:./database/WSO2_CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;'\n" +
+                    "        username: wso2carbon\n" +
+                    "        password: wso2carbon\n" +
+                    "        driverClassName: org.h2.Driver\n" +
+                    "        maxPoolSize: 50\n" +
+                    "        idleTimeout: 60000\n" +
+                    "        connectionTestQuery: SELECT 1\n" +
+                    "        validationTimeout: 30000\n" +
+                    "        isAutoCommit: false";
+            Yaml yaml = new Yaml(new CustomClassLoaderConstructor(DataSourceDefinition.class,
+                    DataSourceDefinition.class.getClassLoader()));
+            yaml.setBeanAccess(BeanAccess.FIELD);
+            DataSourceDefinition dataSourceDefinition = yaml.loadAs(configuration, DataSourceDefinition.class);
 
             Object dataSourceObj = dataSourceService.createDataSource(dataSourceDefinition);
             Assert.assertNotNull(dataSourceObj, "Failed to create datasource Object!");
-        } catch (DataSourceException | ParserConfigurationException | SAXException | IOException | JAXBException e) {
+        } catch (DataSourceException e) {
             Assert.fail("Threw an exception while creating datasource Object");
         }
     }

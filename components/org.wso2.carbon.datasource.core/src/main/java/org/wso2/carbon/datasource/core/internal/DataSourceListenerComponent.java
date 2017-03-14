@@ -31,7 +31,7 @@ import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.core.impl.DataSourceManagementServiceImpl;
 import org.wso2.carbon.datasource.core.impl.DataSourceServiceImpl;
 import org.wso2.carbon.datasource.core.spi.DataSourceReader;
-import org.wso2.carbon.datasource.utils.DataSourceUtils;
+import org.wso2.carbon.kernel.configprovider.ConfigProvider;
 import org.wso2.carbon.kernel.startupresolver.RequiredCapabilityListener;
 
 import java.util.HashMap;
@@ -55,6 +55,7 @@ public class DataSourceListenerComponent implements RequiredCapabilityListener {
 
     private BundleContext bundleContext;
     private Map<String, DataSourceReader> readers = new HashMap<>();
+    private ConfigProvider configProvider;
 
     @Activate
     protected void start(BundleContext bundleContext) {
@@ -89,12 +90,37 @@ public class DataSourceListenerComponent implements RequiredCapabilityListener {
         readers.remove(reader.getType());
     }
 
+    /**
+     * Get the ConfigProvider service.
+     * This is the bind method that gets called for ConfigProvider service registration that satisfy the policy.
+     *
+     * @param configProvider the ConfigProvider service that is registered as a service.
+     */
+    @Reference(
+            name = "carbon.config.provider",
+            service = ConfigProvider.class,
+            cardinality = ReferenceCardinality.MANDATORY,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "unregisterConfigProvider"
+    )
+    protected void registerConfigProvider(ConfigProvider configProvider) {
+        this.configProvider = configProvider;
+    }
+
+    /**
+     * This is the unbind method for the above reference that gets called for ConfigProvider instance un-registrations.
+     *
+     * @param configProvider the ConfigProvider service that get unregistered.
+     */
+    protected void unregisterConfigProvider(ConfigProvider configProvider) {
+        this.configProvider = null;
+    }
+
     @Override
     public void onAllRequiredCapabilitiesAvailable() {
         try {
-            String dataSourcesPath = DataSourceUtils.getDataSourceConfigPath().toString();
             DataSourceManager dataSourceManager = DataSourceManager.getInstance();
-            dataSourceManager.initDataSources(dataSourcesPath, readers);
+            dataSourceManager.initDataSources(configProvider, readers);
 
             DataSourceService dsService = new DataSourceServiceImpl();
             bundleContext.registerService(DataSourceService.class, dsService, null);

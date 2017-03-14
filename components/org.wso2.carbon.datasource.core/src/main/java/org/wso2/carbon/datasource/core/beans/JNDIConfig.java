@@ -16,24 +16,25 @@
 package org.wso2.carbon.datasource.core.beans;
 
 import org.wso2.carbon.datasource.utils.DataSourceUtils;
+import org.wso2.carbon.kernel.annotations.Configuration;
+import org.wso2.carbon.kernel.annotations.Element;
+import org.wso2.carbon.kernel.annotations.Ignore;
 
 import java.util.Hashtable;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlValue;
 
 /**
  * This class represents properties related to JNDI mapping of a data source.
  */
-@XmlRootElement(name = "jndiConfig")
+@Configuration(description = "JNDI mapping of a data source")
 public class JNDIConfig {
 
-    private String name;
+    @Element(description = "JNDI name", required = true)
+    private String name = "jdbc/WSO2CarbonDB/test";
 
+    @Ignore
     private EnvEntry[] environment;
 
+    @Element(description = "JNDI Reference Flag")
     private boolean useJndiReference = false;
 
     public void setName(String name) {
@@ -47,13 +48,10 @@ public class JNDIConfig {
         }
     }
 
-    @XmlElement(name = "name", required = true, nillable = false)
     public String getName() {
         return name;
     }
 
-    @XmlElementWrapper(name = "environment", nillable = false)
-    @XmlElement(name = "property")
     public EnvEntry[] getEnvironment() {
         if (environment == null) {
             return new EnvEntry[0];
@@ -65,7 +63,6 @@ public class JNDIConfig {
         return tempEnvironment;
     }
 
-    @XmlElement(name = "useJndiReference")
     public boolean isUseJndiReference() {
         return useJndiReference;
     }
@@ -115,23 +112,25 @@ public class JNDIConfig {
 
     @Override
     public int hashCode() {
-        assert false : "hashCode() not implemented";
+//        assert false : "hashCode() not implemented";
         return -1;
     }
 
     /**
      * Bean class to hold environment properties.
      */
-    @XmlRootElement(name = "property")
+    @Configuration(description = "Environment Properties")
     public static class EnvEntry {
 
+        @Element(description = "Property name")
         private String name;
 
+        @Element(description = "Encrypted Flag")
         private boolean encrypted = true;
 
+        @Element(description = "Property value")
         private String value;
 
-        @XmlAttribute(name = "encrypted")
         public boolean isEncrypted() {
             return encrypted;
         }
@@ -140,7 +139,6 @@ public class JNDIConfig {
             this.encrypted = encrypted;
         }
 
-        @XmlAttribute(name = "name")
         public String getName() {
             return name;
         }
@@ -149,7 +147,6 @@ public class JNDIConfig {
             this.name = name;
         }
 
-        @XmlValue
         public String getValue() {
             return value;
         }

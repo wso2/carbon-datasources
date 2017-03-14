@@ -37,9 +37,12 @@
         </fileSet>
 
         <fileSet>
-            <directory>carbon-home/conf/datasources</directory>
-            <outputDirectory>conf/datasources</outputDirectory>
+            <directory>carbon-home/conf</directory>
+            <outputDirectory>conf</outputDirectory>
             <fileMode>644</fileMode>
+            <includes>
+                <include>**/deployment.yaml</include>
+            </includes>
         </fileSet>
 
         <fileSet>

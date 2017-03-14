@@ -23,11 +23,9 @@ import org.wso2.carbon.datasource.core.beans.DataSourceMetadata;
 import org.wso2.carbon.datasource.core.beans.DataSourcesConfiguration;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.core.spi.DataSourceReader;
-import org.wso2.carbon.datasource.utils.DataSourceUtils;
+import org.wso2.carbon.kernel.configprovider.CarbonConfigurationException;
+import org.wso2.carbon.kernel.configprovider.ConfigProvider;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,10 +40,9 @@ public class DataSourceManager {
 
     private static Logger logger = LoggerFactory.getLogger(DataSourceManager.class);
     private static DataSourceManager instance = new DataSourceManager();
+    private static final String WSO2_DATASOURCES_NAMESPACE = "wso2.datasources";
     private DataSourceRepository dataSourceRepository;
     private Map<String, DataSourceReader> dataSourceReaders;
-
-    private static final String FILE_NAME_SUFFIX = "-datasources.xml";
     private boolean initialized = false;
 
     /**
@@ -99,23 +96,25 @@ public class DataSourceManager {
     }
 
     /**
-     * Initializes the data sources.
+     * Initializes data sources configured in deployment.yaml
      *
-     * @param configurationDirectory String
+     * @param configProvider configProvider service object
      * @throws DataSourceException if an error occurred while initializing the data source.
      */
-    public void initDataSources(String configurationDirectory)
+    public void initDataSources(ConfigProvider configProvider)
             throws DataSourceException {
         loadDataSourceProviders();
-        initDataSources(configurationDirectory, dataSourceReaders);
+        initDataSources(configProvider, dataSourceReaders);
     }
 
     /**
-     * @param configurationDir  String location of the configuration directory
+     * Initializes data sources configured in deployment.yaml
+     *
+     * @param configProvider configProvider service object
      * @param dataSourceReaders {@code Map<String, DataSourceReader>}
      * @throws DataSourceException if an error occurred while initializing the data source.
      */
-    public void initDataSources(String configurationDir, Map<String, DataSourceReader> dataSourceReaders)
+    public void initDataSources(ConfigProvider configProvider, Map<String, DataSourceReader> dataSourceReaders)
             throws DataSourceException {
         this.dataSourceReaders = dataSourceReaders;
         if (initialized) {
@@ -128,47 +127,24 @@ public class DataSourceManager {
             throw new RuntimeException("No data source readers found. Data sources will not be initialized!");
         }
         try {
-            Path dataSourcesPath = Paths.get(configurationDir);
-            File dataSourcesFolder = dataSourcesPath.toFile();
-            File[] dataSourceConfigFiles = dataSourcesFolder.listFiles();
-
-            if (dataSourceConfigFiles != null) {
-                for (File dataSourceConfigFile : dataSourceConfigFiles) {
-                    if (dataSourceConfigFile.getName().endsWith(FILE_NAME_SUFFIX)) {
-                        initDataSource(dataSourceConfigFile);
-                    }
+            if (configProvider.getConfigurationMap(WSO2_DATASOURCES_NAMESPACE) != null) {
+                DataSourcesConfiguration dataSourceConfiguration = configProvider.getConfigurationObject
+                        (DataSourcesConfiguration.class);
+                if (dataSourceConfiguration.getDataSources() == null) {
+                    throw new DataSourceException("configuration doesn't specify any datasource configurations");
+                }
+                for (DataSourceMetadata dsmInfo : dataSourceConfiguration.getDataSources()) {
+                    DataSourceReader dataSourceReader = getDataSourceReader(dsmInfo.getDefinition().getType());
+                    CarbonDataSource carbonDataSource = DataSourceBuilder
+                            .buildCarbonDataSource(dsmInfo, dataSourceReader);
+                    dataSourceRepository.addDataSource(carbonDataSource);
+                    DataSourceJndiManager.register(carbonDataSource, dataSourceReader);
                 }
             }
-        } catch (DataSourceException e) {
-            throw new DataSourceException("Error in initializing system data sources: " + e.getMessage(), e);
+        } catch (CarbonConfigurationException | DataSourceException | NamingException e) {
+            throw new DataSourceException("Error in initializing data sources.", e);
         }
         initialized = true;
-    }
-
-    /**
-     * Initialize the data sources given in data source config files.
-     *
-     * @param dataSourceFile {@link File}
-     * @throws DataSourceException
-     */
-    private void initDataSource(File dataSourceFile) throws DataSourceException {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Initializing data source: " + dataSourceFile.getName());
-        }
-        try {
-            DataSourcesConfiguration dataSourceConfiguration = DataSourceUtils
-                    .loadJAXBConfiguration(dataSourceFile, DataSourcesConfiguration.class);
-
-            for (DataSourceMetadata dsmInfo : dataSourceConfiguration.getDataSources()) {
-                DataSourceReader dataSourceReader = getDataSourceReader(dsmInfo.getDefinition().getType());
-                CarbonDataSource carbonDataSource = DataSourceBuilder.buildCarbonDataSource(dsmInfo, dataSourceReader);
-                dataSourceRepository.addDataSource(carbonDataSource);
-                DataSourceJndiManager.register(carbonDataSource, dataSourceReader);
-            }
-        } catch (DataSourceException | NamingException e) {
-            throw new DataSourceException("Error in initializing data sources at '" +
-                    dataSourceFile.getAbsolutePath() + " - " + e.getMessage(), e);
-        }
     }
 
     /**

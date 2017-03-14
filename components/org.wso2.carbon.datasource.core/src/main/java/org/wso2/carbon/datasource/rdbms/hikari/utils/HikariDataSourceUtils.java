@@ -17,9 +17,9 @@ package org.wso2.carbon.datasource.rdbms.hikari.utils;
 
 import com.zaxxer.hikari.HikariConfig;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
-import org.wso2.carbon.datasource.rdbms.hikari.HikariConfiguration;
-import org.wso2.carbon.datasource.utils.DataSourceUtils;
-import java.util.Properties;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
+import org.yaml.snakeyaml.introspector.BeanAccess;
 
 /**
  * Encapsulates a set of utility methods for HikariDataSource.
@@ -29,34 +29,13 @@ public class HikariDataSourceUtils {
     /**
      * Generate the configuration bean by reading the xml configuration.
      *
-     * @param xmlConfiguration String
+     * @param configuration String
      * @return {@code HikariConfig}
      * @throws DataSourceException if there is an error when loading Hikari configuration.
      */
-    public static HikariConfig buildConfiguration(String xmlConfiguration) throws DataSourceException {
-        try {
-            HikariConfiguration configuration = DataSourceUtils
-                    .loadJAXBConfiguration(xmlConfiguration, HikariConfiguration.class);
-            HikariConfig config = new HikariConfig();
-            config.setJdbcUrl(configuration.getUrl());
-            config.setUsername(configuration.getUsername());
-            config.setPassword(configuration.getPassword());
-            config.setDriverClassName(configuration.getDriverClassName());
-            config.setConnectionTimeout(configuration.getConnectionTimeout());
-            config.setIdleTimeout(configuration.getIdleTimeout());
-            config.setMaxLifetime(configuration.getMaxLifetime());
-            config.setMaximumPoolSize(configuration.getMaximumPoolSize());
-            config.setMinimumIdle(configuration.getMinimumIdle());
-            config.setAutoCommit(configuration.isAutoCommit());
-            if (configuration.getDatabaseProps() != null && !configuration.getDatabaseProps().isEmpty()) {
-                Properties properties = new Properties();
-                configuration.getDatabaseProps()
-                        .forEach(property -> properties.setProperty(property.getName(), property.getValue()));
-                config.setDataSourceProperties(properties);
-            }
-            return config;
-        } catch (DataSourceException e) {
-            throw new DataSourceException("Error in loading Hikari configuration: " + e.getMessage(), e);
-        }
+    public static HikariConfig buildConfiguration(String configuration) throws DataSourceException {
+        Yaml yaml = new Yaml(new CustomClassLoaderConstructor(HikariConfig.class, HikariConfig.class.getClassLoader()));
+        yaml.setBeanAccess(BeanAccess.FIELD);
+        return yaml.loadAs(configuration, HikariConfig.class);
     }
 }

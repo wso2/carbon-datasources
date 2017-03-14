@@ -61,8 +61,8 @@ public class DataSourceManagementServiceTest {
     }
 
     private static Option copyDSConfigFile() {
-        return copyFile(Paths.get("src", "test", "resources", "conf", "datasources", "master-datasources.xml"),
-                Paths.get("conf", "datasources", "master-datasources.xml"));
+        return copyFile(Paths.get("src", "test", "resources", "conf", "deployment.yaml"),
+                Paths.get("conf", "deployment.yaml"));
     }
 
     @Test
