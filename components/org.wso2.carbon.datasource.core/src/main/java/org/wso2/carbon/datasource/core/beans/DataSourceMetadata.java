@@ -88,7 +88,11 @@ public class DataSourceMetadata {
 
     @Override
     public int hashCode() {
-        return -1;
+        if (name != null && description != null && jndiConfig != null && definition != null) {
+            return name.hashCode() + description.hashCode() + jndiConfig.hashCode() + definition.hashCode();
+        } else {
+            return super.hashCode();
+        }
     }
 
 }
