@@ -34,14 +34,14 @@ import java.nio.file.Paths;
  * Base test class for unit testing. Common methods for unit tests reside here.
  */
 public class BaseTest {
+    public static final String CONFIGURATION_FILE = "deployment.yaml";
     protected DataSourceManager dataSourceManager;
     private static Logger logger = LoggerFactory.getLogger(BaseTest.class.getName());
 
     protected void init() throws DataSourceException {
         setEnv();
-/*        Path configPathCopyLocation = Paths.get("target", "carbonHome", "conf", "datasources");*/
         clearDeploymentConfiguration();
-        ConfigProvider configProvider = new ConfigProviderImpl(new YAMLBasedConfigFileReader("deployment.yaml"));
+        ConfigProvider configProvider = new ConfigProviderImpl(new YAMLBasedConfigFileReader(CONFIGURATION_FILE));
         dataSourceManager = DataSourceManager.getInstance();
         dataSourceManager.initDataSources(configProvider);
     }
@@ -50,9 +50,9 @@ public class BaseTest {
         Path carbonHomePath = Paths.get("target", "carbonHome");
         System.setProperty("carbon.home", carbonHomePath.toFile().getAbsolutePath());
 
-        Path configFilePath = Paths.get("src", "test", "resources", "conf", "deployment.yaml");
+        Path configFilePath = Paths.get("src", "test", "resources", "conf", CONFIGURATION_FILE);
         Path configPathCopyLocation = Paths.get("target", "carbonHome", "conf",
-                "deployment.yaml");
+                CONFIGURATION_FILE);
         Utils.copy(configFilePath.toFile().getAbsolutePath(), configPathCopyLocation.toFile().getAbsolutePath());
     }
 
@@ -64,7 +64,7 @@ public class BaseTest {
     protected void clearDeploymentConfiguration() {
         try {
             Class providerClass = Class.forName("org.wso2.carbon.kernel.internal.configprovider.ConfigProviderImpl");
-            ConfigFileReader fileReader = new XMLBasedConfigFileReader("Example.xml");
+            ConfigFileReader fileReader = new XMLBasedConfigFileReader(CONFIGURATION_FILE);
             Constructor<?> cons = providerClass.getConstructor(ConfigFileReader.class);
             Object providerObject = cons.newInstance(fileReader);
             Field field = providerClass.getDeclaredField("deploymentConfigs");

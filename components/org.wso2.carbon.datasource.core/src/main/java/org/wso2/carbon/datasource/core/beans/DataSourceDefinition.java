@@ -82,6 +82,11 @@ public class DataSourceDefinition {
 
     @Override
     public int hashCode() {
-        return -1;
+        if (type != null && configuration != null) {
+            Yaml yaml = new Yaml();
+            return type.hashCode() + yaml.dumpAsMap(this.getConfiguration()).hashCode();
+        } else {
+            return super.hashCode();
+        }
     }
 }

@@ -112,8 +112,11 @@ public class JNDIConfig {
 
     @Override
     public int hashCode() {
-//        assert false : "hashCode() not implemented";
-        return -1;
+        Hashtable<String, String> env = this.extractHashtableEnv();
+        if (name != null) {
+            return name.hashCode() + env.hashCode();
+        }
+        return super.hashCode();
     }
 
     /**
