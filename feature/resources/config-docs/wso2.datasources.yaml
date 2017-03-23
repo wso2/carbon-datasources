@@ -38,7 +38,7 @@ wso2.datasources:
       type: RDBMS
         # data source configuration
       configuration:
-        jdbcUrl: 'jdbc:h2:./target/database/TEST_DB1;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000'
+        jdbcUrl: 'jdbc:h2:./database/WSO2_CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000'
         username: wso2carbon
         password: wso2carbon
         driverClassName: org.h2.Driver
@@ -47,42 +47,3 @@ wso2.datasources:
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
         isAutoCommit: false
-  - name: WSO2_CARBON_DB_2
-    description: The datasource used for registry and user manager
-      # JNDI mapping of a data source
-    jndiConfig:
-        # JNDI name
-        # THIS IS A MANDATORY FIELD
-      name: jdbc/WSO2CarbonDB/testDb2
-        # JNDI Reference Flag
-      useJndiReference: true
-      # data source definition
-      environment:
-        - name: 'java.naming.factory.initial'
-          value: 'org.wso2.carbon.datasource.core.jndi.CustomContextFactory'
-    definition:
-        # data source type
-        # THIS IS A MANDATORY FIELD
-      type: RDBMS
-        # data source configuration
-      configuration:
-        jdbcUrl: 'jdbc:h2:./target/database/TEST_DB2;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000'
-        username: wso2carbon
-        password: wso2carbon
-        driverClassName: org.h2.Driver
-        maxPoolSize: 50
-        idleTimeout: 600
-        connectionTestQuery: SELECT 1
-        validationTimeout: 300
-        connectionTimeout: 300
-        maxLifetime: 1800
-        isAutoCommit: true
-        isReadOnly: true
-        dataSourceProperties:
-          - name: property_name_1
-            value: property_value_1
-          - name: property_name_2
-            value: property_value_2
-        invalid: invaild entry
-
-

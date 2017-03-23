@@ -126,23 +126,40 @@ public class DataSourceManager {
         if (dataSourceReaders.isEmpty()) {
             throw new RuntimeException("No data source readers found. Data sources will not be initialized!");
         }
+
+        DataSourcesConfiguration dataSourceConfiguration = null;
         try {
+            // check whether datasource is configured in deployment.yaml. create datasource only if configuration
+            // exists in deployment.yaml
             if (configProvider.getConfigurationMap(WSO2_DATASOURCES_NAMESPACE) != null) {
-                DataSourcesConfiguration dataSourceConfiguration = configProvider.getConfigurationObject
-                        (DataSourcesConfiguration.class);
-                if (dataSourceConfiguration.getDataSources() == null) {
+                dataSourceConfiguration = configProvider.getConfigurationObject(DataSourcesConfiguration.class);
+                if (dataSourceConfiguration.getDataSources() == null && dataSourceConfiguration.getDataSources()
+                    .isEmpty()) {
                     throw new DataSourceException("configuration doesn't specify any datasource configurations");
                 }
-                for (DataSourceMetadata dsmInfo : dataSourceConfiguration.getDataSources()) {
-                    DataSourceReader dataSourceReader = getDataSourceReader(dsmInfo.getDefinition().getType());
-                    CarbonDataSource carbonDataSource = DataSourceBuilder
-                            .buildCarbonDataSource(dsmInfo, dataSourceReader);
-                    dataSourceRepository.addDataSource(carbonDataSource);
-                    DataSourceJndiManager.register(carbonDataSource, dataSourceReader);
+            }
+        } catch (CarbonConfigurationException e) {
+            throw new DataSourceException("Error while reading datasource configuration from file", e);
+        }
+
+        if (dataSourceConfiguration != null) {
+            for (DataSourceMetadata dsmInfo : dataSourceConfiguration.getDataSources()) {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Creating datasource object| datasource name: " + dsmInfo.getName());
+                }
+                if (dsmInfo != null && dsmInfo.getDefinition() != null) {
+                    try {
+                        DataSourceReader dataSourceReader = getDataSourceReader(dsmInfo.getDefinition().getType());
+                        CarbonDataSource carbonDataSource = DataSourceBuilder.buildCarbonDataSource(dsmInfo,
+                            dataSourceReader);
+                        dataSourceRepository.addDataSource(carbonDataSource);
+                        DataSourceJndiManager.register(carbonDataSource, dataSourceReader);
+                    } catch (NamingException | DataSourceException e) {
+                        throw new DataSourceException("Error while initializing the datasource: " + dsmInfo.getName()
+                            , e);
+                    }
                 }
             }
-        } catch (CarbonConfigurationException | DataSourceException | NamingException e) {
-            throw new DataSourceException("Error in initializing data sources.", e);
         }
         initialized = true;
     }

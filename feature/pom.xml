@@ -44,6 +44,11 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.wso2.carbon.maven</groupId>

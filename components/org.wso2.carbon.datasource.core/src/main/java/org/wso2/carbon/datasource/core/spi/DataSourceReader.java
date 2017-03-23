@@ -33,11 +33,11 @@ public interface DataSourceReader {
     /**
      * Creating the data source by executing the custom data source creation logic.
      *
-     * @param configuration             String
+     * @param configuration             Object
      * @param isDataSourceFactoryReference boolean
      * @return Object
      * @throws DataSourceException if data source can't be created using xml configuration.
      */
-    Object createDataSource(String configuration, boolean isDataSourceFactoryReference) throws DataSourceException;
+    Object createDataSource(Object configuration, boolean isDataSourceFactoryReference) throws DataSourceException;
 
 }
