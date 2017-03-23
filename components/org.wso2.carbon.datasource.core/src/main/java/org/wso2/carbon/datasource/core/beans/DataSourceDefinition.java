@@ -20,9 +20,6 @@ import org.wso2.carbon.kernel.annotations.Configuration;
 import org.wso2.carbon.kernel.annotations.Element;
 import org.yaml.snakeyaml.Yaml;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 
 /**
  * Class holding the data source definition.
@@ -31,21 +28,7 @@ import java.util.Map;
 public class DataSourceDefinition {
 
     @Element(description = "data source type", required = true)
-    private String type = "RDBMS";
-
-    public DataSourceDefinition() {
-        Map<String, String> configMap = new LinkedHashMap<String, String>();
-        configMap.put("jdbcUrl", "jdbc:h2:./database/WSO2_CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000");
-        configMap.put("username", "wso2carbon");
-        configMap.put("password", "wso2carbon");
-        configMap.put("driverClassName", "org.h2.Driver");
-        configMap.put("maxPoolSize", "50");
-        configMap.put("idleTimeout", "60000");
-        configMap.put("connectionTestQuery", "SELECT 1");
-        configMap.put("validationTimeout", "30000");
-        configMap.put("isAutoCommit", "false");
-        configuration = configMap;
-    }
+    private String type;
 
     @Element(description = "data source configuration")
     private Object configuration;

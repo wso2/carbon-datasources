@@ -29,13 +29,13 @@ import java.util.Hashtable;
 public class JNDIConfig {
 
     @Element(description = "JNDI name", required = true)
-    private String name = "jdbc/WSO2CarbonDB/test";
+    private String name;
 
     @Ignore
     private EnvEntry[] environment;
 
     @Element(description = "JNDI Reference Flag")
-    private boolean useJndiReference = false;
+    private boolean useJndiReference;
 
     public void setName(String name) {
         this.name = name;

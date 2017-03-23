@@ -26,15 +26,15 @@ import org.wso2.carbon.kernel.annotations.Element;
 public class DataSourceMetadata {
 
     @Element(description = "datasource name", required = true)
-    private String name = "WSO2_CARBON_DB";
+    private String name;
 
     @Element(description = "datasource description")
-    private String description = "A sample datasource configuration";
+    private String description;
 
-    private JNDIConfig jndiConfig = new JNDIConfig();
+    private JNDIConfig jndiConfig;
 
     @Element(description = "datasource definition", required = true)
-    private DataSourceDefinition definition = new DataSourceDefinition();
+    private DataSourceDefinition definition;
 
     public void setName(String name) {
         this.name = name;
