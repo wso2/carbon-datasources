@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.kernel.configprovider.ConfigFileReader;
 import org.wso2.carbon.kernel.configprovider.ConfigProvider;
-import org.wso2.carbon.kernel.configprovider.XMLBasedConfigFileReader;
 import org.wso2.carbon.kernel.configprovider.YAMLBasedConfigFileReader;
 import org.wso2.carbon.kernel.internal.configprovider.ConfigProviderImpl;
 
@@ -34,14 +33,14 @@ import java.nio.file.Paths;
  * Base test class for unit testing. Common methods for unit tests reside here.
  */
 public class BaseTest {
-    public static final String CONFIGURATION_FILE = "deployment.yaml";
+    private String[] configurationFiles = {"deployment.yaml", "wso2.datasource.yaml"};
     protected DataSourceManager dataSourceManager;
     private static Logger logger = LoggerFactory.getLogger(BaseTest.class.getName());
 
     protected void init() throws DataSourceException {
         setEnv();
         clearDeploymentConfiguration();
-        ConfigProvider configProvider = new ConfigProviderImpl(new YAMLBasedConfigFileReader(CONFIGURATION_FILE));
+        ConfigProvider configProvider = new ConfigProviderImpl(new YAMLBasedConfigFileReader("deployment.yaml"));
         dataSourceManager = DataSourceManager.getInstance();
         dataSourceManager.initDataSources(configProvider);
     }
@@ -50,10 +49,13 @@ public class BaseTest {
         Path carbonHomePath = Paths.get("target", "carbonHome");
         System.setProperty("carbon.home", carbonHomePath.toFile().getAbsolutePath());
 
-        Path configFilePath = Paths.get("src", "test", "resources", "conf", CONFIGURATION_FILE);
-        Path configPathCopyLocation = Paths.get("target", "carbonHome", "conf",
-                CONFIGURATION_FILE);
-        Utils.copy(configFilePath.toFile().getAbsolutePath(), configPathCopyLocation.toFile().getAbsolutePath());
+        for (String file : configurationFiles) {
+            Path configFilePath = Paths.get("src", "test", "resources", "conf", file);
+            Path configPathCopyLocation = Paths.get("target", "carbonHome", "conf",
+                    file);
+            Utils.copy(configFilePath.toFile().getAbsolutePath(), configPathCopyLocation.toFile().getAbsolutePath());
+        }
+
     }
 
     protected void clearEnv() {
@@ -64,7 +66,7 @@ public class BaseTest {
     protected void clearDeploymentConfiguration() {
         try {
             Class providerClass = Class.forName("org.wso2.carbon.kernel.internal.configprovider.ConfigProviderImpl");
-            ConfigFileReader fileReader = new XMLBasedConfigFileReader(CONFIGURATION_FILE);
+            ConfigFileReader fileReader = new YAMLBasedConfigFileReader("deployment.yaml");
             Constructor<?> cons = providerClass.getConstructor(ConfigFileReader.class);
             Object providerObject = cons.newInstance(fileReader);
             Field field = providerClass.getDeclaredField("deploymentConfigs");
