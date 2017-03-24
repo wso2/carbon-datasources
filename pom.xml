@@ -288,7 +288,7 @@
             <dependency>
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
-                <optional>true</optional>
+                <scope>test</scope>
                 <version>${org.snakeyaml.version}</version>
             </dependency>
         </dependencies>

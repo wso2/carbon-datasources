@@ -20,12 +20,14 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 import org.wso2.carbon.datasource.core.BaseTest;
 import org.wso2.carbon.datasource.core.api.DataSourceService;
-import org.wso2.carbon.datasource.core.beans.DataSourceDefinition;
+import org.wso2.carbon.datasource.core.beans.DataSourcesConfiguration;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.core.impl.DataSourceServiceImpl;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
-import org.yaml.snakeyaml.introspector.BeanAccess;
+import org.wso2.carbon.kernel.configprovider.CarbonConfigurationException;
+import org.wso2.carbon.kernel.configprovider.ConfigFileReader;
+import org.wso2.carbon.kernel.configprovider.ConfigProvider;
+import org.wso2.carbon.kernel.configprovider.YAMLBasedConfigFileReader;
+import org.wso2.carbon.kernel.internal.configprovider.ConfigProviderImpl;
 
 import java.net.MalformedURLException;
 
@@ -57,26 +59,16 @@ public class DataSourceServiceTest extends BaseTest {
     @Test
     public void createDataSourceTest() throws DataSourceException {
         try {
-            String configuration = "      type: RDBMS\n" +
-                    "        # data source configuration\n" +
-                    "      configuration:\n" +
-                    "        jdbcUrl: 'jdbc:h2:./database/WSO2_CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;'\n" +
-                    "        username: wso2carbon\n" +
-                    "        password: wso2carbon\n" +
-                    "        driverClassName: org.h2.Driver\n" +
-                    "        maxPoolSize: 50\n" +
-                    "        idleTimeout: 60000\n" +
-                    "        connectionTestQuery: SELECT 1\n" +
-                    "        validationTimeout: 30000\n" +
-                    "        isAutoCommit: false";
-            Yaml yaml = new Yaml(new CustomClassLoaderConstructor(DataSourceDefinition.class,
-                    DataSourceDefinition.class.getClassLoader()));
-            yaml.setBeanAccess(BeanAccess.FIELD);
-            DataSourceDefinition dataSourceDefinition = yaml.loadAs(configuration, DataSourceDefinition.class);
+            ConfigFileReader fileReader = new YAMLBasedConfigFileReader("wso2.datasource.yaml");
+            ConfigProvider configProvider = new ConfigProviderImpl(fileReader);
+            DataSourcesConfiguration dataSourcesConfiguration = configProvider.getConfigurationObject
+                    (DataSourcesConfiguration
+                    .class);
 
-            Object dataSourceObj = dataSourceService.createDataSource(dataSourceDefinition);
+            Object dataSourceObj = dataSourceService.createDataSource(dataSourcesConfiguration.getDataSources().get
+                    (0).getDefinition());
             Assert.assertNotNull(dataSourceObj, "Failed to create datasource Object!");
-        } catch (DataSourceException e) {
+        } catch (DataSourceException | CarbonConfigurationException e) {
             Assert.fail("Threw an exception while creating datasource Object");
         }
     }

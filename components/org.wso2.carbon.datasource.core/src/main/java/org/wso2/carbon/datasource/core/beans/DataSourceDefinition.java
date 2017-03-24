@@ -18,7 +18,6 @@ package org.wso2.carbon.datasource.core.beans;
 import org.wso2.carbon.datasource.utils.DataSourceUtils;
 import org.wso2.carbon.kernel.annotations.Configuration;
 import org.wso2.carbon.kernel.annotations.Element;
-import org.yaml.snakeyaml.Yaml;
 
 
 /**
@@ -57,17 +56,15 @@ public class DataSourceDefinition {
         if (!DataSourceUtils.nullAllowEquals(dsDef.getType(), this.getType())) {
             return false;
         }
-        Yaml yaml = new Yaml();
-        return DataSourceUtils.nullAllowEquals(yaml.dumpAsMap(
-                dsDef.configuration),
-                yaml.dumpAsMap(this.getConfiguration()));
+        return DataSourceUtils.nullAllowEquals(
+                dsDef.configuration,
+                this.getConfiguration());
     }
 
     @Override
     public int hashCode() {
         if (type != null && configuration != null) {
-            Yaml yaml = new Yaml();
-            return type.hashCode() + yaml.dumpAsMap(this.getConfiguration()).hashCode();
+            return type.hashCode() + this.getConfiguration().hashCode();
         } else {
             return super.hashCode();
         }
