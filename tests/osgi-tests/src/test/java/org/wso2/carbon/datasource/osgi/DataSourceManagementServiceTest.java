@@ -56,7 +56,7 @@ public class DataSourceManagementServiceTest {
 
     @Configuration
     public Option[] createConfiguration() {
-        return new Option[] { copyOSGiLibBundle(maven().artifactId("h2").groupId("com.h2database").version("1.4.191")),
+        return new Option[] { copyOSGiLibBundle(maven().artifactId("h2").groupId("com.h2database").version("1.4.195")),
                 copyDSConfigFile() };
     }
 
