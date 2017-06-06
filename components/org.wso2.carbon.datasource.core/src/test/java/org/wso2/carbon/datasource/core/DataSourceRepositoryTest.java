@@ -19,6 +19,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+import org.wso2.carbon.config.ConfigurationException;
 import org.wso2.carbon.datasource.core.beans.CarbonDataSource;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 
@@ -33,7 +34,7 @@ public class DataSourceRepositoryTest extends BaseTest {
     private static final String DATASOURCE_NAME = "WSO2_CARBON_DB";
 
     @BeforeSuite
-    public void initialize() throws DataSourceException, MalformedURLException {
+    public void initialize() throws DataSourceException, MalformedURLException, ConfigurationException {
         super.init();
         dsRepository = dataSourceManager.getDataSourceRepository();
     }

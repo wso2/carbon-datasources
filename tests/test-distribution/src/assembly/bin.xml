@@ -23,8 +23,9 @@
 
     <fileSets>
         <fileSet>
-            <directory>target/wso2carbon-datasource-${carbon.datasource.version}</directory>
+            <directory>target/WSO2Carbon</directory>
             <outputDirectory>.</outputDirectory>
+            <fileMode>644</fileMode>
             <excludes>
                 <exclude>README.txt</exclude>
                 <exclude>LICENSE.txt</exclude>
@@ -35,20 +36,14 @@
                 <exclude>**/*.eclipse</exclude>
             </excludes>
         </fileSet>
-
-        <fileSet>
-            <directory>carbon-home/conf</directory>
-            <outputDirectory>conf</outputDirectory>
-            <fileMode>644</fileMode>
-            <includes>
-                <include>**/deployment.yaml</include>
-            </includes>
-        </fileSet>
-
-        <fileSet>
-            <directory>carbon-home/conf/osgi</directory>
-            <outputDirectory>conf/osgi</outputDirectory>
-            <fileMode>644</fileMode>
-        </fileSet>
     </fileSets>
+
+    <files>
+        <file>
+            <source>carbon-home/conf/deployment.yaml</source>
+            <outputDirectory>conf/default</outputDirectory>
+            <fileMode>644</fileMode>
+            <filtered>true</filtered>
+        </file>
+    </files>
 </assembly>

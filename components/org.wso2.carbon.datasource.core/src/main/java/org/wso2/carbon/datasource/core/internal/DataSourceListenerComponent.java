@@ -24,6 +24,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.jndi.JNDIContextManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.carbon.config.provider.ConfigProvider;
 import org.wso2.carbon.datasource.core.DataSourceManager;
 import org.wso2.carbon.datasource.core.api.DataSourceManagementService;
 import org.wso2.carbon.datasource.core.api.DataSourceService;
@@ -31,8 +32,8 @@ import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.core.impl.DataSourceManagementServiceImpl;
 import org.wso2.carbon.datasource.core.impl.DataSourceServiceImpl;
 import org.wso2.carbon.datasource.core.spi.DataSourceReader;
-import org.wso2.carbon.kernel.configprovider.ConfigProvider;
 import org.wso2.carbon.kernel.startupresolver.RequiredCapabilityListener;
+import org.wso2.carbon.kernel.startupresolver.StartupServiceUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,11 +47,11 @@ import java.util.Map;
         name = "org.wso2.carbon.kernel.datasource.core.internal.DataSourceListenerComponent",
         immediate = true,
         property = {
-                "componentName=carbon-datasource-service"
+                "componentName=" + DataSourceListenerComponent.COMPONENT_NAME
         }
 )
 public class DataSourceListenerComponent implements RequiredCapabilityListener {
-
+    public static final String COMPONENT_NAME = "carbon-datasource-service";
     private static final Logger logger = LoggerFactory.getLogger(DataSourceListenerComponent.class);
 
     private BundleContext bundleContext;
@@ -84,6 +85,7 @@ public class DataSourceListenerComponent implements RequiredCapabilityListener {
     )
     protected void registerReader(DataSourceReader reader) {
         readers.put(reader.getType(), reader);
+        StartupServiceUtils.updateServiceCache(COMPONENT_NAME, DataSourceReader.class);
     }
 
     protected void unregisterReader(DataSourceReader reader) {

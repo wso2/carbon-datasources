@@ -28,7 +28,7 @@ import org.wso2.carbon.container.CarbonContainerFactory;
 import org.wso2.carbon.datasource.core.api.DataSourceManagementService;
 import org.wso2.carbon.datasource.core.beans.DataSourceMetadata;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
-import org.wso2.carbon.kernel.utils.CarbonServerInfo;
+import org.wso2.carbon.kernel.CarbonServerInfo;
 
 import java.nio.file.Paths;
 import java.util.List;
@@ -62,7 +62,7 @@ public class DataSourceManagementServiceTest {
 
     private static Option copyDSConfigFile() {
         return copyFile(Paths.get("src", "test", "resources", "conf", "deployment.yaml"),
-                Paths.get("conf", "deployment.yaml"));
+                Paths.get("conf", "default", "deployment.yaml"));
     }
 
     @Test

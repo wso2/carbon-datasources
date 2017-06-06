@@ -19,6 +19,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+import org.wso2.carbon.config.ConfigurationException;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 
 import java.net.MalformedURLException;
@@ -30,7 +31,7 @@ import java.util.List;
 public class DataSourceManagerTest extends BaseTest {
 
     @BeforeSuite
-    public void initialize() throws DataSourceException, MalformedURLException {
+    public void initialize() throws DataSourceException, MalformedURLException, ConfigurationException {
         super.init();
     }
 

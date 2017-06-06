@@ -15,10 +15,8 @@
  */
 package org.wso2.carbon.datasource.core.beans;
 
+import org.wso2.carbon.config.annotation.Configuration;
 import org.wso2.carbon.datasource.utils.DataSourceUtils;
-import org.wso2.carbon.kernel.annotations.Configuration;
-import org.wso2.carbon.kernel.annotations.Element;
-import org.wso2.carbon.kernel.annotations.Ignore;
 
 import java.util.Hashtable;
 
@@ -28,13 +26,10 @@ import java.util.Hashtable;
 @Configuration(description = "JNDI mapping of a data source")
 public class JNDIConfig {
 
-    @Element(description = "JNDI name", required = true)
     private String name;
 
-    @Ignore
     private EnvEntry[] environment;
 
-    @Element(description = "JNDI Reference Flag")
     private boolean useJndiReference;
 
     public void setName(String name) {
@@ -122,16 +117,12 @@ public class JNDIConfig {
     /**
      * Bean class to hold environment properties.
      */
-    @Configuration(description = "Environment Properties")
     public static class EnvEntry {
 
-        @Element(description = "Property name")
         private String name;
 
-        @Element(description = "Encrypted Flag")
         private boolean encrypted = true;
 
-        @Element(description = "Property value")
         private String value;
 
         public boolean isEncrypted() {
