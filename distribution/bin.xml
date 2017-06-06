@@ -24,20 +24,27 @@
     <fileSets>
         <fileSet>
             <directory>target/WSO2Carbon</directory>
-            <outputDirectory>.</outputDirectory>
+            <outputDirectory></outputDirectory>
             <fileMode>644</fileMode>
             <excludes>
-                <exclude>README.txt</exclude>
-                <exclude>LICENSE.txt</exclude>
-                <exclude>INSTALL.txt</exclude>
-                <exclude>release-notes.html</exclude>
-                <exclude>**/*.ipr</exclude>
-                <exclude>**/*.iwr</exclude>
-                <exclude>**/*.eclipse</exclude>
+                <exclude>**/*.lock</exclude>
+                <exclude>**/.data</exclude>
+                <exclude>**/.settings</exclude>
+                <exclude>libcairo-swt.so</exclude>
+                <exclude>eclipse</exclude>
+                <exclude>**/*.sh</exclude>
+                <exclude>**/native/*</exclude>
             </excludes>
         </fileSet>
-
-
+        <fileSet>
+            <directory>target/WSO2Carbon</directory>
+            <outputDirectory></outputDirectory>
+            <includes>
+                <include>**/*.sh</include>
+                <include>**/native/*</include>
+            </includes>
+            <fileMode>755</fileMode>
+        </fileSet>
     </fileSets>
     <files>
         <file>
