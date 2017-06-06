@@ -23,7 +23,6 @@ import org.wso2.carbon.config.ConfigurationException;
 import org.wso2.carbon.datasource.core.beans.CarbonDataSource;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 
-import java.net.MalformedURLException;
 
 /**
  * Test class for DataSourceRepository class.
@@ -34,7 +33,7 @@ public class DataSourceRepositoryTest extends BaseTest {
     private static final String DATASOURCE_NAME = "WSO2_CARBON_DB";
 
     @BeforeSuite
-    public void initialize() throws DataSourceException, MalformedURLException, ConfigurationException {
+    public void initialize() throws DataSourceException, ConfigurationException {
         super.init();
         dsRepository = dataSourceManager.getDataSourceRepository();
     }

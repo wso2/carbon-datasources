@@ -286,12 +286,6 @@
                 <version>${carbon.kernel.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.yaml</groupId>
-                <artifactId>snakeyaml</artifactId>
-                <scope>test</scope>
-                <version>${org.snakeyaml.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.wso2.carbon.config</groupId>
                 <artifactId>org.wso2.carbon.config</artifactId>
                 <version>${carbon.config.version}</version>
@@ -478,7 +472,6 @@
         </equinox.simpleconfigurator.manipulator.version>
         <equinox.util.version>1.0.500.v20130404-1337</equinox.util.version>
         <org.eclipse.equinox.cm.version>1.1.0.v20131021-1936</org.eclipse.equinox.cm.version>
-        <org.snakeyaml.version>1.17</org.snakeyaml.version>
         <maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
     </properties>
 </project>
