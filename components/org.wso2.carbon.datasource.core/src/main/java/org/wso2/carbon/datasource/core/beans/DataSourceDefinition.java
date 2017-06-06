@@ -60,10 +60,7 @@ public class DataSourceDefinition {
 
     @Override
     public int hashCode() {
-        if (type != null && configuration != null) {
-            return type.hashCode() + this.getConfiguration().hashCode();
-        } else {
-            return super.hashCode();
-        }
+        assert false : "hashCode() not implemented";
+        return -1;
     }
 }
