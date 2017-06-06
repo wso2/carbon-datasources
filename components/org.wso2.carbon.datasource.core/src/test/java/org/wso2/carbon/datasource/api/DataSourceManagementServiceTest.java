@@ -18,13 +18,13 @@ package org.wso2.carbon.datasource.api;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+import org.wso2.carbon.config.ConfigurationException;
 import org.wso2.carbon.datasource.core.BaseTest;
 import org.wso2.carbon.datasource.core.api.DataSourceManagementService;
 import org.wso2.carbon.datasource.core.beans.DataSourceMetadata;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.core.impl.DataSourceManagementServiceImpl;
 
-import java.net.MalformedURLException;
 import java.util.List;
 
 /**
@@ -36,7 +36,7 @@ public class DataSourceManagementServiceTest extends BaseTest {
     private static final String DATASOURCE_NAME = "WSO2_CARBON_DB_2";
 
     @BeforeSuite
-    public void initialize() throws DataSourceException, MalformedURLException {
+    public void initialize() throws DataSourceException, ConfigurationException {
         super.init();
         dataSourceMgtService = new DataSourceManagementServiceImpl();
     }

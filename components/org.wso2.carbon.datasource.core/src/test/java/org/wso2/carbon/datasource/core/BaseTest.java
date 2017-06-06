@@ -15,17 +15,15 @@
  */
 package org.wso2.carbon.datasource.core;
 
+import org.easymock.EasyMock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.carbon.config.ConfigProviderFactory;
+import org.wso2.carbon.config.ConfigurationException;
+import org.wso2.carbon.config.provider.ConfigProvider;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
-import org.wso2.carbon.kernel.configprovider.ConfigFileReader;
-import org.wso2.carbon.kernel.configprovider.ConfigProvider;
-import org.wso2.carbon.kernel.configprovider.YAMLBasedConfigFileReader;
-import org.wso2.carbon.kernel.internal.configprovider.ConfigProviderImpl;
+import org.wso2.carbon.secvault.SecureVault;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -33,14 +31,16 @@ import java.nio.file.Paths;
  * Base test class for unit testing. Common methods for unit tests reside here.
  */
 public class BaseTest {
-    private String[] configurationFiles = {"deployment.yaml", "wso2.datasource.yaml"};
+    public SecureVault secureVault;
     protected DataSourceManager dataSourceManager;
     private static Logger logger = LoggerFactory.getLogger(BaseTest.class.getName());
+    private String[] configurationFiles = {"deployment.yaml", "wso2.datasource.yaml"};
 
-    protected void init() throws DataSourceException {
+    protected void init() throws DataSourceException, ConfigurationException {
         setEnv();
-        clearDeploymentConfiguration();
-        ConfigProvider configProvider = new ConfigProviderImpl(new YAMLBasedConfigFileReader("deployment.yaml"));
+        secureVault = EasyMock.mock(SecureVault.class);
+        ConfigProvider configProvider = ConfigProviderFactory.getConfigProvider(Paths.get(System.getProperty("carbon" +
+                ".home"), "conf", "deployment.yaml"), secureVault);
         dataSourceManager = DataSourceManager.getInstance();
         dataSourceManager.initDataSources(configProvider);
     }
@@ -55,26 +55,10 @@ public class BaseTest {
                     file);
             Utils.copy(configFilePath.toFile().getAbsolutePath(), configPathCopyLocation.toFile().getAbsolutePath());
         }
-
     }
 
     protected void clearEnv() {
         System.clearProperty("carbon.home");
     }
 
-
-    protected void clearDeploymentConfiguration() {
-        try {
-            Class providerClass = Class.forName("org.wso2.carbon.kernel.internal.configprovider.ConfigProviderImpl");
-            ConfigFileReader fileReader = new YAMLBasedConfigFileReader("deployment.yaml");
-            Constructor<?> cons = providerClass.getConstructor(ConfigFileReader.class);
-            Object providerObject = cons.newInstance(fileReader);
-            Field field = providerClass.getDeclaredField("deploymentConfigs");
-            field.setAccessible(true);
-            field.set(providerObject, null);
-        } catch (ClassNotFoundException | IllegalAccessException | NoSuchFieldException | InstantiationException |
-                NoSuchMethodException | InvocationTargetException e) {
-            logger.error("Error while cleaning deployment configuration.", e);
-        }
-    }
 }

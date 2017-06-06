@@ -14,6 +14,17 @@
 #   limitations under the License.
 ################################################################################
 
+  # Carbon Configuration Parameters
+wso2.carbon:
+    # value to uniquely identify a server
+  id: carbon-kernel
+    # server name
+  name: WSO2 Carbon Kernel
+    # ports used by this server
+  ports:
+      # port offset
+    offset: 0
+
 wso2.securevault:
   secretRepository:
     type: org.wso2.carbon.secvault.repository.DefaultSecretRepository
@@ -39,6 +50,10 @@ wso2.datasources:
       name: jdbc/WSO2CarbonDB/test
         # JNDI Reference Flag
       useJndiReference: true
+      # data source definition
+      environment:
+        - name: 'java.naming.factory.initial'
+          value: 'org.wso2.carbon.datasource.core.jndi.CustomContextFactory'
       # data source definition
     definition:
         # data source type

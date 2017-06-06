@@ -36,7 +36,7 @@ public interface DataSourceReader {
      * @param configuration             Object
      * @param isDataSourceFactoryReference boolean
      * @return Object
-     * @throws DataSourceException if data source can't be created using xml configuration.
+     * @throws DataSourceException if data source can't be created using configuration.
      */
     Object createDataSource(Object configuration, boolean isDataSourceFactoryReference) throws DataSourceException;
 

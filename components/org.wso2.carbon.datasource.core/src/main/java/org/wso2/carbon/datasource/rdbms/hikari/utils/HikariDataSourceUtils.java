@@ -36,7 +36,7 @@ public class HikariDataSourceUtils {
 
     private static Logger log = LoggerFactory.getLogger(HikariDataSourceUtils.class);
     /**
-     * Generate the configuration bean by reading the xml configuration.
+     * Generate the configuration bean by reading the configuration.
      *
      * @param configuration Object
      * @return {@code HikariConfig}

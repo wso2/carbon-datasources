@@ -56,12 +56,12 @@ public class HikariDataSourceReader implements DataSourceReader {
     }
 
     /**
-     * Creating the data source by reading the xml configuration.
+     * Creating the data source by reading the configuration.
      *
      * @param configuration             Object
      * @param isDataSourceFactoryReference boolean
      * @return Object
-     * @throws DataSourceException if data source can't be created using xml configuration.
+     * @throws DataSourceException if data source can't be created using configuration.
      */
     @Override
     public Object createDataSource(Object configuration, boolean isDataSourceFactoryReference)

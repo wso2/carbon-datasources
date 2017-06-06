@@ -15,9 +15,8 @@
  */
 package org.wso2.carbon.datasource.core.beans;
 
+import org.wso2.carbon.config.annotation.Configuration;
 import org.wso2.carbon.datasource.utils.DataSourceUtils;
-import org.wso2.carbon.kernel.annotations.Configuration;
-import org.wso2.carbon.kernel.annotations.Element;
 
 /**
  * This class represents data source meta information.
@@ -25,15 +24,12 @@ import org.wso2.carbon.kernel.annotations.Element;
 @Configuration(description = "Data Source metadata configuration")
 public class DataSourceMetadata {
 
-    @Element(description = "datasource name", required = true)
     private String name;
 
-    @Element(description = "datasource description")
     private String description;
 
     private JNDIConfig jndiConfig;
 
-    @Element(description = "datasource definition", required = true)
     private DataSourceDefinition definition;
 
     public void setName(String name) {

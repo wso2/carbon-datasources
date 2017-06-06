@@ -14,6 +14,18 @@
 #   limitations under the License.
 ################################################################################
 
+wso2.securevault:
+  secretRepository:
+    type: org.wso2.carbon.secvault.repository.DefaultSecretRepository
+    parameters:
+      privateKeyAlias: wso2carbon
+      keystoreLocation: ../../resources/security/securevault.jks
+      secretPropertiesFile: ../../conf/${sys:wso2.runtime}/secrets.properties
+  masterKeyReader:
+    type: org.wso2.carbon.secvault.reader.DefaultMasterKeyReader
+    parameters:
+      masterKeyReaderFile: ../../conf/${sys:wso2.runtime}/master-keys.yaml
+
   # Data Sources Configuration
 wso2.datasources:
     # datasources

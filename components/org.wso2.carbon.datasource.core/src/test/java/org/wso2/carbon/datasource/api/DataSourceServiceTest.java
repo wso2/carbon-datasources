@@ -18,18 +18,16 @@ package org.wso2.carbon.datasource.api;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+import org.wso2.carbon.config.ConfigProviderFactory;
+import org.wso2.carbon.config.ConfigurationException;
+import org.wso2.carbon.config.provider.ConfigProvider;
 import org.wso2.carbon.datasource.core.BaseTest;
 import org.wso2.carbon.datasource.core.api.DataSourceService;
 import org.wso2.carbon.datasource.core.beans.DataSourcesConfiguration;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.core.impl.DataSourceServiceImpl;
-import org.wso2.carbon.kernel.configprovider.CarbonConfigurationException;
-import org.wso2.carbon.kernel.configprovider.ConfigFileReader;
-import org.wso2.carbon.kernel.configprovider.ConfigProvider;
-import org.wso2.carbon.kernel.configprovider.YAMLBasedConfigFileReader;
-import org.wso2.carbon.kernel.internal.configprovider.ConfigProviderImpl;
 
-import java.net.MalformedURLException;
+import java.nio.file.Paths;
 
 /**
  * Test class for {@code DataSourceService}.
@@ -39,7 +37,7 @@ public class DataSourceServiceTest extends BaseTest {
     private DataSourceService dataSourceService;
 
     @BeforeSuite
-    public void initialize() throws DataSourceException, MalformedURLException {
+    public void initialize() throws DataSourceException, ConfigurationException {
         super.init();
         dataSourceService = new DataSourceServiceImpl();
     }
@@ -59,17 +57,16 @@ public class DataSourceServiceTest extends BaseTest {
     @Test
     public void createDataSourceTest() throws DataSourceException {
         try {
-            ConfigFileReader fileReader = new YAMLBasedConfigFileReader("wso2.datasource.yaml");
-            ConfigProvider configProvider = new ConfigProviderImpl(fileReader);
+            ConfigProvider configProvider = ConfigProviderFactory.getConfigProvider(Paths.get(System.getProperty
+                    ("carbon.home"), "conf", "wso2.datasource.yaml"), secureVault);
             DataSourcesConfiguration dataSourcesConfiguration = configProvider.getConfigurationObject
-                    (DataSourcesConfiguration
-                    .class);
+                    (DataSourcesConfiguration.class);
 
             Object dataSourceObj = dataSourceService.createDataSource(dataSourcesConfiguration.getDataSources().get
                     (0).getDefinition());
             Assert.assertNotNull(dataSourceObj, "Failed to create datasource Object!");
-        } catch (DataSourceException | CarbonConfigurationException e) {
-            Assert.fail("Threw an exception while creating datasource Object");
+        } catch (DataSourceException | ConfigurationException e) {
+            Assert.fail("Threw an exception while creating datasource Object", e);
         }
     }
 }

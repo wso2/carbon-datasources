@@ -15,8 +15,8 @@
  */
 package org.wso2.carbon.datasource.core.beans;
 
-import org.wso2.carbon.kernel.annotations.Configuration;
-import org.wso2.carbon.kernel.annotations.Element;
+
+import org.wso2.carbon.config.annotation.Configuration;
 
 import java.util.List;
 
@@ -26,7 +26,6 @@ import java.util.List;
 @Configuration(namespace = "wso2.datasources", description = "Data Sources Configuration")
 public class DataSourcesConfiguration {
 
-    @Element(description = "datasources")
     private List<DataSourceMetadata> dataSources;
 
     public List<DataSourceMetadata> getDataSources() {

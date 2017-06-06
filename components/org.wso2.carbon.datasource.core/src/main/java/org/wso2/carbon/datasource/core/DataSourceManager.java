@@ -17,14 +17,14 @@ package org.wso2.carbon.datasource.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.carbon.config.ConfigurationException;
+import org.wso2.carbon.config.provider.ConfigProvider;
 import org.wso2.carbon.datasource.core.beans.CarbonDataSource;
 import org.wso2.carbon.datasource.core.beans.DataSourceDefinition;
 import org.wso2.carbon.datasource.core.beans.DataSourceMetadata;
 import org.wso2.carbon.datasource.core.beans.DataSourcesConfiguration;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.core.spi.DataSourceReader;
-import org.wso2.carbon.kernel.configprovider.CarbonConfigurationException;
-import org.wso2.carbon.kernel.configprovider.ConfigProvider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -131,14 +131,14 @@ public class DataSourceManager {
         try {
             // check whether datasource is configured in deployment.yaml. create datasource only if configuration
             // exists in deployment.yaml
-            if (configProvider.getConfigurationMap(WSO2_DATASOURCES_NAMESPACE) != null) {
+            if (configProvider.getConfigurationObject(WSO2_DATASOURCES_NAMESPACE) != null) {
                 dataSourceConfiguration = configProvider.getConfigurationObject(DataSourcesConfiguration.class);
                 if (dataSourceConfiguration.getDataSources() == null && dataSourceConfiguration.getDataSources()
                     .isEmpty()) {
                     throw new DataSourceException("configuration doesn't specify any datasource configurations");
                 }
             }
-        } catch (CarbonConfigurationException e) {
+        } catch (ConfigurationException e) {
             throw new DataSourceException("Error while reading datasource configuration from file", e);
         }
 

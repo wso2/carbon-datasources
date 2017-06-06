@@ -15,9 +15,8 @@
  */
 package org.wso2.carbon.datasource.core.beans;
 
+import org.wso2.carbon.config.annotation.Configuration;
 import org.wso2.carbon.datasource.utils.DataSourceUtils;
-import org.wso2.carbon.kernel.annotations.Configuration;
-import org.wso2.carbon.kernel.annotations.Element;
 
 
 /**
@@ -26,10 +25,8 @@ import org.wso2.carbon.kernel.annotations.Element;
 @Configuration(description = "data source definition")
 public class DataSourceDefinition {
 
-    @Element(description = "data source type", required = true)
     private String type;
 
-    @Element(description = "data source configuration")
     private Object configuration;
 
     public String getType() {
