@@ -135,7 +135,7 @@ public class DataSourceManager {
                 dataSourceConfiguration = configProvider.getConfigurationObject(DataSourcesConfiguration.class);
                 if (dataSourceConfiguration.getDataSources() == null && dataSourceConfiguration.getDataSources()
                     .isEmpty()) {
-                    throw new DataSourceException("configuration doesn't specify any datasource configurations");
+                    throw new DataSourceException("Configuration doesn't specify any datasource configurations");
                 }
             }
         } catch (ConfigurationException e) {
