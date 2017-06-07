@@ -44,7 +44,7 @@ public class HikariDataSourceUtils {
      */
     public static HikariConfig buildConfiguration(Object configuration) throws DataSourceException {
         if (configuration == null) {
-            throw new DataSourceException("datasource configurations are not provided. datasource object will not be " +
+            throw new DataSourceException("Datasource configurations are not provided. datasource object will not be " +
                 "initialized!");
         }
         if (configuration instanceof Map) {
@@ -69,8 +69,7 @@ public class HikariDataSourceUtils {
                     //get matching to the config key. key name should match with the field name to apply the value.
                     Field beanField = hikariClass.getDeclaredField(name);
                     if (!beanField.isAccessible()) {
-                        AccessController
-                            .doPrivileged((PrivilegedAction<Object>) () -> {
+                        AccessController.doPrivileged((PrivilegedAction<Object>) () -> {
                                 beanField.setAccessible(true);
                                 return null;
                             });

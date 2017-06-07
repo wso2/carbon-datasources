@@ -71,7 +71,6 @@
         <dependency>
             <groupId>org.wso2.carbon.config</groupId>
             <artifactId>org.wso2.carbon.config</artifactId>
-            <optional>true</optional>
         </dependency>
     </dependencies>
 
@@ -121,7 +120,6 @@
             org.wso2.carbon.datasource.utils.*
         </export.package>
         <import.package>
-            javax.xml.parsers;version=0.0.0,
             org.wso2.carbon.config.*;version="${carbon.config.package.import.version.range}",
             org.wso2.carbon.kernel.*;version="${carbon.kernel.import.version.range}"
         </import.package>

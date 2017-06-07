@@ -41,7 +41,6 @@
         <dependency>
             <groupId>org.wso2.carbon.datasources</groupId>
             <artifactId>org.wso2.carbon.datasource.core</artifactId>
-            <version>1.1.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.jndi</groupId>
