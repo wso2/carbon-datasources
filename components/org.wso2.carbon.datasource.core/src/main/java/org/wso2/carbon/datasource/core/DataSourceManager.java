@@ -96,7 +96,7 @@ public class DataSourceManager {
     }
 
     /**
-     * Initializes data sources configured in deployment.yaml
+     * Initializes data sources configured in deployment.yaml.
      *
      * @param configProvider configProvider service object
      * @throws DataSourceException if an error occurred while initializing the data source.
@@ -108,7 +108,7 @@ public class DataSourceManager {
     }
 
     /**
-     * Initializes data sources configured in deployment.yaml
+     * Initializes data sources configured in deployment.yaml.
      *
      * @param configProvider configProvider service object
      * @param dataSourceReaders {@code Map<String, DataSourceReader>}
