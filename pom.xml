@@ -424,11 +424,11 @@
         <org.apache.felix.version>1.0.0</org.apache.felix.version>
         <com.zaxxer.hikaricp.version>2.4.1</com.zaxxer.hikaricp.version>
         <java.version>1.8</java.version>
-        <carbon.kernel.version>5.2.0-alpha</carbon.kernel.version>
+        <carbon.kernel.version>5.2.0</carbon.kernel.version>
         <carbon.kernel.import.version.range>[5.0.0, 6.0.0)</carbon.kernel.import.version.range>
         <carbon.jndi.version>1.0.3</carbon.jndi.version>
 
-        <carbon.config.version>2.0.3</carbon.config.version>
+        <carbon.config.version>2.1.2</carbon.config.version>
         <carbon.config.package.import.version.range>[2.0.0, 3.0.0)</carbon.config.package.import.version.range>
         <carbon.utils.version>2.0.2</carbon.utils.version>
         <carbon.utils.package.import.version.range>[2.0.0, 3.0.0)</carbon.utils.package.import.version.range>
