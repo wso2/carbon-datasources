@@ -287,6 +287,12 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
+                <groupId>org.easymock</groupId>
+                <artifactId>easymock</artifactId>
+                <version>${easy.mock.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.wso2.carbon</groupId>
                 <artifactId>org.wso2.carbon.container</artifactId>
                 <version>${carbon.kernel.version}</version>
@@ -424,11 +430,11 @@
         <org.apache.felix.version>1.0.0</org.apache.felix.version>
         <com.zaxxer.hikaricp.version>2.4.1</com.zaxxer.hikaricp.version>
         <java.version>1.8</java.version>
-        <carbon.kernel.version>5.2.0-alpha</carbon.kernel.version>
+        <carbon.kernel.version>5.2.0</carbon.kernel.version>
         <carbon.kernel.import.version.range>[5.0.0, 6.0.0)</carbon.kernel.import.version.range>
         <carbon.jndi.version>1.0.3</carbon.jndi.version>
 
-        <carbon.config.version>2.0.3</carbon.config.version>
+        <carbon.config.version>2.1.2</carbon.config.version>
         <carbon.config.package.import.version.range>[2.0.0, 3.0.0)</carbon.config.package.import.version.range>
         <carbon.utils.version>2.0.2</carbon.utils.version>
         <carbon.utils.package.import.version.range>[2.0.0, 3.0.0)</carbon.utils.package.import.version.range>
@@ -450,6 +456,7 @@
         <pax.exam.testng.version>4.6.0</pax.exam.testng.version>
         <pax.exam.link.mvn.version>4.6.0</pax.exam.link.mvn.version>
         <pax.url.aether.version>1.6.0</pax.url.aether.version>
+        <easy.mock.version>3.4</easy.mock.version>
         <maven.paxexam.plugin.version>1.2.4</maven.paxexam.plugin.version>
         <ow2.jta.spec.version>1.0.12</ow2.jta.spec.version>
         <slf4j.api.version>1.7.12</slf4j.api.version>
