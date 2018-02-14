@@ -35,6 +35,8 @@ public class DataSourceJndiManager {
 
     private static final String JAVA_COMP_CONTEXT_STRING = "java:comp";
     private static final String ENV_CONTEXT_STRING = "env";
+    private static final String JNDI_BIND_OFF = "jndi.bind.off";
+
     private static Logger logger = LoggerFactory.getLogger(DataSourceJndiManager.class);
 
     /**
@@ -59,9 +61,15 @@ public class DataSourceJndiManager {
      */
     public static void register(DataSourceMetadata dataSourceMetadata, Object dataSourceObject,
             DataSourceReader dataSourceReader) throws DataSourceException, NamingException {
+
         JNDIConfig jndiConfig = dataSourceMetadata.getJndiConfig();
-        //If JNDI configuration is not present, the data source will not be bound to a JNDI context.
-        if (jndiConfig == null) {
+
+        // We disable JNDI bind in SPI scenarios where JNDI tag is present in the datasource.xml
+        boolean isJNDIBindOff = Boolean.parseBoolean(System.getProperty(JNDI_BIND_OFF));
+
+        // If JNDI configuration is not present or we disabled the JNDI bind using system property, the data source will
+        // not be bound to a JNDI context.
+        if (jndiConfig == null || isJNDIBindOff) {
             if (logger.isDebugEnabled()) {
                 logger.debug("JNDI info not found for " + dataSourceMetadata.getName());
             }
