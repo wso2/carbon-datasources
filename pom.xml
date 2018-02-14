@@ -20,7 +20,7 @@
     <groupId>org.wso2.carbon.datasources</groupId>
     <artifactId>carbon-datasources</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <parent>
         <groupId>org.wso2</groupId>
