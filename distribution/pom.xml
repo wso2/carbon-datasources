@@ -108,7 +108,7 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.datasource.core.feature</id>
-                                    <version>${carbon.datasource.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.jndi.feature</id>
@@ -166,7 +166,7 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.datasource.core.feature</id>
-                                    <version>${carbon.datasource.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.jndi.feature</id>

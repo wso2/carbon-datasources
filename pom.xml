@@ -117,7 +117,7 @@
             <dependency>
                 <groupId>org.wso2.carbon.datasources</groupId>
                 <artifactId>org.wso2.carbon.datasource.core.feature</artifactId>
-                <version>${carbon.datasource.version}</version>
+                <version>${project.version}</version>
                 <type>zip</type>
             </dependency>
             <dependency>
@@ -360,7 +360,6 @@
     </build>
 
     <properties>
-        <carbon.datasource.version>1.0.0</carbon.datasource.version>
         <carbon.feature.plugin.version>2.0.1</carbon.feature.plugin.version>
         <tomcat.jdbc.version>7.0.34.wso2v2</tomcat.jdbc.version>
         <commons.io.version>2.4.0.wso2v1</commons.io.version>
