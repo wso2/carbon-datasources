@@ -62,7 +62,7 @@
                 <version>${commons.io.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.tomcat.wso2</groupId>
+                <groupId>org.wso2.orbit.org.apache.tomcat</groupId>
                 <artifactId>jdbc-pool</artifactId>
                 <version>${tomcat.jdbc.version}</version>
             </dependency>
@@ -361,7 +361,7 @@
 
     <properties>
         <carbon.feature.plugin.version>2.0.1</carbon.feature.plugin.version>
-        <tomcat.jdbc.version>7.0.34.wso2v2</tomcat.jdbc.version>
+        <tomcat.jdbc.version>7.0.81.wso2v2</tomcat.jdbc.version>
         <commons.io.version>2.4.0.wso2v1</commons.io.version>
         <org.apache.felix.version>1.0.0</org.apache.felix.version>
         <com.zaxxer.hikaricp.version>2.4.1</com.zaxxer.hikaricp.version>
