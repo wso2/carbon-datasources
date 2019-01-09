@@ -17,6 +17,8 @@ package org.wso2.carbon.datasource.rdbms.hikari;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.utils.DataSourceUtils;
 
@@ -30,6 +32,8 @@ import javax.naming.StringRefAddr;
 public class HikariRDBMSDataSource {
     private static final String JAVAX_DATASOURCE_CLASS = "javax.sql.DataSource";
     private static final String HIKARI_JNDI_FACTORY = "com.zaxxer.hikari.HikariJNDIFactory";
+    private static final Logger log = LoggerFactory.getLogger(HikariRDBMSDataSource.class);
+    private static final long retryIntervalInSec = 5;
 
     private HikariDataSource dataSource;
     private Reference dataSourceFactoryReference;
@@ -52,8 +56,18 @@ public class HikariRDBMSDataSource {
      * @return {@link HikariDataSource}
      */
     public HikariDataSource getDataSource() {
-        if (dataSource == null) {
-            dataSource = new HikariDataSource(config);
+        while (dataSource == null) {
+            try {
+                dataSource = new HikariDataSource(config);
+            } catch (Exception e) {
+                log.error("Cannot connect to JDBC URL " + config.getJdbcUrl() + ". Failed due to " + e.getMessage() +
+                        "retrying in " + retryIntervalInSec + " seconds", e);
+                try {
+                    Thread.sleep(retryIntervalInSec * 1000);
+                } catch (InterruptedException e1) {
+                    log.error(e1.getMessage(), e1);
+                }
+            }
         }
         return dataSource;
     }
