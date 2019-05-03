@@ -20,7 +20,7 @@
     <groupId>org.wso2.carbon.datasources</groupId>
     <artifactId>carbon-datasources</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.3</version>
+    <version>1.0.4-SNAPSHOT</version>
 
     <parent>
         <groupId>org.wso2</groupId>
@@ -41,7 +41,7 @@
         <url>https://github.com/wso2/carbon-datasources.git</url>
         <developerConnection>scm:git:https://github.com/wso2/carbon-datasources.git</developerConnection>
         <connection>scm:git:https://github.com/wso2/carbon-datasources.git</connection>
-        <tag>v1.0.3</tag>
+        <tag>v1.0.0</tag>
     </scm>
 
     <dependencyManagement>
