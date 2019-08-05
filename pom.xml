@@ -434,12 +434,12 @@
         <carbon.kernel.import.version.range>[5.0.0, 6.0.0)</carbon.kernel.import.version.range>
         <carbon.jndi.version>1.0.3</carbon.jndi.version>
 
-        <carbon.config.version>2.1.2</carbon.config.version>
+        <carbon.config.version>2.1.14</carbon.config.version>
         <carbon.config.package.import.version.range>[2.0.0, 3.0.0)</carbon.config.package.import.version.range>
         <carbon.utils.version>2.0.2</carbon.utils.version>
         <carbon.utils.package.import.version.range>[2.0.0, 3.0.0)</carbon.utils.package.import.version.range>
         <carbon.touchpoint.version>1.1.0</carbon.touchpoint.version>
-        <carbon.securevault.version>5.0.8</carbon.securevault.version>
+        <carbon.securevault.version>5.0.14</carbon.securevault.version>
         <carbon.securevault.version.range>[5.0.0, 6.0.0)</carbon.securevault.version.range>
 
         <osgi.core.api.version>6.0.0</osgi.core.api.version>
