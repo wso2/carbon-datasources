@@ -24,6 +24,7 @@ limitations under the License.
             <class name="org.wso2.carbon.datasource.core.DataSourceRepositoryTest" />
             <class name="org.wso2.carbon.datasource.api.DataSourceServiceTest" />
             <class name="org.wso2.carbon.datasource.api.DataSourceManagementServiceTest" />
+            <class name="org.wso2.carbon.datasource.api.StreamlinedConfigTest" />
         </classes>
     </test>
 </suite>

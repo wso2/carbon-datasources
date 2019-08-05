@@ -41,6 +41,7 @@ public class DataSourceManager {
     private static Logger logger = LoggerFactory.getLogger(DataSourceManager.class);
     private static DataSourceManager instance = new DataSourceManager();
     private static final String WSO2_DATASOURCES_NAMESPACE = "wso2.datasources";
+    private static final String DATASOURCES_NAMESPACE = "dataSources";
     private DataSourceRepository dataSourceRepository;
     private Map<String, DataSourceReader> dataSourceReaders;
     private boolean initialized = false;
@@ -131,7 +132,16 @@ public class DataSourceManager {
         try {
             // check whether datasource is configured in deployment.yaml. create datasource only if configuration
             // exists in deployment.yaml
-            if (configProvider.getConfigurationObject(WSO2_DATASOURCES_NAMESPACE) != null) {
+            if (configProvider.getConfigurationObject(DATASOURCES_NAMESPACE) != null) {
+                ArrayList<DataSourceMetadata> dataSourceList = configProvider
+                        .getConfigurationObjectList(DATASOURCES_NAMESPACE, DataSourceMetadata.class);
+                if (dataSourceList.isEmpty()) {
+                    throw new DataSourceException("Configuration 'dataSources' doesn't specify any datasource " +
+                            "configurations");
+                }
+                dataSourceConfiguration = new DataSourcesConfiguration();
+                dataSourceConfiguration.setDataSources(dataSourceList);
+            } else if (configProvider.getConfigurationObject(WSO2_DATASOURCES_NAMESPACE) != null) {
                 dataSourceConfiguration = configProvider.getConfigurationObject(DataSourcesConfiguration.class);
                 if (dataSourceConfiguration.getDataSources() == null && dataSourceConfiguration.getDataSources()
                     .isEmpty()) {
