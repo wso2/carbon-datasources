@@ -361,7 +361,7 @@
 
     <properties>
         <carbon.feature.plugin.version>2.0.1</carbon.feature.plugin.version>
-        <tomcat.jdbc.version>7.0.81.wso2v2</tomcat.jdbc.version>
+        <tomcat.jdbc.version>9.0.35.wso2v1</tomcat.jdbc.version>
         <commons.io.version>2.4.0.wso2v1</commons.io.version>
         <org.apache.felix.version>1.0.0</org.apache.felix.version>
         <com.zaxxer.hikaricp.version>2.4.1</com.zaxxer.hikaricp.version>
@@ -412,5 +412,7 @@
         <equinox.util.version>1.0.500.v20130404-1337</equinox.util.version>
         <org.eclipse.equinox.cm.version>1.1.0.v20131021-1936</org.eclipse.equinox.cm.version>
         <org.snakeyaml.version>1.16.0.wso2v1</org.snakeyaml.version>
+
+        <maven.findbugsplugin.version>3.0.4</maven.findbugsplugin.version>
     </properties>
 </project>
