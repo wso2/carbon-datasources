@@ -53,7 +53,7 @@ public class HikariDataSourceUtils {
             hikariConfig.setIdleTimeout(HikariConstants.IDLE_TIME_OUT);
             hikariConfig.setMaxLifetime(HikariConstants.MAX_LIFE_TIME);
             hikariConfig.setMinimumIdle(HikariConstants.MINIMUM_IDLE_SIZE);
-            hikariConfig.setMinimumIdle(HikariConstants.MAXIMUM_POOL_SIZE);
+            hikariConfig.setMaximumPoolSize(HikariConstants.MAXIMUM_POOL_SIZE);
             hikariConfig.setAutoCommit(HikariConstants.AUTO_COMMIT);
 
             Map<String, ? extends Object> configMap = (Map<String, ? extends Object>) configuration;
