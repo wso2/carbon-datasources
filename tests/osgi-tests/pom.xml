@@ -244,6 +244,7 @@
                                 <org.ops4j.pax.logging.DefaultServiceLog.level>DEBUG</org.ops4j.pax.logging.DefaultServiceLog.level>
                                 <org.ops4j.pax.url.mvn.localRepository>${settings.localRepository}
                                 </org.ops4j.pax.url.mvn.localRepository>
+                                <org.ops4j.pax.url.mvn.repositories>https://repo1.maven.org/maven2/</org.ops4j.pax.url.mvn.repositories>
                                 <jacoco-agent.destfile>${project.build.directory}/jacoco.exec</jacoco-agent.destfile>
                             </systemPropertyVariables>
                             <suiteXmlFiles>
