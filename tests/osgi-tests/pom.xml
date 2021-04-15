@@ -18,7 +18,7 @@
     <parent>
         <artifactId>carbon-datasource-tests</artifactId>
         <groupId>org.wso2.carbon.datasources</groupId>
-        <version>1.1.9</version>
+        <version>1.1.10-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
